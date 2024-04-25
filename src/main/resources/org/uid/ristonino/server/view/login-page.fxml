@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.server.controller.LoginPageController"
+            prefHeight="400.0" prefWidth="600.0">
+<VBox styleClass="root">
+    <Label text="INTERFACCIA SERVER"/>
+    <Button text="Premimi :3" onAction="#faiCosa"/>
+    <Label fx:id="test"/>
+</VBox>
+</AnchorPane>

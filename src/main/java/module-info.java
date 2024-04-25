@@ -5,5 +5,9 @@ module org.uid.ristonino.server {
     requires org.kordamp.ikonli.javafx;
 
     opens org.uid.ristonino.server to javafx.fxml;
+    opens org.uid.ristonino.server.controller to javafx.fxml;
+    exports org.uid.ristonino.server.controller;
+    exports org.uid.ristonino.server.model;
+    exports org.uid.ristonino.server.view;
     exports org.uid.ristonino.server;
 }
