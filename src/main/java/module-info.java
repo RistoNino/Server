@@ -3,6 +3,7 @@ module org.uid.ristonino.server {
     requires javafx.fxml;
 
     requires org.kordamp.ikonli.javafx;
+    requires java.sql;
 
     opens org.uid.ristonino.server to javafx.fxml;
     opens org.uid.ristonino.server.controller to javafx.fxml;

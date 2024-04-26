@@ -14,5 +14,6 @@
     <Label text="INTERFACCIA SERVER"/>
     <Button text="Premimi :3" onAction="#faiCosa"/>
     <Label fx:id="test"/>
+    <Button text="Connetti al Database" onAction="#connectDb"/>
 </VBox>
 </AnchorPane>
