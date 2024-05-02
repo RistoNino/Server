@@ -1,41 +1,46 @@
 package org.uid.ristonino.server.model;
 
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class DatabaseHandler {
+
+
+    // lista query, da finire
+    private final String inseriscipiatto = "INSERT INTO users VALUES(?, ?, ?, ?);";
+
     private final String url = "jdbc:sqlite:RistoNino.db";
-    private static Connection conn;
+    Connection con;
 
-    private static final DatabaseHandler instance = new DatabaseHandler();
+    // classe singleton
+    private static DatabaseHandler instance = new DatabaseHandler();
     private DatabaseHandler() {}
-    public static DatabaseHandler getInstance() {
-        return instance;
-    }
+    public static DatabaseHandler getInstance() {return instance; }
 
-    public void openConnection() {
+    public void openConnection()  {
         try {
-            conn = DriverManager.getConnection(url);
-            if (conn != null && !conn.isClosed()) {
-                System.out.println("Database connection established");
-            }
-        }
-        catch (SQLException e) {
-            //logError("Error while connecting to the database: " + e.getMessage());
-        }
-    }
-
-    public void closeConnection() {
-
-        try {
-            if (conn != null) {
-                conn.close();
+            con = DriverManager.getConnection(url);
+            if (con != null && !con.isClosed() && Debug.IS_ACTIVE) {
+                System.out.println("Connecting to " + url);
             }
         } catch (SQLException e) {
-            //logError("Error while closing the connection: " + e.getMessage());
+            System.out.println("Error while trying to connect to the database:  " + e.getMessage());
         }
     }
 
-    public Connection getConnection() {
-        return conn;
+    public void closeConnection()  {
+        try {
+            if (con != null) {
+                con.close();
+            }
+            if (con != null && con.isClosed() && Debug.IS_ACTIVE) {
+                System.out.println("Disconnecting from " + url);
+            }
+        } catch (SQLException e) {
+            System.out.println("error while closing the connection:  " + e.getMessage());
+        }
     }
 }
