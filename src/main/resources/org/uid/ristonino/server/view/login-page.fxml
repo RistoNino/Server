@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.server.controller.LoginPageController"
-            prefHeight="400.0" prefWidth="600.0">
-<VBox styleClass="root">
-    <Label text="INTERFACCIA SERVER"/>
-    <Button text="Premimi :3" onAction="#faiCosa"/>
-    <Label fx:id="test"/>
-    <Button text="Connetti al Database" onAction="#connectDb"/>
-</VBox>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.LoginPageController">
+   <VBox prefHeight="200.0" prefWidth="100.0">
+      <children>
+       <Button onAction="#faiCosa" text="Premimi :3" />
+       <Button onAction="#connectDb" text="Connetti al Database" />
+         <Label contentDisplay="BOTTOM" text="Username">
+            <graphic>
+               <TextField fx:id="usernameField" />
+            </graphic>
+         </Label>
+         <Label contentDisplay="BOTTOM" text="Password">
+            <graphic>
+               <PasswordField fx:id="passwordField" />
+            </graphic>
+         </Label>
+         <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginUser" text="Login" />
+          <Button fx:id="createUserButton" mnemonicParsing="false" onAction="#createUser" text="Register" />
+      </children>
+   </VBox>
 </AnchorPane>

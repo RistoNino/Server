@@ -24,7 +24,7 @@ public class SceneHandler {
 
     private static final SceneHandler instance = new SceneHandler();
     // Va ricordato di essere preso da file / server
-    private String theme = "dark";
+    private String theme = "light";
 
     public static SceneHandler getInstance() {
         return instance;
@@ -84,9 +84,11 @@ public class SceneHandler {
 
     public void createHomeScene() {
         try {
-            scene.setRoot(loadRootFromFXML("home-page.fxml"));
+            scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
             setResolution();
-        } catch (IOException ignored) {
+        }
+        catch (IOException ignored) {
+            System.out.println(ignored.getMessage());
         }
     }
 

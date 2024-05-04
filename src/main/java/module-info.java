@@ -4,6 +4,7 @@ module org.uid.ristonino.server {
 
     requires org.kordamp.ikonli.javafx;
     requires java.sql;
+    requires spring.security.crypto;
 
     opens org.uid.ristonino.server to javafx.fxml;
     opens org.uid.ristonino.server.controller to javafx.fxml;
