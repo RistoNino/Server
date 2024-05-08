@@ -8,17 +8,20 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
 public class HomePageController implements Initializable{
+    private final static String SCENE_PATH = "/org/uid/ristonino/server/";
+    private final static String VIEW_PATH = SCENE_PATH + "view/";
 
     public StackPane contentArea;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            Parent fxml= FXMLLoader.load(getClass().getResource("/org/uid/ristonino/server/view/dashboard.fxml"));
+            Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + "dashboard.fxml")));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
         } catch (IOException e) {
@@ -28,18 +31,18 @@ public class HomePageController implements Initializable{
     }
 
     public void dashboard() throws IOException {
-        Parent fxml= FXMLLoader.load(getClass().getResource("/org/uid/ristonino/server/view/dashboard.fxml"));
+        Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH+"dashboard.fxml")));
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
     }
 
     public void tavoli() throws IOException {
-        Parent fxml= FXMLLoader.load(getClass().getResource("/org/uid/ristonino/server/view/tavoli.fxml"));
+        Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + "tavoli.fxml")));
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
     }
     public void menu() throws IOException {
-        Parent fxml= FXMLLoader.load(getClass().getResource("/org/uid/ristonino/server/view/menu.fxml"));
+        Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + "menu.fxml")));
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
     }
