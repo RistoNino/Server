@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.HomePageController">
-   <children>
-      <Label layoutX="206.0" layoutY="140.0" text="test" />
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.HomePageController">
+   <left>
+      <AnchorPane prefHeight="555.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutY="58.0" prefHeight="444.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#dashboard" prefHeight="30.0" prefWidth="200.0" text="Dashboard">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#tavoli" prefHeight="30.0" prefWidth="200.0" text="Tavoli">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#menu" prefHeight="30.0" prefWidth="200.0" text="Menu">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@CASCINAdEV.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="5.0" layoutY="502.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Impostazioni" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="502.0" />
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="600.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane fx:id="contentArea" prefHeight="600.0" prefWidth="1000.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
