@@ -112,5 +112,9 @@ public class SceneHandler {
         alert.setContentText(message);
         alert.show();
     }
+
+    public Stage getStage() {
+        return stage;
+    }
 }
 

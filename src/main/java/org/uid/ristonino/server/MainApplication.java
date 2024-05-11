@@ -15,6 +15,7 @@ public class MainApplication extends Application {
     @Override
     public void init() throws Exception {
         super.init();
+
         db.openConnection();
     }
 
