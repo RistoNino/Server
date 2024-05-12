@@ -116,5 +116,6 @@ public class SceneHandler {
     public Stage getStage() {
         return stage;
     }
+
 }
 
