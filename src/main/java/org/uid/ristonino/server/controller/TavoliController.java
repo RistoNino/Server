@@ -1,6 +1,7 @@
 //Idea sidebar gestore tavoli: se la sidebar(anchor pane) è visibile, cambiare dimensioni parte centrale
 //Oppure, impostare alla sidebar una grandezza=0 se non è visibile, e quando sarà visibile impostare una grandezza
 //del 15% della larghezza della scena centrale
+
 package org.uid.ristonino.server.controller;
 
 import javafx.fxml.FXML;
