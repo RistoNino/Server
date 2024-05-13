@@ -3,15 +3,18 @@ package org.uid.ristonino.server.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.uid.ristonino.server.model.Debug;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Vector;
 
 public class SceneHandler {
     private Stage stage;
     private Scene scene;
+    public Vector<Button> buttonsVector = new Vector<>();
 
     // Path
     private final static String SCENE_PATH = "/org/uid/ristonino/server/";
