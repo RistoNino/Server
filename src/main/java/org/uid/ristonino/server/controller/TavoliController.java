@@ -47,7 +47,6 @@ public class TavoliController {
 
 
 
-
     public Button setStandardButton(){
         Button btn=new Button();
         FontIcon tableIcon = new FontIcon("mdi2t-table-furniture");
@@ -58,56 +57,50 @@ public class TavoliController {
                 openSideBar()
         );
         return btn;
-
     }
 
-    //Fare lista di bottoni e inserirla sul flowpane
-    public void initialize() {
-        sideBarTavoli.setPrefWidth(50);
-        System.out.println("Sono quaaaa");
-        flowPaneTavoli.getChildren().remove(tavoloLabel);
-
+    public void setPlusIcon(){
         FontIcon myIcon = new FontIcon("mdi2p-plus-thick"); //MaterialDesign2
         myIcon.setIconSize(30);
         tavoloLabel.setGraphic(myIcon);
         tavoloLabel.setText("");
 
-        if(!SceneHandler.getInstance().buttonsVector.isEmpty()){
-            System.out.println("Sono dentro l'if");
-            for(int i=0; i<SceneHandler.getInstance().buttonsVector.size(); i++){
-                flowPaneTavoli.getChildren().add(SceneHandler.getInstance().buttonsVector.elementAt(i));
-                System.out.println(SceneHandler.getInstance().buttonsVector.elementAt(i));
-            }
-        }
+    }
 
+    public void setExitIcon(){
+
+        FontIcon myIcon = new FontIcon("mdi2c-close-thick");
+        myIcon.setIconSize(30);
+        exitLabel.setGraphic(myIcon);
+        exitLabel.setText("");
+
+
+    }
+
+    public void initialize() {
+        closeSideBar();
+        flowPaneTavoli.getChildren().remove(tavoloLabel);
+        setPlusIcon();
         flowPaneTavoli.getChildren().add(tavoloLabel);
 
     }
 
-
     @FXML
     public void addTable() {
-        System.out.println("Sono qua");
         flowPaneTavoli.getChildren().remove(tavoloLabel);
         SceneHandler.getInstance().buttonsVector.addElement(setStandardButton());
-        System.out.println(" addtable "+SceneHandler.getInstance().buttonsVector.lastElement());
-
-        System.out.println(SceneHandler.getInstance().buttonsVector.size());
         flowPaneTavoli.getChildren().add(SceneHandler.getInstance().buttonsVector.lastElement());
         flowPaneTavoli.getChildren().add(tavoloLabel);
     }
 
     @FXML
     public void openSideBar(){
-
-        System.out.println("Sono quaua "+listviewOrder.isVisible()+" "+sideBarTavoli.isVisible()+" larghezza "+sideBarTavoli.getWidth()
-                            +" largh listview"+listviewOrder.getWidth()+" class "+SceneHandler.getInstance().getStage().getScene().getClass());
-
+        sideBarTavoli.setVisible(true);
+        listviewOrder.setVisible(true);
         orderText.setText("Ordini");
         totalText.setText("Totale:");
-        exitLabel.setText("X");
-        listviewOrder.setVisible(true);
-        sideBarTavoli.setPrefWidth((flowPaneTavoli.getWidth()*25)/100);
+        setExitIcon();
+        sideBarTavoli.setPrefWidth((SceneHandler.getInstance().sideWidht(17.5)));
     }
 
     @FXML
@@ -115,8 +108,9 @@ public class TavoliController {
         orderText.setText("");
         totalText.setText("");
         exitLabel.setText("");
-        //listviewOrder.setVisible(false);
-        sideBarTavoli.setPrefWidth(50);
+        listviewOrder.setVisible(false);
+        sideBarTavoli.setVisible(false);
+        sideBarTavoli.setPrefWidth(0);
 
     }
 

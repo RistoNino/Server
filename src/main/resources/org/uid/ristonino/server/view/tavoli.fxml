@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.TavoliController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.TavoliController">
    <children>
       <BorderPane layoutY="6.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -29,11 +26,17 @@
                </children></FlowPane>
          </center>
          <right>
-            <AnchorPane fx:id="sideBarTavoli" prefHeight="366.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="sideBarTavoli" prefHeight="366.0" prefWidth="187.0" BorderPane.alignment="CENTER">
                <children>
                   <BorderPane layoutX="232.8" prefHeight="366.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
-                        <ListView fx:id="listviewOrder" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <ListView fx:id="listviewOrder" prefHeight="305.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets left="2.0" right="2.0" />
+                           </padding>
+                           <BorderPane.margin>
+                              <Insets left="2.0" right="2.0" />
+                           </BorderPane.margin></ListView>
                      </center>
                      <bottom>
                         <Text fx:id="totalText" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="TOP_LEFT">

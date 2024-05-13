@@ -6,38 +6,41 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.HomePageController">
+<BorderPane fx:id="homepagePane" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.HomePageController">
    <left>
       <AnchorPane fx:id="sideBar" prefHeight="600.0" prefWidth="240.0" BorderPane.alignment="CENTER">
-         <VBox alignment="TOP_CENTER" prefHeight="538.0" prefWidth="240.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
-            <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@CASCINAdEV.png" />
-            </ImageView>
-            <Button mnemonicParsing="false" onAction="#dashboard" prefHeight="31.0" prefWidth="304.0" text="Dashboard">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#tavoli" prefHeight="31.0" prefWidth="301.0" text="Tavoli">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#menu" prefHeight="31.0" prefWidth="311.0" text="Menu">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Button>
-         </VBox>
-         <Button layoutX="5.0" layoutY="536.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="234.0" text="Impostazioni" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="0.0" />
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="538.0" prefWidth="240.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@CASCINAdEV.png" />
+                     </image>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#dashboard" prefHeight="31.0" prefWidth="300.0" text="Dashboard">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#tavoli" prefHeight="31.0" prefWidth="300.0" text="Tavoli">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#menu" prefHeight="31.0" prefWidth="300.0" text="Menu">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <Button layoutX="5.0" layoutY="536.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="234.0" text="Impostazioni" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="0.0" />
+         </children>
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="600.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
-         <StackPane fx:id="contentArea" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
-      </AnchorPane>
+      <AnchorPane prefHeight="600.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

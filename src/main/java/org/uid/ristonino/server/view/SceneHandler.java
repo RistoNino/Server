@@ -120,5 +120,9 @@ public class SceneHandler {
         return stage;
     }
 
+    public double sideWidht(double percentage){
+        return (stage.widthProperty().getValue()*percentage)/100;
+    }
+
 }
 
