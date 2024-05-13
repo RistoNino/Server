@@ -58,14 +58,14 @@ public class HomePageController implements Initializable{
 
 
 
-    public void dashboard() throws IOException {
+    public void dashboard() {
         homepagePane.setCenter(dashb);
     }
 
-    public void tavoli() throws IOException {
+    public void tavoli(){
         homepagePane.setCenter(table);
     }
-    public void menu() throws IOException {
+    public void menu(){
         homepagePane.setCenter(men);
     }
 

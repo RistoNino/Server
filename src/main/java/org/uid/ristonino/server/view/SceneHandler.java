@@ -53,7 +53,7 @@ public class SceneHandler {
         }
     }
 
-    public void init(Stage stage) throws IOException {
+    public void init(Stage stage){
         if (this.stage == null) {
             this.stage = stage;
             this.stage.setWidth(Debug.width);
@@ -116,9 +116,6 @@ public class SceneHandler {
         alert.show();
     }
 
-    public Stage getStage() {
-        return stage;
-    }
 
     public double sideWidht(double percentage){
         return (stage.widthProperty().getValue()*percentage)/100;
