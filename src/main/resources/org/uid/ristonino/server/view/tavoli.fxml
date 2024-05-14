@@ -1,15 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.uid.ristonino.server.controller.TavoliController">
-    <children>
-        <Label layoutX="388.0" layoutY="283.0" text="Tavoli" />
-    </children>
+   <BorderPane layoutY="6.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <top>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tavoli" BorderPane.alignment="CENTER">
+            <font>
+               <Font size="25.0"/>
+            </font>
+         </Text>
+      </top>
+      <center>
+         <FlowPane fx:id="flowPaneTavoli" hgap="10.0" prefHeight="200.0" prefWidth="626.0" vgap="10.0"
+                   BorderPane.alignment="CENTER">
+            <Label fx:id="tavoloLabel" onMouseClicked="#addTable" text="Label"/>
+         </FlowPane>
+      </center>
+      <right>
+         <AnchorPane fx:id="sideBarTavoli" prefHeight="366.0" prefWidth="187.0" BorderPane.alignment="CENTER">
+            <BorderPane layoutX="232.8" prefHeight="366.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0"
+                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <ListView fx:id="listviewOrder" prefHeight="305.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets left="2.0" right="2.0"/>
+                     </padding>
+                     <BorderPane.margin>
+                        <Insets left="2.0" right="2.0"/>
+                     </BorderPane.margin>
+                  </ListView>
+               </center>
+               <bottom>
+                  <Text fx:id="totalText" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font size="20.0"/>
+                     </font>
+                  </Text>
+               </bottom>
+               <top>
+                  <AnchorPane prefHeight="3.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+                     <Label fx:id="exitLabel" alignment="TOP_RIGHT" layoutX="194.0" layoutY="5.0"
+                            onMouseClicked="#closeSideBar" AnchorPane.rightAnchor="0.0"
+                            AnchorPane.topAnchor="0.0">
+                        <font>
+                           <Font size="15.0"/>
+                        </font>
+                     </Label>
+                     <Text fx:id="orderText" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.leftAnchor="0.0"
+                           AnchorPane.topAnchor="0.0">
+                        <font>
+                           <Font size="25.0"/>
+                        </font>
+                     </Text>
+                  </AnchorPane>
+               </top>
+            </BorderPane>
+         </AnchorPane>
+      </right>
+   </BorderPane>
 </AnchorPane>

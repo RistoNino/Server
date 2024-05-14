@@ -1,9 +1,14 @@
+//Cambiare organizzazione schermata principale
+
 package org.uid.ristonino.server.controller;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import org.uid.ristonino.server.view.SceneHandler;
 
 
 import java.io.IOException;
@@ -16,35 +21,52 @@ public class HomePageController implements Initializable{
     private final static String SCENE_PATH = "/org/uid/ristonino/server/";
     private final static String VIEW_PATH = SCENE_PATH + "view/";
 
-    public StackPane contentArea;
+
+    public AnchorPane sideBar;
+
+    @FXML
+    private BorderPane homepagePane;
+
+    public Parent dashb, table, men;
+
+    private Parent loadScene(String sc) throws IOException {
+        return FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + sc)));
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //sideBar.setMinHeight();
+
+        //Creare funzione per grandezza sidebar
+        sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));
+        System.out.println("Sidebar larghezza: "+sideBar.getPrefWidth());
+
+
+
         try {
-            Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + "dashboard.fxml")));
-            contentArea.getChildren().removeAll();
-            contentArea.getChildren().setAll(fxml);
+            dashb=loadScene("dashboard.fxml");
+            table=loadScene("tavoli.fxml");
+            men=loadScene("menu.fxml");
+
+            homepagePane.setCenter(dashb);
+            System.out.println("Ciaociaociao");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public void dashboard() throws IOException {
-        Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH+"dashboard.fxml")));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
+
+
+    public void dashboard() {
+        homepagePane.setCenter(dashb);
     }
 
-    public void tavoli() throws IOException {
-        Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + "tavoli.fxml")));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
+    public void tavoli(){
+        homepagePane.setCenter(table);
     }
-    public void menu() throws IOException {
-        Parent fxml= FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + "menu.fxml")));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
+    public void menu(){
+        homepagePane.setCenter(men);
     }
 
 }
