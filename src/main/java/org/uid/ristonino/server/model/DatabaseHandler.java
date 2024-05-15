@@ -2,6 +2,7 @@ package org.uid.ristonino.server.model;
 
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.uid.ristonino.server.view.SceneHandler;
 
 import java.sql.*;
 
@@ -18,6 +19,9 @@ public class DatabaseHandler {
     private final String checkPasswordSt = "SELECT Password FROM Users WHERE Username = ?;";
     private final String createUser = "INSERT INTO Users (Username, Password, PrivilegesLevel) VALUES (?, ?, ?);";
     private final String checkUsername = "SELECT Username FROM Users WHERE Username = ?;";
+    private final String getTavoli = "SELECT * FROM Tavoli";
+    private final String getOrdiniDaTavolo = "SELECT o.id, Name, Price FROM Items AS i, Ordini_Items AS oi, Ordini AS o, Tavoli AS t WHERE i.Id = oi.idItems AND oi.idOrdine = o.Id AND o.idTavolo = t.Id AND t.id = ?;";
+
 
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
@@ -30,11 +34,11 @@ public class DatabaseHandler {
     public void openConnection()  {
         try {
             con = DriverManager.getConnection(url);
-            if (con != null && !con.isClosed() && Debug.IS_ACTIVE) {
-                System.out.println("Connected to " + url);
+            if (con != null && !con.isClosed()) {
+                Debug.getInstance().print("Connected to " + url);
             }
         } catch (SQLException e) {
-            System.out.println("Error while trying to connect to the database:  " + e.getMessage());
+            Debug.getInstance().print("Error while trying to connect to the database:  " + e.getMessage());
         }
     }
 
@@ -43,11 +47,12 @@ public class DatabaseHandler {
             if (con != null) {
                 con.close();
             }
-            if (con != null && con.isClosed() && Debug.IS_ACTIVE) {
-                System.out.println("Disconnecting from " + url);
+            if (con != null && con.isClosed()) {
+                Debug.getInstance().print("Disconnecting from " + url);
             }
         } catch (SQLException e) {
-            System.out.println("Error while closing the connection:  " + e.getMessage());
+            SceneHandler.getInstance().createErrorMessage("Check log");
+            Debug.getInstance().print("Error while closing the connection:  " + e.getMessage());
         }
     }
 
@@ -56,10 +61,7 @@ public class DatabaseHandler {
             PreparedStatement st = con.prepareStatement(checkUsername);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -97,5 +99,20 @@ public class DatabaseHandler {
             throw new RuntimeException(e);
         }
         return false;
+    }
+
+    public Ordine getOrdineByTableId(int id) {
+        try {
+            PreparedStatement st = con.prepareStatement(getOrdiniDaTavolo);
+            st.setInt(1,id);
+            ResultSet rs = st.executeQuery();
+            Ordine ordine = new Ordine(rs.getInt("Id"));
+            while (rs.next()) {
+
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException();
+        }
     }
 }

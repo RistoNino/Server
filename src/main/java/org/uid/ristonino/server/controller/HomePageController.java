@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import org.uid.ristonino.server.model.Debug;
 import org.uid.ristonino.server.view.SceneHandler;
 
 
@@ -39,9 +40,7 @@ public class HomePageController implements Initializable{
 
         //Creare funzione per grandezza sidebar
         sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));
-        System.out.println("Sidebar larghezza: "+sideBar.getPrefWidth());
-
-
+        Debug.getInstance().print("Sidebar larghezza: "+sideBar.getPrefWidth());
 
         try {
             dashb=loadScene("dashboard.fxml");
@@ -49,24 +48,18 @@ public class HomePageController implements Initializable{
             men=loadScene("menu.fxml");
 
             homepagePane.setCenter(dashb);
-            System.out.println("Ciaociaociao");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
-
-
-
     public void dashboard() {
         homepagePane.setCenter(dashb);
     }
-
     public void tavoli(){
         homepagePane.setCenter(table);
     }
     public void menu(){
         homepagePane.setCenter(men);
     }
-
 }
