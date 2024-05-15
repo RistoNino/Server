@@ -1,10 +1,5 @@
-//Idea sidebar gestore tavoli: se la sidebar(anchor pane) è visibile, cambiare dimensioni parte centrale
-//Oppure, impostare alla sidebar una grandezza=0 se non è visibile, e quando sarà visibile impostare una grandezza
-//del 15% della larghezza della scena centrale (fatto)
+//IMPORTANTE: Come stampare su list view
 
-
-//Implementata sidebar ma trovati alcuni problemi da risolvere. Quando si cambia scena i tavoli già presenti se cliccati
-//non aprono la sidebar
 package org.uid.ristonino.server.controller;
 
 import javafx.fxml.FXML;
@@ -44,6 +39,7 @@ public class TavoliController {
     @FXML
     private Label exitLabel;
 
+    private int contatoreTavoli = 0;
 
 
 
@@ -54,7 +50,7 @@ public class TavoliController {
         btn.setGraphic(tableIcon);
         btn.setText("");
         btn.setOnMouseClicked(event ->
-                openSideBar()
+                tableClicked(btn.getId())
         );
         return btn;
     }
@@ -79,6 +75,7 @@ public class TavoliController {
 
     public void initialize() {
         closeSideBar();
+        flowPaneTavoli.getChildren().remove(tavoloButton);
         flowPaneTavoli.getChildren().remove(tavoloLabel);
         setPlusIcon();
         flowPaneTavoli.getChildren().add(tavoloLabel);
@@ -88,7 +85,10 @@ public class TavoliController {
     @FXML
     public void addTable() {
         flowPaneTavoli.getChildren().remove(tavoloLabel);
-        SceneHandler.getInstance().buttonsVector.addElement(setStandardButton());
+        Button bottone = setStandardButton();
+        bottone.setId(String.valueOf(contatoreTavoli));
+        contatoreTavoli++;
+        SceneHandler.getInstance().buttonsVector.addElement(bottone);
         flowPaneTavoli.getChildren().add(SceneHandler.getInstance().buttonsVector.lastElement());
         flowPaneTavoli.getChildren().add(tavoloLabel);
     }
@@ -104,6 +104,16 @@ public class TavoliController {
     }
 
     @FXML
+    public void tableClicked(String idBottone){
+        openSideBar();
+        Button bottone = searchButton(idBottone);
+
+        System.out.println("Id bottone: " + idBottone);
+
+
+    }
+
+    @FXML
     void closeSideBar() {
         orderText.setText("");
         totalText.setText("");
@@ -112,6 +122,16 @@ public class TavoliController {
         sideBarTavoli.setVisible(false);
         sideBarTavoli.setPrefWidth(0);
 
+    }
+
+    private Button searchButton(String id) {
+        Button btn = new Button();
+        for (Button button : SceneHandler.getInstance().buttonsVector) {
+            if (button.getId().equals(id)) {
+                btn=button;
+            }
+        }
+        return btn;
     }
 
 }

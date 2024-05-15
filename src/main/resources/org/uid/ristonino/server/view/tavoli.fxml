@@ -9,6 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.Button?>
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.uid.ristonino.server.controller.TavoliController">
    <BorderPane layoutY="6.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
@@ -23,6 +24,7 @@
       <center>
          <FlowPane fx:id="flowPaneTavoli" hgap="10.0" prefHeight="200.0" prefWidth="626.0" vgap="10.0"
                    BorderPane.alignment="CENTER">
+            <Button fx:id="tavoloButton" />
             <Label fx:id="tavoloLabel" onMouseClicked="#addTable" text="Label"/>
          </FlowPane>
       </center>
