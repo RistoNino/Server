@@ -12,4 +12,5 @@ module org.uid.ristonino.server {
     exports org.uid.ristonino.server.model;
     exports org.uid.ristonino.server.view;
     exports org.uid.ristonino.server;
+    opens org.uid.ristonino.server.model to javafx.fxml;
 }
