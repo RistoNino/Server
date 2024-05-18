@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.uid.ristonino.server.controller.MenuController">
     <children>
-        <Label layoutX="388.0" layoutY="283.0" text="Menu" />
+        <Button text="test query" onAction="#test" fx:id="testButton" mnemonicParsing="false"/>
     </children>
 
 </AnchorPane>

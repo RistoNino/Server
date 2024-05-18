@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.uid.ristonino.server.view.SceneHandler;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class DatabaseHandler {
@@ -19,9 +20,9 @@ public class DatabaseHandler {
     private final String checkPasswordSt = "SELECT Password FROM Users WHERE Username = ?;";
     private final String createUser = "INSERT INTO Users (Username, Password, PrivilegesLevel) VALUES (?, ?, ?);";
     private final String checkUsername = "SELECT Username FROM Users WHERE Username = ?;";
-    private final String getTavoli = "SELECT * FROM Tavoli";
-    private final String getOrdiniDaTavolo = "SELECT o.id, Name, Price FROM Items AS i, Ordini_Items AS oi, Ordini AS o, Tavoli AS t WHERE i.Id = oi.idItems AND oi.idOrdine = o.Id AND o.idTavolo = t.Id AND t.id = ?;";
+    private final String getTavoli = "SELECT * FROM Tables";
 
+    private final String getOrdineDaTavolo = "SELECT o.Id AS OrderId, i.id AS ItemId, Name, oi.Quantity, Price, oi.Note AS ItemNote FROM Items AS i, Orders_Items AS oi, Orders AS o, Tables AS t WHERE i.Id = oi.idItem AND oi.idOrder = o.Id AND o.idTable = t.Id AND t.id = ?;";
 
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
@@ -103,15 +104,37 @@ public class DatabaseHandler {
 
     public Ordine getOrdineByTableId(int id) {
         try {
-            PreparedStatement st = con.prepareStatement(getOrdiniDaTavolo);
+            PreparedStatement st = con.prepareStatement(getOrdineDaTavolo);
             st.setInt(1,id);
             ResultSet rs = st.executeQuery();
-            Ordine ordine = new Ordine(rs.getInt("Id"));
+            Ordine ordine = new Ordine(rs.getInt("OrderId"));
             while (rs.next()) {
-
+                Item i;
+                i = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getDouble("Price"), rs.getString("ItemNote"));
+                ordine.insertItem(i, rs.getInt("Quantity"));
+                System.out.println(i);
             }
+            st.close();
+            return ordine;
         }
         catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+    public ArrayList<Table> getTables() {
+        try {
+            PreparedStatement st = con.prepareStatement(getTavoli);
+            ResultSet rs = st.executeQuery();
+            ArrayList<Table> tables = new ArrayList<>();
+            while (rs.next()) {
+                Table t = new Table(rs.getInt(1), rs.getString(2), rs.getBoolean(3));
+                tables.add(t);
+                System.out.println(t);
+            }
+            return tables;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException();
         }
     }

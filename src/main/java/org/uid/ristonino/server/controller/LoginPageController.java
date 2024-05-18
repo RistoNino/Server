@@ -57,21 +57,26 @@ public class LoginPageController {
 
     @FXML
     public void loginUser(ActionEvent actionEvent) {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-        if (username.isEmpty() || password.isEmpty()) {
-            SceneHandler.getInstance().createErrorMessage("Username and Password cannot be empty");
-        }
-        else {
-            if (db.checkPassword(username,password)) {
-                SceneHandler.getInstance().createHomeScene();
-                System.out.println("Good");
+        if (!Debug.IS_ACTIVE) {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            if (username.isEmpty() || password.isEmpty()) {
+                SceneHandler.getInstance().createErrorMessage("Username and Password cannot be empty");
             }
             else {
-                SceneHandler.getInstance().createErrorMessage("Wrong password");
-                usernameField.clear();
-                passwordField.clear();
+                if (db.checkPassword(username,password)) {
+                    SceneHandler.getInstance().createHomeScene();
+                    System.out.println("Good");
+                }
+                else {
+                    SceneHandler.getInstance().createErrorMessage("Wrong password");
+                    usernameField.clear();
+                    passwordField.clear();
+                }
             }
+        }
+        else {
+            SceneHandler.getInstance().createHomeScene();
         }
     }
 }
