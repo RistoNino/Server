@@ -39,6 +39,7 @@ public class SceneHandler {
     private void applyTheme() {
         this.scene.getStylesheets().clear();
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + theme + "/main.css")).toExternalForm());
+        this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "buttons.css")).toExternalForm());
     }
 
     public void changeTheme(String newTheme) {
@@ -121,5 +122,8 @@ public class SceneHandler {
         return (stage.widthProperty().getValue()*percentage)/100;
     }
 
+    public Scene getScene() {
+        return scene;
+    }
 }
 
