@@ -10,19 +10,28 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.uid.ristonino.server.model.Debug;
 import org.uid.ristonino.server.view.SceneHandler;
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
+import javafx.scene.control.Button;
 
 public class HomePageController implements Initializable{
     private final static String SCENE_PATH = "/org/uid/ristonino/server/";
     private final static String VIEW_PATH = SCENE_PATH + "view/";
 
 
+    @FXML
+    private Button dashButton;
+
+    @FXML
+    private Button menuButton;
+
+    @FXML
+    private Button tavButton;
+
+
+    @FXML
     public AnchorPane sideBar;
 
     @FXML
@@ -36,9 +45,7 @@ public class HomePageController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //sideBar.setMinHeight();
 
-        //Creare funzione per grandezza sidebar
         sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));
         Debug.getInstance().print("Sidebar larghezza: "+sideBar.getPrefWidth());
 
@@ -53,13 +60,40 @@ public class HomePageController implements Initializable{
         }
 
     }
+
+    private void removeButtonState(Button button) {
+        if(button.getStyleClass().contains("buttonHomePressed")){
+            System.out.println("Sono qua");
+            button.getStyleClass().remove("buttonHomePressed");
+
+        }
+
+    }
+
+    private void addButtonState(Button button) {
+        if(!button.getStyleClass().contains("buttonHomePressed"))
+            button.getStyleClass().add("buttonHomePressed");
+    }
+
     public void dashboard() {
+        addButtonState(dashButton);
+        removeButtonState(menuButton);
+        removeButtonState(tavButton);
         homepagePane.setCenter(dashb);
     }
     public void tavoli(){
+        addButtonState(tavButton);
+        removeButtonState(menuButton);
+        removeButtonState(dashButton);
+
         homepagePane.setCenter(table);
     }
     public void menu(){
+        addButtonState(menuButton);
+        removeButtonState(dashButton);
+        removeButtonState(tavButton);
         homepagePane.setCenter(men);
     }
+
+
 }

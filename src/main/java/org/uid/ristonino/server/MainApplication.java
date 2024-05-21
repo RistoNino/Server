@@ -8,7 +8,7 @@ import org.uid.ristonino.server.view.SceneHandler;
 public class MainApplication extends Application {
     DatabaseHandler db = DatabaseHandler.getInstance();
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
         SceneHandler.getInstance().init(primaryStage);
     }
 

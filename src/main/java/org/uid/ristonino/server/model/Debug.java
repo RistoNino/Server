@@ -5,11 +5,11 @@ public class Debug {
     public static final double width = 1200;
     public static final double height = 600;
 
-    private static Debug instance = new Debug();
+    private static final Debug instance = new Debug();
     private Debug() {}
     public static Debug getInstance() {return instance; }
 
-    public void print(String message) {
+    public static void print(String message) {
         if (IS_ACTIVE) {
             System.out.println(message);
         }
