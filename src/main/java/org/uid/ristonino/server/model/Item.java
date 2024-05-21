@@ -12,6 +12,18 @@ public class Item {
     private ArrayList<String> Ingredients = new ArrayList<>();
     private String note;
 
+    public String getName() {
+        return Name;
+    }
+
+    public double getPrice() {
+        return Price;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
     public Item(int id, String name, String description, String imageUrl, int category, ArrayList<String> ingredients) {
         this.Id = id;
         this.Name = name;

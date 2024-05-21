@@ -111,8 +111,9 @@ public class DatabaseHandler {
             while (rs.next()) {
                 Item i;
                 i = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getDouble("Price"), rs.getString("ItemNote"));
+                Debug.print(i+" Quantità"+rs.getInt("Quantity"));
+
                 ordine.insertItem(i, rs.getInt("Quantity"));
-                System.out.println(i);
             }
             st.close();
             return ordine;
@@ -127,10 +128,12 @@ public class DatabaseHandler {
             ResultSet rs = st.executeQuery();
             ArrayList<Table> tables = new ArrayList<>();
             while (rs.next()) {
-                Table t = new Table(rs.getInt(1), rs.getString(2), rs.getBoolean(3));
+                Table t = new Table(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getInt(4), rs.getInt(5));
                 tables.add(t);
-                System.out.println(t);
+                //Debug.print("Qua: "+t);
             }
+            //Debug.print("Qua: "+tables);
+
             return tables;
         }
         catch (SQLException e) {
