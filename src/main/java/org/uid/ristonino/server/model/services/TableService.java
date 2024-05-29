@@ -1,6 +1,5 @@
 package org.uid.ristonino.server.model.services;
 
-import javafx.scene.control.ListView;
 import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.types.Table;
 
