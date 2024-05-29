@@ -1,3 +1,5 @@
+//TODO: Eseguire test e vedere se buttonsVector è realmente necessario.
+
 package org.uid.ristonino.server.view;
 
 import javafx.fxml.FXMLLoader;
