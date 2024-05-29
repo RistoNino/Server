@@ -1,3 +1,5 @@
+//TODO: Riempire gli altri grafici
+
 package org.uid.ristonino.server.controller;
 
 import javafx.beans.binding.Bindings;
@@ -7,12 +9,11 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
-import org.uid.ristonino.server.model.DatabaseHandler;
-import org.uid.ristonino.server.model.Table;
-
+import org.uid.ristonino.server.model.services.TableService;
 import java.util.ArrayList;
 
 public class DashboardController {
+
 
     @FXML
     private LineChart<?, ?> guadagniAnno;
@@ -23,24 +24,17 @@ public class DashboardController {
     @FXML
     private PieChart pieChart=new PieChart();
 
-    private final DatabaseHandler db = DatabaseHandler.getInstance();
+    private final TableService tableService=TableService.getInstance();
 
     public void initialize() {
         this.setPieChart();
-
     }
 
-    //26, 47
     public void setPieChart(){
-        System.out.println("Qua");
-        ArrayList<Table> tables = db.getTables();
-        System.out.println("Qua");
-        int totOc=0;
-        int totPos =0;
-        for (Table table : tables) {
-            totOc += table.getOccupied();
-            totPos += table.getMaxOccupied();
-        }
+        int totOc= tableService.getTotalCoperti();
+
+        int totPos =tableService.getTotalMaxCoperti();
+
         System.out.println("Total occupied: "+totOc);
         System.out.println("Total Liberi: "+ totPos);
         ObservableList<PieChart.Data> pieChartData =
@@ -55,7 +49,5 @@ public class DashboardController {
 
     //Riempire gli altri grafici
     //Inserire tasto che aggiorna i grafici e inserire aggiornamento automatico in base al tempo
-
-
-
 }
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.geometry.Insets?>
+<AnchorPane fx:id="sidebarRight" prefHeight="0.0" prefWidth="0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="org.uid.ristonino.server.controller.SidebarTableController">
+
+    <BorderPane prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <top>
+            <AnchorPane>
+                <Label fx:id="tableText" styleClass="subtitleFont" AnchorPane.leftAnchor="5"
+                       AnchorPane.topAnchor="5"/>
+                <Label fx:id="exit" AnchorPane.rightAnchor="5" AnchorPane.topAnchor="5"
+                       onMouseClicked="#closeSidebar">
+                    <graphic>
+                        <FontIcon iconLiteral="mdi2e-exit-to-app" iconSize="30"/>
+                    </graphic>
+                </Label>
+            </AnchorPane>
+        </top>
+        <left>
+            <Separator orientation="VERTICAL"/>
+        </left>
+
+        <center>
+            <ScrollPane hbarPolicy="NEVER" prefWidth="0.0" fitToWidth="true">
+                <VBox fx:id="orderVBox" prefHeight="0.0" prefWidth="0.0" alignment="CENTER"/>
+            </ScrollPane>
+        </center>
+        <bottom>
+            <Label fx:id="totalText" styleClass="subtitleFont">
+                <padding>
+                    <Insets left="5.0"/>
+                </padding>
+            </Label>
+
+        </bottom>
+        <right>
+         <Separator nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="200.0"
+                    BorderPane.alignment="CENTER"/>
+        </right>
+    </BorderPane>
+</AnchorPane>

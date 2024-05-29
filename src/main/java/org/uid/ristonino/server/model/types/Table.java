@@ -1,6 +1,4 @@
-package org.uid.ristonino.server.model;
-
-import javafx.scene.control.Tab;
+package org.uid.ristonino.server.model.types;
 
 public class Table {
     private int id;
@@ -8,6 +6,8 @@ public class Table {
     private boolean isoccupied;
     private int occupied;
     private int maxOccupied;
+
+    public Table() {}
 
     public Table(int id, String ip, boolean isoccupied, int occupied, int maxOccupied) {
         this.id = id;
@@ -29,34 +29,19 @@ public class Table {
         return ip;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-
     public boolean isIsoccupied() {
         return isoccupied;
-    }
-
-    public void setIsoccupied(boolean isoccupied) {
-        this.isoccupied = isoccupied;
     }
 
     public int getOccupied() {
         return occupied;
     }
 
-    public void setOccupied(int occupied) {
-        this.occupied = occupied;
-    }
 
     public int getMaxOccupied() {
         return maxOccupied;
     }
 
-    public void setMaxOccupied(int maxOccupied) {
-        this.maxOccupied = maxOccupied;
-    }
 
     @Override
     public String toString() {
@@ -68,7 +53,6 @@ public class Table {
                 ", maxOccupied=" + maxOccupied +
                 '}';
     }
-
 
 
 

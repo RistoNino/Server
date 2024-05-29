@@ -1,3 +1,5 @@
+//TODO: Eseguire test e vedere se buttonsVector è realmente necessario.
+
 package org.uid.ristonino.server.view;
 
 import javafx.fxml.FXMLLoader;
@@ -28,20 +30,18 @@ public class SceneHandler {
     private static final SceneHandler instance = new SceneHandler();
     // Va ricordato di essere preso da file / server
     private String theme = "light";
-
     public static SceneHandler getInstance() {
         return instance;
     }
 
     private SceneHandler() {
     }
-
     private void applyTheme() {
         this.scene.getStylesheets().clear();
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + theme + "/main.css")).toExternalForm());
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "buttons.css")).toExternalForm());
+        this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "fonts.css")).toExternalForm());
     }
-
     public void changeTheme(String newTheme) {
         if (newTheme.equals(this.theme)) {
             return;

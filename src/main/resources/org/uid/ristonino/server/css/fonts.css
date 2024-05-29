@@ -1,0 +1,23 @@
+.titleFont{
+    -fx-font-size: 25;
+}
+
+.subtitleFont{
+    -fx-font-size: 20;
+}
+
+.tableFont{
+    -fx-font-size: 15;
+    -fx-font-weight: 800;
+}
+
+.dishFont {
+    -fx-font-size: 12;
+    -fx-font-weight: 700;
+
+}
+
+.noteFont{
+    -fx-font-style: italic;
+    -fx-font-size: 13;
+}
