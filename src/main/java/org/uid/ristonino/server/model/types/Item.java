@@ -1,4 +1,4 @@
-package org.uid.ristonino.server.model;
+package org.uid.ristonino.server.model.types;
 
 import java.util.ArrayList;
 
@@ -42,6 +42,12 @@ public class Item {
     public Item(int id, String name, double Price) {
         this.Id = id;
         this.Name = name;
+        this.Price = Price;
+    }
+
+    public Item(String name, String note, double Price){
+        this.Name = name;
+        this.note= note;
         this.Price = Price;
     }
 
