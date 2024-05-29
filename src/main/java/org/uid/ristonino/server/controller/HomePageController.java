@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.uid.ristonino.server.model.Debug;
+import org.uid.ristonino.server.model.services.OrderService;
+import org.uid.ristonino.server.model.services.TableService;
 import org.uid.ristonino.server.view.SceneHandler;
 import java.io.IOException;
 import java.net.URL;
@@ -42,10 +44,13 @@ public class HomePageController implements Initializable{
     private Parent loadScene(String sc) throws IOException {
         return FXMLLoader.load(Objects.requireNonNull(getClass().getResource(VIEW_PATH + sc)));
     }
+    OrderService orderService = OrderService.getInstance();
+    TableService tableService = TableService.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        orderService.load();
+        tableService.load();
         sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));
         Debug.getInstance().print("Sidebar larghezza: "+sideBar.getPrefWidth());
 
