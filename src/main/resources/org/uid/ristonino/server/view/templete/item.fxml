@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="totalVbox" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="52.0" prefWidth="238.0"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.uid.ristonino.server.controller.ItemTableController">
+    <AnchorPane VBox.vgrow="ALWAYS">
+        <Text fx:id="piattoText" text="Piatto" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0" styleClass="dishFont"/>
+        <Text fx:id="priceText" text="€" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0" styleClass="dishFont"/>
+    </AnchorPane>
+    <AnchorPane VBox.vgrow="ALWAYS">
+        <Text fx:id="noteText" strokeType="OUTSIDE" strokeWidth="0.0" text="Note:" AnchorPane.leftAnchor="5"
+              AnchorPane.topAnchor="0.0" styleClass="noteFont"/>
+
+    </AnchorPane>
+    <Separator AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <padding>
+            <Insets top="2.0"/>
+        </padding>
+    </Separator>
+    <padding>
+        <Insets left="5" top="1"/>
+    </padding>
+</VBox>
