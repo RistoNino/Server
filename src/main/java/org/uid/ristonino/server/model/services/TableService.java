@@ -32,6 +32,7 @@ public class TableService {
     }
 
     public int getNumberOfTables(){
+        update();
         return table.getLast().getId();
     }
 
