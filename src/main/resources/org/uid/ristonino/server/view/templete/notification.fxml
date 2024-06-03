@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<HBox fx:id="paneNotification"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.server.controller.NotificationController"
+            styleClass="border"
+            style="-fx-background-color: rgba(238, 238, 238, 0.80); -fx-background-insets: 5"
+            alignment="CENTER" maxWidth="250" maxHeight="70" spacing="25">
+
+    <Label fx:id="textNotification" styleClass="updateFont"/>
+    <Label fx:id="iconNotification" />
+
+
+
+</HBox>
