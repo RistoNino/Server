@@ -16,8 +16,6 @@ import java.util.Vector;
 public class SceneHandler {
     private Stage stage;
     private Scene scene;
-    public Vector<Button> buttonsVector = new Vector<>();
-
     // Path
     private final static String SCENE_PATH = "/org/uid/ristonino/server/";
     private final static String CSS_PATH = SCENE_PATH + "css/";
@@ -41,6 +39,8 @@ public class SceneHandler {
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + theme + "/main.css")).toExternalForm());
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "buttons.css")).toExternalForm());
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "fonts.css")).toExternalForm());
+        this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "border.css")).toExternalForm());
+
     }
     public void changeTheme(String newTheme) {
         if (newTheme.equals(this.theme)) {
