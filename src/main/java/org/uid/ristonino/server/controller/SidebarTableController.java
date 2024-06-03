@@ -1,5 +1,4 @@
-//TODO: Verificare che i pulsanti siano effettivamente collegati anche se si rimuove un tavolo
-//TODO: Aggiungere tasto per lo scontrino
+//TODO: Creare funzione creaScontrino
 
 package org.uid.ristonino.server.controller;
 
@@ -26,6 +25,9 @@ public class SidebarTableController {
     @FXML
     public VBox orderVBox;
 
+    @FXML
+    public Label payButton;
+
     OrderService orderService = OrderService.getInstance();
     TableService tableService = TableService.getInstance();
 
@@ -45,14 +47,13 @@ public class SidebarTableController {
     @FXML
     public void initialize() {
         closeSidebar();
-        orderService.update();
-        tableService.update();
 
     }
 
     public void openSidebar(int numTav) throws IOException {
         orderVBox.getChildren().clear();
         sidebarRight.setPrefWidth((SceneHandler.getInstance().sideWidht(20)));
+        orderService.update();
         if (sidebarRight != null) {
             tableText.setText("Ordine Tavolo "+numTav+":");
             ArrayList<Pair<Integer, Item>> ord =orderService.getOrder(numTav);
@@ -80,8 +81,6 @@ public class SidebarTableController {
 
             totalText.setText("Totale: €"+(orderService.getTotal(numTav)+((double)nCoperti*prezzoCoperti)));
             sidebarRight.setVisible(true);
-
-
         }
         else{
             System.out.println("sidebarRight is null");
