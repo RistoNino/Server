@@ -6,6 +6,7 @@ module org.uid.ristonino.server {
     requires java.sql;
     requires spring.security.crypto;
     requires spring.core;
+    requires java.desktop;
 
     opens org.uid.ristonino.server to javafx.fxml;
     opens org.uid.ristonino.server.controller to javafx.fxml;

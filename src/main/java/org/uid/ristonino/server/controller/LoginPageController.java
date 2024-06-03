@@ -1,3 +1,5 @@
+//TODO: Sistemare metodi in modo che non comunichino direttamente con il database (tipo classe tavolicontroller).
+
 package org.uid.ristonino.server.controller;
 
 import javafx.event.ActionEvent;
@@ -64,7 +66,7 @@ public class LoginPageController {
                 SceneHandler.getInstance().createErrorMessage("Username and Password cannot be empty");
             }
             else {
-                if (db.checkPassword(username,password)) {
+                if (db.checkPassword(username,password)){
                     SceneHandler.getInstance().createHomeScene();
                     System.out.println("Good");
                 }
