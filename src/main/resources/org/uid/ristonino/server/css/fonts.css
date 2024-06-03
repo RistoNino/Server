@@ -20,4 +20,21 @@
 .noteFont{
     -fx-font-style: italic;
     -fx-font-size: 13;
+
+}
+
+.updateFont {
+    -fx-font-size: 18;
+    -fx-font-weight: 800;
+}
+
+.totalFont {
+    -fx-font-size: 17;
+    -fx-font-weight: 700;
+
+}
+
+.pagaFont {
+    -fx-font-size: 14;
+    -fx-font-weight: 700;
 }
