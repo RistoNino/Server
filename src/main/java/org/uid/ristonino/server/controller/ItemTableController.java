@@ -18,7 +18,7 @@ public class ItemTableController {
     public Text noteText;
 
     public VBox setItem(String nomePiatto, String notePiatto, double prezzoPiatto, int quantity){
-
+        noteText.setWrappingWidth(170);
         piattoText.setText(quantity+"x "+nomePiatto);
         noteText.setText(notePiatto);
         priceText.setText("€ "+prezzoPiatto+" cad.");
