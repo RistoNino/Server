@@ -1,3 +1,5 @@
+//TODO: Cambiare da arraylist a vector (in caso avessimo bisogno di thread)
+
 package org.uid.ristonino.server.model.services;
 import javafx.util.Pair;
 import org.uid.ristonino.server.model.DatabaseHandler;
