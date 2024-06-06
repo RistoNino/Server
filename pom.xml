@@ -65,6 +65,12 @@
             <artifactId>spring-security-core</artifactId>
             <version>6.2.4</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.vertx/vertx-core -->
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-core</artifactId>
+            <version>4.5.8</version>
+        </dependency>
 
         <dependency>
             <groupId>org.kordamp.ikonli</groupId>

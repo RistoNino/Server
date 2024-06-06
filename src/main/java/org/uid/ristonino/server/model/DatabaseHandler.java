@@ -3,6 +3,7 @@
 package org.uid.ristonino.server.model;
 
 
+import javafx.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
@@ -12,6 +13,8 @@ import org.uid.ristonino.server.model.types.Table;
 import org.uid.ristonino.server.view.SceneHandler;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseHandler {
@@ -27,9 +30,11 @@ public class DatabaseHandler {
     private final String createUser = "INSERT INTO Users (Username, Password, PrivilegesLevel) VALUES (?, ?, ?);";
     private final String checkUsername = "SELECT Username FROM Users WHERE Username = ?;";
     private final String getTavoli = "SELECT * FROM Tables";
-
+    private final String getCategories = "SELECT * FROM Categories";
+    private final String getItems = "SELECT * FROM Items";
     private final String getOrdineDaTavolo = "SELECT o.Id AS OrderId, i.id AS ItemId, Name, oi.Quantity, Price, oi.Note AS ItemNote FROM Items AS i, Orders_Items AS oi, Orders AS o, Tables AS t WHERE i.Id = oi.idItem AND oi.idOrder = o.Id AND o.idTable = t.Id;";
-
+    private final String getIngredientsByItemId = "SELECT Name FROM Ingredients INNER JOIN Items_Ingredients on Ingredients.Id = Items_Ingredients.Ingredient_Id WHERE Items_Ingredients.Item_Id = ?;"
+    private final String getFlags = "SELECT * FROM Flags;";
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
 
@@ -142,6 +147,49 @@ public class DatabaseHandler {
             //System.out.println(tableService);
 
         }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Item> getAllItems() {
+        try {
+            ArrayList<Item> items = new ArrayList<>();
+            PreparedStatement st = con.prepareStatement(getItems);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Item i = new Item(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
+                items.add(i);
+            }
+            return items;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Pair<Integer,String>> getAllCategories() {
+        try {
+            ArrayList<Pair<Integer,String>> categories = new ArrayList<>();
+            PreparedStatement st = con.prepareStatement(getCategories);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Pair<Integer,String> c = new Pair<>(rs.getInt(1),rs.getString(2));
+                categories.add(c);
+            }
+            return categories;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<String> getIngredientsByItemId(int itemId) {
+        try {
+            ArrayList<String> ingredients = new ArrayList<>();
+            PreparedStatement st = con.prepareStatement(getIngredientsByItemId);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                ingredients.add(rs.getString(1));
+            }
+            return ingredients;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
