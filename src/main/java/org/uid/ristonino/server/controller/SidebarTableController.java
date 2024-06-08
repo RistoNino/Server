@@ -6,13 +6,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.view.SceneHandler;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +30,15 @@ public class SidebarTableController {
 
     @FXML
     public Label payButton;
+
+    @FXML
+    public Label iconExit;
+
+    @FXML
+    public ScrollPane scrollPaneOrder;
+
+    @FXML
+    public BorderPane borderPaneSidebar;
 
     OrderService orderService = OrderService.getInstance();
     TableService tableService = TableService.getInstance();
@@ -46,8 +58,22 @@ public class SidebarTableController {
 
     @FXML
     public void initialize() {
-        closeSidebar();
+    }
 
+
+    void setExitIcon(){
+        FontIcon icon=new FontIcon("mdi2e-exit-to-app");
+        icon.setIconSize(30);
+        iconExit.setGraphic(icon);
+        iconExit.setOnMouseClicked(event -> {
+            TavoliController.getInstance().closeSidebar();
+        });
+    }
+
+    void setPayButton(){
+        FontIcon icon=new FontIcon("mdi2c-cash-register");
+        icon.setIconSize(30);
+        payButton.setGraphic(icon);
     }
 
     public void openSidebar(int numTav) throws IOException {
@@ -80,17 +106,12 @@ public class SidebarTableController {
 
 
             totalText.setText("Totale: €"+(orderService.getTotal(numTav)+((double)nCoperti*prezzoCoperti)));
-            sidebarRight.setVisible(true);
+            setExitIcon();
+            setPayButton();
+
         }
         else{
             System.out.println("sidebarRight is null");
         }
-    }
-
-    public void closeSidebar(){
-        tableText.setText("");
-        totalText.setText("");
-        sidebarRight.setPrefWidth(0);
-        sidebarRight.setVisible(false);
     }
 }

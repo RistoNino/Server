@@ -1,18 +1,18 @@
 //TODO: Aggiornare tavoli ogni tot secondi
 //TODO: Sistemare i font e l'interfaccia in generale
-
+//TODO: Sistemare tasto aggiorna tavoli, posizionare altrove in un posto fisso
+//TODO: Verificare che quando si chiama getinstance, l'istanza richiamata sia effettivamente un singleton. IMPORTANTE IMPORTANTE
 package org.uid.ristonino.server.controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.server.model.services.TableService;
 
@@ -24,25 +24,28 @@ public class TavoliController {
     public StackPane tavoliStackPane;
 
     @FXML
+    public BorderPane borderPaneTavoli;
+
+    @FXML
     private FlowPane tavoliFlow;
 
     private boolean notification=false; //Usato per attivare o disattivare le eventuali notifiche sulla scena
     private boolean isActive=true;
-    public static TavoliController instance;
+    private static TavoliController instance=null;
 
-    public static TavoliController getInstance(){
-        if(instance == null){
-            instance = new TavoliController();
-        }
+    public TavoliController(){instance=this;} //Classe singleton
+
+    public static TavoliController getInstance() {
         return instance;
     }
 
     private final TableService table=TableService.getInstance();
-    private final TableService order=TableService.getInstance();
 
 
-    public void initialize() {
+    public void initialize() throws IOException {
         loadTavoli();
+        System.out.println("initialize chiamato in TavoliController");
+        System.out.println("borderPaneTavoli: " + borderPaneTavoli);
         notification=true;
     }
 
@@ -90,14 +93,15 @@ public class TavoliController {
 
         }
 
-    }
 
+
+    }
 
 
     public Label addUpdateLabel(){
         Label label = new Label();
         FontIcon updateIcon = new FontIcon("mdi2u-update");
-        updateIcon.setIconSize(30);
+        updateIcon.setIconSize(50);
         if(isActive)
             label.setOnMouseClicked(event -> {
                 loadTavoli();
@@ -109,5 +113,17 @@ public class TavoliController {
         return label;
     }
 
+    void openSidebar(int numTav) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/sidebarTable.fxml"));
+        Parent rightPane = loader.load();
+        SidebarTableController controller = loader.getController();
+        controller.openSidebar(numTav);
+        this.borderPaneTavoli.setRight(rightPane);
+
+    }
+
+    void closeSidebar() {
+        borderPaneTavoli.setRight(null);
+    }
 
 }

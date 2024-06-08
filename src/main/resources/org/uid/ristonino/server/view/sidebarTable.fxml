@@ -10,17 +10,15 @@
             fx:controller="org.uid.ristonino.server.controller.SidebarTableController">
 
     <BorderPane prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-                AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
+                fx:id="borderPaneSidebar">
         <top>
             <AnchorPane>
                 <Label fx:id="tableText" styleClass="subtitleFont" AnchorPane.leftAnchor="5"
-                       AnchorPane.topAnchor="5"/>
-                <Label fx:id="exit" AnchorPane.rightAnchor="5" AnchorPane.topAnchor="5"
-                       onMouseClicked="#closeSidebar">
-                    <graphic>
-                        <FontIcon iconLiteral="mdi2e-exit-to-app" iconSize="30"/>
-                    </graphic>
-                </Label>
+                       AnchorPane.topAnchor="5" />
+
+                <Label fx:id="iconExit" AnchorPane.rightAnchor="5" AnchorPane.topAnchor="5"
+                        />
             </AnchorPane>
         </top>
         <left>
@@ -28,7 +26,7 @@
         </left>
 
         <center>
-            <ScrollPane hbarPolicy="NEVER" prefWidth="0.0" fitToWidth="true">
+            <ScrollPane fx:id="scrollPaneOrder" hbarPolicy="NEVER" fitToWidth="true">
                 <VBox fx:id="orderVBox" prefHeight="0.0" prefWidth="0.0" alignment="CENTER"/>
             </ScrollPane>
         </center>
@@ -36,11 +34,8 @@
             <AnchorPane>
                 <Label fx:id="totalText" styleClass="totalFont" AnchorPane.bottomAnchor="5" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="5" />
 
-                <Label fx:id="payButton" text="PAGA" styleClass="pagaFont, border" AnchorPane.bottomAnchor="5" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="5"
+                <Label fx:id="payButton" styleClass="pagaFont, border" AnchorPane.bottomAnchor="5" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="5"
                         style="-fx-padding: 0 5 0 5">
-                    <graphic>
-                        <FontIcon iconLiteral="mdi2c-cash-register" iconSize="30"/>
-                    </graphic>
                 </Label>
             </AnchorPane>
 
