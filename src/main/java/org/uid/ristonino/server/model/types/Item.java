@@ -31,6 +31,14 @@ public class Item {
         return note;
     }
 
+    public int getCategory() {
+        return Category;
+    }
+
+    public void setCategory(int category) {
+        Category = category;
+    }
+
     public ArrayList<String> getIngredients() {
         return Ingredients;
     }
