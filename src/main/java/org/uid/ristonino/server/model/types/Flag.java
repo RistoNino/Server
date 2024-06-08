@@ -3,12 +3,12 @@ package org.uid.ristonino.server.model.types;
 public class Flag {
     int Id;
     String Name;
-    String pathImage;
+    String Image;
 
-    public Flag(int id, String name, String pathImage) {
-        Id = id;
-        Name = name;
-        this.pathImage = pathImage;
+    public Flag(int id, String name, String Image) {
+        this.Id = id;
+        this.Name = name;
+        this.Image = Image;
     }
 
     public int getId() {
@@ -27,11 +27,11 @@ public class Flag {
         Name = name;
     }
 
-    public String getPathImage() {
-        return pathImage;
+    public String getImage() {
+        return Image;
     }
 
-    public void setPathImage(String pathImage) {
-        this.pathImage = pathImage;
+    public void setImage(String image) {
+        this.Image = image;
     }
 }

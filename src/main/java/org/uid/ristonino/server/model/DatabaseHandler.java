@@ -208,6 +208,7 @@ public class DatabaseHandler {
                 Flag f = new Flag(rs.getInt(1),rs.getString(2), rs.getString(3));
                 flags.add(f);
             }
+            System.out.println(flags);
             return flags;
         } catch (SQLException e) {
             throw new RuntimeException(e);
