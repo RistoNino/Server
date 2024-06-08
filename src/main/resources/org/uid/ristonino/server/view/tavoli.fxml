@@ -3,22 +3,17 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uid.ristonino.server.controller.TavoliController" >
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uid.ristonino.server.controller.TavoliController" fx:id="borderPaneTavoli" >
    <top>
       <Text text="Tavoli" BorderPane.alignment="CENTER" styleClass="titleFont"/>
    </top>
 
    <center>
-      <StackPane fx:id="tavoliStackPane" alignment="BOTTOM_CENTER">
+      <StackPane fx:id="tavoliStackPane" alignment="BOTTOM_CENTER" style="-fx-background-color: #fafa">
          <AnchorPane>
             <FlowPane fx:id="tavoliFlow" hgap="15" vgap="15" AnchorPane.topAnchor="5" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="5" AnchorPane.bottomAnchor="0"/>
          </AnchorPane>
       </StackPane>
    </center>
-
-   <right>
-      <fx:include source="sidebarTable.fxml"/>
-   </right>
-
 
 </BorderPane>

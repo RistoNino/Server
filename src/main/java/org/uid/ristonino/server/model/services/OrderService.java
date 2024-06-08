@@ -15,6 +15,7 @@ public class OrderService {
     private static OrderService instance;
 
     public static OrderService getInstance() {
+
         if (instance == null) {
             instance = new OrderService();
         }
@@ -27,6 +28,7 @@ public class OrderService {
     private int idOrder;
 
     public OrderService() {}
+
     public void load(){
         db.loadOrders();
     }

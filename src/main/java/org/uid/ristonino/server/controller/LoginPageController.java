@@ -1,5 +1,4 @@
 //TODO: Sistemare metodi in modo che non comunichino direttamente con il database (tipo classe tavolicontroller).
-
 package org.uid.ristonino.server.controller;
 
 import javafx.event.ActionEvent;

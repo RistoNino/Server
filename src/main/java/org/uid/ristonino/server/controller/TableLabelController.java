@@ -1,10 +1,12 @@
 package org.uid.ristonino.server.controller;
 
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
+import  javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -27,14 +29,16 @@ public class TableLabelController {
         labIcon.setGraphic(tableIcon);
         labCop.setText("Tavolo: "+numTav);
         vboxTable.setId(String.valueOf(numTav));
-        vboxTable.setOnMouseClicked(event -> {
+        vboxTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-            try {
-                SidebarTableController.getInstance().openSidebar(numTav);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            @Override
+            public void handle(MouseEvent t) {
+                try {
+                    TavoliController.getInstance().openSidebar(numTav);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-
         });
         return vboxTable;
     }

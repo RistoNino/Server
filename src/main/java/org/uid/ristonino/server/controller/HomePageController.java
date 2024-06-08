@@ -49,6 +49,7 @@ public class HomePageController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addButtonState(dashButton);
         orderService.load();
         tableService.load();
         sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));

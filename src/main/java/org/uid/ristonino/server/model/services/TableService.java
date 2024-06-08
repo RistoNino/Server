@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class TableService {
     private ArrayList<Table> table=new ArrayList<>();
 
-    private static TableService instance;
+    private static TableService instance=null;
 
     public static TableService getInstance(){
         if(instance==null){

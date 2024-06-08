@@ -29,7 +29,9 @@ public class NotificationController {
     public HBox paneNotification;
 
 
-    static NotificationController instance;
+    static NotificationController instance=null;
+
+
     public static NotificationController getInstance() {
         if (instance == null) {
             instance = new NotificationController();
