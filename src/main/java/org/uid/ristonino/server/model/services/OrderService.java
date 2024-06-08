@@ -2,11 +2,13 @@
 
 package org.uid.ristonino.server.model.services;
 import javafx.util.Pair;
+import io.vertx.core.Future;
 import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.model.types.Ordine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderService {
 
@@ -19,13 +21,13 @@ public class OrderService {
         return instance;
     }
 
+    private ArrayList<Pair<Integer, Ordine>> ordini = new ArrayList<>();
+    private final DatabaseHandler db = DatabaseHandler.getInstance();
 
-    private ArrayList<Pair<Integer, Ordine>> ordini= new ArrayList<>();
     private int idOrder;
 
     public OrderService() {}
     public void load(){
-        DatabaseHandler db=DatabaseHandler.getInstance();
         db.loadOrders();
     }
 
@@ -38,17 +40,11 @@ public class OrderService {
         ordini.add(new Pair<>(idOrder, ord));
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
-    }
-
-
-    @Override
-    public String toString() {
-        return "OrderService{" +
-                ", ordini=" + ordini +
-                '}';
-    }
+//    public Future<Ordine> addOrderAPI(Ordine ord) {
+//        db.createOrder(ord);
+//
+//        return Future.succeededFuture();
+//    }
 
     public ArrayList<Pair<Integer, Item>> getOrder(int id) {
         ArrayList<Pair <Integer, Item>> ord = new ArrayList<>();
@@ -77,6 +73,15 @@ public class OrderService {
         return tot;
     }
 
+    public void setIdOrder(int idOrder) {
+        this.idOrder = idOrder;
+    }
 
+    @Override
+    public String toString() {
+        return "OrderService{" +
+                ", ordini=" + ordini +
+                '}';
+    }
 
 }

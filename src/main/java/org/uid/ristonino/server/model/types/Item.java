@@ -3,8 +3,6 @@ package org.uid.ristonino.server.model.types;
 import java.util.ArrayList;
 
 public class Item {
-
-
     private int Id;
     private String Name;
     private String Description;

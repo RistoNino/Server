@@ -8,6 +8,8 @@ module org.uid.ristonino.server {
     requires spring.core;
     requires java.desktop;
     requires io.vertx.core;
+    requires io.vertx.web;
+    requires com.fasterxml.jackson.databind;
 
     opens org.uid.ristonino.server to javafx.fxml;
     opens org.uid.ristonino.server.controller to javafx.fxml;

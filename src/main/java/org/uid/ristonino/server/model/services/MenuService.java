@@ -1,31 +1,34 @@
 package org.uid.ristonino.server.model.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.core.Future;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
 import javafx.util.Pair;
 import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.types.Flag;
 import org.uid.ristonino.server.model.types.Item;
+import org.uid.ristonino.server.model.types.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class MenuService {
-    private final ArrayList<Pair<Integer, String>> categories = new ArrayList<>();
-    private final ArrayList<Flag> flags = new ArrayList<>();
-    private final ArrayList<Item> items = new ArrayList<>();
-    private final DatabaseHandler db = DatabaseHandler.getInstance();
+
+    private final Menu m;
     public MenuService() {
-        categories.addAll(db.getAllCategories());
-        // ricevi flags
-        items.addAll(db.getAllItems());
-        for (int i = 0; i < items.size(); i++) {
-            int id = items.get(i).getId();
-            ArrayList<String> ingredients = db.getIngredientsByItemId(id);
-            items.get(i).setIngredients(ingredients);
-        }
+        m = new Menu();
     }
-    public Future<List<Item>> getAllItems() {
-        return Future.succeededFuture(items);
+    public Future<JsonObject> getAllItems() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String jsonString = mapper.writeValueAsString(m);
+            JsonObject j = new JsonObject(jsonString);
+            return Future.succeededFuture(j);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

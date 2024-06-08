@@ -7,6 +7,7 @@ import javafx.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
+import org.uid.ristonino.server.model.types.Flag;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.model.types.Ordine;
 import org.uid.ristonino.server.model.types.Table;
@@ -33,8 +34,11 @@ public class DatabaseHandler {
     private final String getCategories = "SELECT * FROM Categories";
     private final String getItems = "SELECT * FROM Items";
     private final String getOrdineDaTavolo = "SELECT o.Id AS OrderId, i.id AS ItemId, Name, oi.Quantity, Price, oi.Note AS ItemNote FROM Items AS i, Orders_Items AS oi, Orders AS o, Tables AS t WHERE i.Id = oi.idItem AND oi.idOrder = o.Id AND o.idTable = t.Id;";
-    private final String getIngredientsByItemId = "SELECT Name FROM Ingredients INNER JOIN Items_Ingredients on Ingredients.Id = Items_Ingredients.Ingredient_Id WHERE Items_Ingredients.Item_Id = ?;"
+    private final String getIngredientsByItemId = "SELECT Name FROM Ingredients INNER JOIN Items_Ingredients on Ingredients.Id = Items_Ingredients.Ingredient_Id WHERE Items_Ingredients.Item_Id = ?;";
     private final String getFlags = "SELECT * FROM Flags;";
+    private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
+
+
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
 
@@ -184,6 +188,7 @@ public class DatabaseHandler {
         try {
             ArrayList<String> ingredients = new ArrayList<>();
             PreparedStatement st = con.prepareStatement(getIngredientsByItemId);
+            st.setInt(1,itemId);
             ResultSet rs = st.executeQuery();
             while(rs.next()){
                 ingredients.add(rs.getString(1));
@@ -194,4 +199,34 @@ public class DatabaseHandler {
         }
     }
 
+    public ArrayList<Flag> getFlags() {
+        try {
+            ArrayList<Flag> flags = new ArrayList<>();
+            PreparedStatement st = con.prepareStatement(getFlags);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Flag f = new Flag(rs.getInt(1),rs.getString(2), rs.getString(3));
+                flags.add(f);
+            }
+            return flags;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+//    public Boolean createOrder(Ordine ord) {
+//        try {
+//            PreparedStatement st = con.prepareStatement(createOrder, Statement.RETURN_GENERATED_KEYS);
+//            st.setInt(1,ord.getIdTavolo());
+//            st.setString(2,ord.getNotes());
+//            if (st.executeUpdate() > 0) {
+//                ResultSet rs = st.getGeneratedKeys();
+//                rs.next();
+//                ord.setIdOrdine(rs.getInt(1));
+//
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
