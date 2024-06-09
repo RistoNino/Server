@@ -5,9 +5,13 @@ package org.uid.ristonino.server.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import org.uid.ristonino.server.model.Debug;
 import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
@@ -22,6 +26,12 @@ public class HomePageController implements Initializable{
     private final static String SCENE_PATH = "/org/uid/ristonino/server/";
     private final static String VIEW_PATH = SCENE_PATH + "view/";
 
+
+    @FXML
+    public StackPane stackPaneHome;
+
+    @FXML
+    public ImageView logoImage;
 
     @FXML
     private Button dashButton;
@@ -39,6 +49,14 @@ public class HomePageController implements Initializable{
     @FXML
     private BorderPane homepagePane;
 
+    private static HomePageController instance=null;
+
+    public HomePageController(){instance=this;} //Classe singleton
+
+    public static HomePageController getInstance() {
+        return instance;
+    }
+
     public Parent dashb, table, men;
 
     private Parent loadScene(String sc) throws IOException {
@@ -50,11 +68,19 @@ public class HomePageController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addButtonState(dashButton);
+
         orderService.load();
+
         tableService.load();
         sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));
         Debug.getInstance().print("Sidebar larghezza: "+sideBar.getPrefWidth());
 
+        stackPaneHome.setOnMouseClicked(event -> {
+            Node node = (Node) event.getTarget();
+            if (node.getId() != null && node.getId().equals("impostazioniBorder")) {
+                closeImp();
+            }
+        });
         try {
             dashb=loadScene("dashboard.fxml");
             table=loadScene("tavoli.fxml");
@@ -100,6 +126,22 @@ public class HomePageController implements Initializable{
         removeButtonState(tavButton);
         homepagePane.setCenter(men);
     }
+
+    public void impostazioni(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/impostazioni.fxml"));
+            Node notification=loader.load();
+            stackPaneHome.getChildren().add(notification);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void closeImp(){
+        stackPaneHome.getChildren().removeLast();
+    }
+
+
 
 
 }
