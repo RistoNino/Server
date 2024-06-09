@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.server.controller.ImpostazioniController"
+            styleClass="background" fx:id="impostazioniBorder" >
+    <center>
+        <AnchorPane maxHeight="50" maxWidth="300" styleClass="backgroundImp, border" >
+            <HBox AnchorPane.leftAnchor="15" AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="15" alignment="CENTER">
+                <Label text="Inserisci Logo: " styleClass="subtitleFont"/>
+                <Button text="LOGO" onMouseClicked="#addLogo" />
+            </HBox>
+
+        </AnchorPane>
+
+    </center>
+
+
+</BorderPane>
