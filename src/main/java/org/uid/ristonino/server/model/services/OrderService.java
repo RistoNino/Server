@@ -1,5 +1,5 @@
 //TODO: Cambiare da arraylist a vector (in caso avessimo bisogno di thread)
-
+//TODO: Lasciare solo conti aperti e conti pagati
 package org.uid.ristonino.server.model.services;
 import javafx.util.Pair;
 import io.vertx.core.Future;
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderService {
+    private int ordiniTotaliPagati;
+    private int ordiniTotaliNonPagati;
+
 
     private static OrderService instance;
 
@@ -78,6 +81,23 @@ public class OrderService {
     public void setIdOrder(int idOrder) {
         this.idOrder = idOrder;
     }
+
+    public void setTotalOrderPagati(int tot){
+        ordiniTotaliPagati=tot;
+    }
+
+    public int getTotalOrderPagati() {
+        return ordiniTotaliPagati;
+    }
+
+    public void setTotalOrderNonPagati(int tot){
+        ordiniTotaliNonPagati=tot;
+    }
+
+    public int getTotalOrderNonPagati() {
+        return ordiniTotaliNonPagati;
+    }
+
 
     @Override
     public String toString() {
