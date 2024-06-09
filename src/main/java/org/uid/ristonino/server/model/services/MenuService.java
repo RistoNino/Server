@@ -18,8 +18,19 @@ import java.util.Locale;
 public class MenuService {
 
     private final Menu m;
+    private final DatabaseHandler db = DatabaseHandler.getInstance();
+
     public MenuService() {
         m = new Menu();
+        m.setCategories(db.getAllCategories());
+        m.setFlags(db.getFlags());
+        m.setItems(db.getAllItems());
+        for (int i = 0; i < m.getItems().size(); i++) {
+            int id = m.getItems().get(i).getId();
+            ArrayList<String> ingredients = db.getIngredientsByItemId(id);
+            m.getItems().get(i).setIngredients(ingredients);
+            // da imagepath a base64 encoded
+        }
     }
     public Future<JsonObject> getAllItems() {
         ObjectMapper mapper = new ObjectMapper();

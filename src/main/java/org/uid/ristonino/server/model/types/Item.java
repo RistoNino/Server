@@ -6,12 +6,9 @@ public class Item {
     private int Id;
     private String Name;
     private String Description;
-    private String ImageUrl;
+    private String Image;
     private int Category;
     private double Price;
-
-
-
     private ArrayList<String> Ingredients = new ArrayList<>();
     private String note;
 
@@ -31,6 +28,14 @@ public class Item {
         return note;
     }
 
+    public int getCategory() {
+        return Category;
+    }
+
+    public void setCategory(int category) {
+        Category = category;
+    }
+
     public ArrayList<String> getIngredients() {
         return Ingredients;
     }
@@ -38,12 +43,27 @@ public class Item {
     public void setIngredients(ArrayList<String> ingredients) {
         Ingredients = ingredients;
     }
+    public String getDescription() {
+        return Description;
+    }
 
-    public Item(int id, String name, String description, String imageUrl, int category, ArrayList<String> ingredients) {
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    public Item(int id, String name, String description, String image, int category, ArrayList<String> ingredients) {
         this.Id = id;
         this.Name = name;
         this.Description = description;
-        this.ImageUrl = imageUrl;
+        this.Image = image;
         this.Category = category;
         this.Ingredients = ingredients;
     }
@@ -54,12 +74,12 @@ public class Item {
         this.Price = Price;
         this.note = Note;
     }
-    public Item(int id, String name, String description, String imageUrl, double Price, int category) {
+    public Item(int id, String name, String description, String image, double Price, int category) {
         this.Id = id;
         this.Name = name;
         this.Description = description;
         this.Price = Price;
-        this.ImageUrl = imageUrl;
+        this.Image = image;
         this.Category = category;
     }
 
@@ -79,7 +99,7 @@ public class Item {
                 "Id=" + Id +
                 ", Name='" + Name + '\'' +
                 ", Description='" + Description + '\'' +
-                ", ImageUrl='" + ImageUrl + '\'' +
+                ", ImageUrl='" + Image + '\'' +
                 ", Category=" + Category +
                 ", Price=" + Price +
                 ", Ingredients=" + Ingredients +

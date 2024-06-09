@@ -5,8 +5,6 @@ module org.uid.ristonino.server {
     requires org.kordamp.ikonli.javafx;
     requires java.sql;
     requires spring.security.crypto;
-    requires spring.core;
-    requires java.desktop;
     requires io.vertx.core;
     requires io.vertx.web;
     requires com.fasterxml.jackson.databind;
@@ -18,6 +16,4 @@ module org.uid.ristonino.server {
     exports org.uid.ristonino.server.view;
     exports org.uid.ristonino.server;
     opens org.uid.ristonino.server.model to javafx.fxml;
-    exports org.uid.ristonino.server.model.types;
-    opens org.uid.ristonino.server.model.types to javafx.fxml;
 }
