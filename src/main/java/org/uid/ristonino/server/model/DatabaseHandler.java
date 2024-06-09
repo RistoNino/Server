@@ -15,7 +15,6 @@ import org.uid.ristonino.server.view.SceneHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class DatabaseHandler {
@@ -37,12 +36,17 @@ public class DatabaseHandler {
     private final String getIngredientsByItemId = "SELECT Name FROM Ingredients INNER JOIN Items_Ingredients on Ingredients.Id = Items_Ingredients.Ingredient_Id WHERE Items_Ingredients.Item_Id = ?;";
     private final String getFlags = "SELECT * FROM Flags;";
     private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
+    private final String getOrdiniPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 1;";
+    private final String getOrdiniNonPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 0;";
 
+
+    OrderService allOrders;
 
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
 
     // classe singleton
+
     private static DatabaseHandler instance = new DatabaseHandler();
     private DatabaseHandler() {}
     public static DatabaseHandler getInstance() {return instance; }
@@ -102,6 +106,8 @@ public class DatabaseHandler {
         }
     }
 
+
+
     public Boolean checkPassword(String username, String passwordInput) {
         try {
             PreparedStatement st = con.prepareStatement(checkPasswordSt);
@@ -119,9 +125,9 @@ public class DatabaseHandler {
 
     public void loadOrders() {
         try {
+            allOrders=OrderService.getInstance();
             PreparedStatement st = con.prepareStatement(getOrdineDaTavolo);
             ResultSet rs = st.executeQuery();
-            OrderService allOrders= OrderService.getInstance();
             Ordine ordine;
             while (rs.next()) {
                 ordine=new Ordine();
@@ -130,7 +136,24 @@ public class DatabaseHandler {
                 ordine.insertItem(i, rs.getInt("Quantity"));
                 allOrders.setIdOrder(rs.getInt("OrderId"));
                 allOrders.addOrder(ordine);
+
+
             }
+            st = con.prepareStatement(getOrdiniPagati);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                allOrders.setTotalOrderPagati(rs.getInt(1));
+            }
+
+            st = con.prepareStatement(getOrdiniNonPagati);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                allOrders.setTotalOrderNonPagati(rs.getInt(1));
+            }
+
+
+
+
             //System.out.println(allOrders);
             st.close();
         }
@@ -138,6 +161,8 @@ public class DatabaseHandler {
             throw new RuntimeException();
         }
     }
+
+
 
     public void loadTable(){
         try{
