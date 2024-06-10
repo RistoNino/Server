@@ -8,33 +8,39 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="homepagePane" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.HomePageController">
-   <left>
-      <AnchorPane fx:id="sideBar" prefHeight="600.0" prefWidth="240.0" BorderPane.alignment="CENTER">
-         <VBox alignment="TOP_CENTER" prefHeight="538.0" prefWidth="240.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
-            <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@CASCINAdEV.png" />
-            </ImageView>
-            <Button fx:id="dashButton" mnemonicParsing="false" onAction="#dashboard" prefHeight="31.0" prefWidth="300.0" styleClass="buttonHome" text="Dashboard">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="tavButton" mnemonicParsing="false" onAction="#tavoli" prefHeight="31.0" prefWidth="300.0" styleClass="buttonHome" text="Tavoli">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="menuButton" mnemonicParsing="false" onAction="#menu" prefHeight="31.0" prefWidth="300.0" styleClass="buttonHome" text="Menu">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Button>
-         </VBox>
-         <Button layoutX="5.0" layoutY="536.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="234.0" styleClass="buttonHome" text="Impostazioni" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="0.0" />
-      </AnchorPane>
-   </left>
-   <center>
-      <AnchorPane prefHeight="600.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
-   </center>
-</BorderPane>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.HomePageController" fx:id="stackPaneHome">
+   <BorderPane fx:id="homepagePane" >
+      <left>
+         <AnchorPane fx:id="sideBar" prefHeight="600.0" prefWidth="240.0" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="538.0" prefWidth="240.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+               <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@LogoNonDefinito.png" />
+               </ImageView>
+
+
+               <Button fx:id="dashButton" mnemonicParsing="false" onAction="#dashboard" prefHeight="31.0" prefWidth="300.0" styleClass="buttonHome" text="Dashboard">
+                  <VBox.margin>
+                     <Insets bottom="5.0" top="5.0" />
+                  </VBox.margin>
+               </Button>
+               <Button fx:id="tavButton" mnemonicParsing="false" onAction="#tavoli" prefHeight="31.0" prefWidth="300.0" styleClass="buttonHome" text="Tavoli">
+                  <VBox.margin>
+                     <Insets bottom="5.0" />
+                  </VBox.margin>
+               </Button>
+               <Button fx:id="menuButton" mnemonicParsing="false" onAction="#menu" prefHeight="31.0" prefWidth="300.0" styleClass="buttonHome" text="Menu">
+                  <VBox.margin>
+                     <Insets bottom="5.0" />
+                  </VBox.margin>
+               </Button>
+            </VBox>
+            <Button layoutX="5.0" onAction="#impostazioni" layoutY="536.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="234.0" styleClass="buttonHome" text="Impostazioni" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="0.0" />
+         </AnchorPane>
+      </left>
+      <center>
+         <AnchorPane prefHeight="600.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
+      </center>
+   </BorderPane>
+</StackPane>
