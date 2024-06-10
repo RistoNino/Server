@@ -25,12 +25,12 @@ public class OrderService {
     private ArrayList<Pair<Integer, Ordine>> ordini = new ArrayList<>();
     private final DatabaseHandler db = DatabaseHandler.getInstance();
 
-    private int idOrder;
+    private int idTavolo;
 
     public OrderService() {}
 
     public void load(){
-        db.loadOrders();
+        db.loadOrderNew();
     }
 
     public void update(){
@@ -39,7 +39,7 @@ public class OrderService {
     }
 
     public void addOrder(Ordine ord) {
-        ordini.add(new Pair<>(idOrder, ord));
+        ordini.add(new Pair<>(idTavolo, ord));
     }
 
     public Future<Ordine> saveOrder(Ordine ord) {
@@ -52,13 +52,14 @@ public class OrderService {
     public ArrayList<Pair<Integer, Item>> getOrder(int id) {
         ArrayList<Pair <Integer, Item>> ord = new ArrayList<>();
         for (Pair<Integer, Ordine> ordini : ordini) {
+
             if (ordini.getKey() == id) {
+
                 int quantity=ordini.getValue().getListaOrdine().getFirst().getKey();
                 String nomePiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getName();
                 String notePiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getNotes();
                 double prezzoPiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getPrice();
                 ord.add(new Pair<>(quantity, new Item(nomePiatto, notePiatto, prezzoPiatto)));
-
             }
         }
         return ord;
@@ -76,8 +77,8 @@ public class OrderService {
         return tot;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setIdTavolo(int idTavolo) {
+        this.idTavolo = idTavolo;
     }
 
     @Override

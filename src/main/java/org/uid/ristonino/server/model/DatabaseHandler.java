@@ -15,7 +15,6 @@ import org.uid.ristonino.server.view.SceneHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class DatabaseHandler {
@@ -39,8 +38,7 @@ public class DatabaseHandler {
     private final String createOrder = "INSERT INTO Orders (IdTable) VALUES (?);";
     private final String putItemsInOrder = "INSERT INTO Orders_Items (IdOrder, IdItem, Quantity, Note) VALUES (?,?,?,?)";
 
-
-
+    private final String getOrdini="SELECT o.Id AS OrderId, i.Id AS ItemId, i.Name, oi.Quantity, i.Price, oi.Note AS ItemNote, t.Id AS TableId FROM Items AS i JOIN Orders_Items AS oi ON i.Id = oi.IdItem JOIN Orders AS o ON oi.IdOrder = o.Id JOIN Tables AS t ON o.IdTable = t.Id;";
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
 
@@ -130,7 +128,27 @@ public class DatabaseHandler {
                 Item i;
                 i = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getDouble("Price"), rs.getString("ItemNote"));
                 ordine.insertItem(i, rs.getInt("Quantity"));
-                allOrders.setIdOrder(rs.getInt("OrderId"));
+                allOrders.setIdTavolo(rs.getInt("OrderId"));
+                allOrders.addOrder(ordine);
+            }
+            st.close();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+    public void loadOrderNew() {
+        try {
+            PreparedStatement st = con.prepareStatement(getOrdini);
+            ResultSet rs = st.executeQuery();
+            OrderService allOrders= OrderService.getInstance();
+            Ordine ordine;
+            while (rs.next()) {
+                ordine=new Ordine();
+                Item i;
+                i = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getDouble("Price"), rs.getString("ItemNote"));
+                ordine.insertItem(i, rs.getInt("Quantity"));
+                allOrders.setIdTavolo(rs.getInt("TableId"));
                 allOrders.addOrder(ordine);
             }
             st.close();
