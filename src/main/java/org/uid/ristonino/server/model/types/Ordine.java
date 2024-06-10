@@ -5,13 +5,13 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 
 public class Ordine {
+
+
     private ArrayList<Pair<Integer, Item>> listaOrdine = new ArrayList<Pair<Integer, Item>>();
+
     private int idOrdine;
 
-
-
     private int idTavolo;
-    private String notes;
 
     public Ordine() {}
 
@@ -21,6 +21,9 @@ public class Ordine {
 
     public ArrayList<Pair<Integer, Item>> getListaOrdine() {
         return listaOrdine;
+    }
+    public void setListaOrdine(ArrayList<Pair<Integer, Item>> listaOrdine) {
+        this.listaOrdine = listaOrdine;
     }
 
     public int getIdTavolo() {
@@ -39,13 +42,6 @@ public class Ordine {
         this.idOrdine = idOrdine;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 
     @Override
     public String toString() {
@@ -53,7 +49,6 @@ public class Ordine {
                 "listaOrdine=" + listaOrdine +
                 ", idOrdine=" + idOrdine +
                 ", idTavolo=" + idTavolo +
-                ", notes='" + notes + '\'' +
                 '}';
     }
 }

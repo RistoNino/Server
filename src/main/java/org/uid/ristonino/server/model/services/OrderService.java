@@ -1,14 +1,14 @@
 //TODO: Cambiare da arraylist a vector (in caso avessimo bisogno di thread)
 
 package org.uid.ristonino.server.model.services;
-import javafx.util.Pair;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
+import javafx.util.Pair;
 import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.model.types.Ordine;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OrderService {
 
@@ -42,11 +42,12 @@ public class OrderService {
         ordini.add(new Pair<>(idOrder, ord));
     }
 
-//    public Future<Ordine> saveOrder(Ordine ord) {
-//        db.createOrder(ord);
-//
-//        return Future.succeededFuture();
-//    }
+    public Future<Ordine> saveOrder(Ordine ord) {
+        Promise<Ordine> promise = Promise.promise();
+        db.createOrder(ord);
+        promise.complete(ord);
+        return promise.future();
+    }
 
     public ArrayList<Pair<Integer, Item>> getOrder(int id) {
         ArrayList<Pair <Integer, Item>> ord = new ArrayList<>();
@@ -54,7 +55,7 @@ public class OrderService {
             if (ordini.getKey() == id) {
                 int quantity=ordini.getValue().getListaOrdine().getFirst().getKey();
                 String nomePiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getName();
-                String notePiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getNote();
+                String notePiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getNotes();
                 double prezzoPiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getPrice();
                 ord.add(new Pair<>(quantity, new Item(nomePiatto, notePiatto, prezzoPiatto)));
 

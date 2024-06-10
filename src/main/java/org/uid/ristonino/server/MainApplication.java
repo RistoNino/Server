@@ -3,9 +3,8 @@ package org.uid.ristonino.server;
 import io.vertx.core.Vertx;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.uid.ristonino.server.controller.ApiController;
+import org.uid.ristonino.server.model.ApiHandler;
 import org.uid.ristonino.server.model.DatabaseHandler;
-import org.uid.ristonino.server.model.Debug;
 import org.uid.ristonino.server.view.SceneHandler;
 
 public class MainApplication extends Application {
@@ -20,7 +19,7 @@ public class MainApplication extends Application {
         super.init();
         db.openConnection();
         Vertx vertx = Vertx.vertx();
-        vertx.deployVerticle(new ApiController());
+        vertx.deployVerticle(new ApiHandler());
     }
 
     @Override

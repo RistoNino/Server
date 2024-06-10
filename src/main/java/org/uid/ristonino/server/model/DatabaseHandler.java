@@ -36,7 +36,9 @@ public class DatabaseHandler {
     private final String getOrdineDaTavolo = "SELECT o.Id AS OrderId, i.id AS ItemId, Name, oi.Quantity, Price, oi.Note AS ItemNote FROM Items AS i, Orders_Items AS oi, Orders AS o, Tables AS t WHERE i.Id = oi.idItem AND oi.idOrder = o.Id AND o.idTable = t.Id;";
     private final String getIngredientsByItemId = "SELECT Name FROM Ingredients INNER JOIN Items_Ingredients on Ingredients.Id = Items_Ingredients.Ingredient_Id WHERE Items_Ingredients.Item_Id = ?;";
     private final String getFlags = "SELECT * FROM Flags;";
-    private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
+    private final String createOrder = "INSERT INTO Orders (IdTable) VALUES (?);";
+    private final String putItemsInOrder = "INSERT INTO Orders_Items (IdOrder, IdItem, Quantity, Note) VALUES (?,?,?,?)";
+
 
 
     private final String url = "jdbc:sqlite:RistoNino.db";
@@ -131,7 +133,6 @@ public class DatabaseHandler {
                 allOrders.setIdOrder(rs.getInt("OrderId"));
                 allOrders.addOrder(ordine);
             }
-            //System.out.println(allOrders);
             st.close();
         }
         catch (SQLException e) {
@@ -145,11 +146,9 @@ public class DatabaseHandler {
             ResultSet rs = st.executeQuery();
             TableService tableService= TableService.getInstance();
             while(rs.next()){
-                Table t=new Table(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getInt(4), rs.getInt(5));
+                Table t = new Table(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getInt(4), rs.getInt(5));
                 tableService.addTable(t);
             }
-            //System.out.println(tableService);
-
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -208,26 +207,36 @@ public class DatabaseHandler {
                 Flag f = new Flag(rs.getInt(1),rs.getString(2), rs.getString(3));
                 flags.add(f);
             }
-            System.out.println(flags);
             return flags;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-//    public Boolean createOrder(Ordine ord) {
-//        try {
-//            PreparedStatement st = con.prepareStatement(createOrder, Statement.RETURN_GENERATED_KEYS);
-//            st.setInt(1,ord.getIdTavolo());
-//            st.setString(2,ord.getNotes());
-//            if (st.executeUpdate() > 0) {
-//                ResultSet rs = st.getGeneratedKeys();
-//                rs.next();
-//                ord.setIdOrdine(rs.getInt(1));
-//
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+
+
+    public int createOrder(Ordine ord) {
+        try {
+            PreparedStatement st = con.prepareStatement(createOrder, Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1,ord.getIdTavolo());
+            if (st.executeUpdate() > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+                int idOrdine = rs.getInt(1);
+                ord.setIdOrdine(rs.getInt(1));
+                for (int i = 0; i < ord.getListaOrdine().size(); i++) {
+                    PreparedStatement stItem = con.prepareStatement(putItemsInOrder);
+                    stItem.setInt(1,idOrdine);
+                    stItem.setInt(2,ord.getListaOrdine().get(i).getValue().getId());
+                    stItem.setInt(3,ord.getListaOrdine().get(i).getKey());
+                    stItem.setString(4,ord.getListaOrdine().get(i).getValue().getNotes());
+                    stItem.executeUpdate();
+                }
+                return idOrdine;
+            }
+            return -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

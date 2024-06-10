@@ -40,6 +40,4 @@ public class Menu {
     public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
-
-
 }
