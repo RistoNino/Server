@@ -8,9 +8,11 @@ module org.uid.ristonino.server {
     requires io.vertx.core;
     requires io.vertx.web;
     requires com.fasterxml.jackson.databind;
+    requires java.desktop;
 
     opens org.uid.ristonino.server to javafx.fxml;
     opens org.uid.ristonino.server.controller to javafx.fxml;
+    exports org.uid.ristonino.server.model.types to com.fasterxml.jackson.databind;
     exports org.uid.ristonino.server.controller;
     exports org.uid.ristonino.server.model;
     exports org.uid.ristonino.server.view;

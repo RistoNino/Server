@@ -65,7 +65,7 @@ public class SidebarTableController {
 
                 int quantity=ord.get(i).getKey();
                 String nomePiatto=ord.get(i).getValue().getName();
-                String notePiatto=ord.get(i).getValue().getNote();
+                String notePiatto=ord.get(i).getValue().getNotes();
                 double prezzoPiatto=ord.get(i).getValue().getPrice();
 
                 orderVBox.getChildren().add(controller.setItem(nomePiatto, notePiatto, prezzoPiatto, quantity));
