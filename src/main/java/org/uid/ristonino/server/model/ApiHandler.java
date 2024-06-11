@@ -75,24 +75,6 @@ public class ApiHandler extends AbstractVerticle {
         Ordine ordine = new Ordine();
         ordine.setIdTavolo(jsonObject.getInteger("idTavolo"));
 
-//        {
-//          idTavolo : y,
-//          items : [
-//              {
-//                      id : x,
-//                      quantity : z,
-//                      notes : "note",
-//                      removedIngredients : "NO ing1, ing2, ing3"
-//              },
-//              {
-//                      id : xx,
-//                      quantity : zz,
-//                      notes : "note2",
-//                      removedIngredients : "NO ing1, ing2, ing3"
-//              }
-//                  ]
-//        }
-
         JsonArray jsonArray = jsonObject.getJsonArray("items");
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject itemJson = jsonArray.getJsonObject(i);

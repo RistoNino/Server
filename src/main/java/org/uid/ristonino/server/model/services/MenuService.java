@@ -16,7 +16,7 @@ public class MenuService {
 
     private final Menu m;
     private final DatabaseHandler db = DatabaseHandler.getInstance();
-    private ImageBase64Encoder conv = new ImageBase64Encoder();
+
 
     public MenuService() {
         m = new Menu();
@@ -27,13 +27,30 @@ public class MenuService {
             int id = m.getItems().get(i).getId();
             ArrayList<String> ingredients = db.getIngredientsByItemId(id);
             m.getItems().get(i).setIngredients(ingredients);
-
         }
     }
+
+    public Menu getMenu() {
+        return m;
+    }
+
     public Future<JsonObject> getAllItems() {
+
+
+        ImageBase64Encoder conv = new ImageBase64Encoder();
+        for (int i = 0; i < m.getFlags().size(); i++) {
+            String path = Debug.PATH + m.getFlags().get(i).getPathImage();
+                // dovremmo implementare il webserver che da proprio le immagini
+            try {
+                m.getFlags().get(i).setBase64(conv.encodeImageToBase64(path));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         for (int i = 0; i < m.getItems().size(); i++) {
             String path = Debug.PATH + m.getItems().get(i).getPathImage();
+            // dovremmo implementare il webserver che da proprio le immagini
             try {
                 m.getItems().get(i).setBase64(conv.encodeImageToBase64(path));
             } catch (IOException e) {
