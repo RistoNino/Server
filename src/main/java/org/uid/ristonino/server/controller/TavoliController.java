@@ -14,8 +14,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import org.kordamp.ikonli.javafx.FontIcon;
+import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
+import org.uid.ristonino.server.model.types.Table;
 
 
 import java.io.IOException;
@@ -49,7 +52,6 @@ public class TavoliController {
         System.out.println("initialize chiamato in TavoliController");
         System.out.println("borderPaneTavoli: " + borderPaneTavoli);
         notification=true;
-        //findButton(1);
     }
 
 
@@ -60,13 +62,15 @@ public class TavoliController {
 
         try{
             tavoliFlow.getChildren().clear();
-            for(int i=1; i<= table.getNumberOfTables(); i++){
+            for(Table t:table.getTable()){
+
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/templete/table.fxml"));
                 Node tavolo=loader.load();
                 TableLabelController controller = loader.getController();
-
-                tavoliFlow.getChildren().add(controller.setTable(i));
+                tavoliFlow.getChildren().add(controller.setTable(t.getId()));
             }
+            setTableState();
             tavoliFlow.getChildren().add(addUpdateLabel());
 
         }
@@ -127,23 +131,42 @@ public class TavoliController {
     }
 
     void closeSidebar() {
+
         borderPaneTavoli.setRight(null);
     }
 
+    OrderService allOrd=OrderService.getInstance();
 
-    void setTableState(int id, boolean state){ //true: pagato, false: da pagare
+    void setTableState(){
 
+        for(int i=0; i<tavoliFlow.getChildren().size(); i++){
+            for(Pair<Integer, Boolean> x:allOrd.getOrdiniONo()){
+                if(Integer.parseInt(tavoliFlow.getChildren().get(i).getId())==x.getKey()){
+                    System.out.println("Integer.parseInt(tavoliFlow.getChildren().get(i).getId()), x.getKey()"+Integer.parseInt(tavoliFlow.getChildren().get(i).getId())+" "+x.getKey());
+                    if(x.getValue()){
+                        tavoliFlow.getChildren().get(i).getStyleClass().add("tablePagato");
+                    }
+                    else{
+                        tavoliFlow.getChildren().get(i).getStyleClass().add("tableNoPagato");
+                    }
+                }
 
+            }
+        }
     }
 
-    /*
-    void findButton(int id){
+    public void setTableStateById(int id, boolean state) {
         for(int i=0; i<tavoliFlow.getChildren().size()-1; i++){
-            if(Integer.parseInt(tavoliFlow.getChildren().get(i).getId()));
-
+            if(Integer.parseInt(tavoliFlow.getChildren().get(i).getId())==id){
+                if(state){
+                    tavoliFlow.getChildren().get(i).getStyleClass().add("tablePagato");
+                }
+                else{
+                    tavoliFlow.getChildren().get(i).getStyleClass().add("tableNoPagato");
+                }
+            }
 
         }
-        return ;
     }
-    */
 }
+
