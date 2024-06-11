@@ -40,6 +40,7 @@ public class SceneHandler {
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "buttons.css")).toExternalForm());
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "fonts.css")).toExternalForm());
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "border.css")).toExternalForm());
+        this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "background.css")).toExternalForm());
 
     }
     public void changeTheme(String newTheme) {

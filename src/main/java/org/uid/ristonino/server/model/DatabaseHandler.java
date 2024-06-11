@@ -39,10 +39,17 @@ public class DatabaseHandler {
     private final String putItemsInOrder = "INSERT INTO Orders_Items (IdOrder, IdItem, Quantity, Note) VALUES (?,?,?,?)";
 
     private final String getOrdini="SELECT o.Id AS OrderId, i.Id AS ItemId, i.Name, oi.Quantity, i.Price, oi.Note AS ItemNote, t.Id AS TableId FROM Items AS i JOIN Orders_Items AS oi ON i.Id = oi.IdItem JOIN Orders AS o ON oi.IdOrder = o.Id JOIN Tables AS t ON o.IdTable = t.Id;";
+    private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
+    private final String getOrdiniPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 1;";
+    private final String getOrdiniNonPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 0;";
+
+
+    OrderService allOrders;
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
 
     // classe singleton
+
     private static DatabaseHandler instance = new DatabaseHandler();
     private DatabaseHandler() {}
     public static DatabaseHandler getInstance() {return instance; }
@@ -102,6 +109,8 @@ public class DatabaseHandler {
         }
     }
 
+
+
     public Boolean checkPassword(String username, String passwordInput) {
         try {
             PreparedStatement st = con.prepareStatement(checkPasswordSt);
@@ -119,9 +128,9 @@ public class DatabaseHandler {
 
     public void loadOrders() {
         try {
+            allOrders=OrderService.getInstance();
             PreparedStatement st = con.prepareStatement(getOrdineDaTavolo);
             ResultSet rs = st.executeQuery();
-            OrderService allOrders= OrderService.getInstance();
             Ordine ordine;
             while (rs.next()) {
                 ordine=new Ordine();
@@ -150,13 +159,33 @@ public class DatabaseHandler {
                 ordine.insertItem(i, rs.getInt("Quantity"));
                 allOrders.setIdTavolo(rs.getInt("TableId"));
                 allOrders.addOrder(ordine);
+
+
             }
+            st = con.prepareStatement(getOrdiniPagati);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                allOrders.setTotalOrderPagati(rs.getInt(1));
+            }
+
+            st = con.prepareStatement(getOrdiniNonPagati);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                allOrders.setTotalOrderNonPagati(rs.getInt(1));
+            }
+
+
+
+
+            //System.out.println(allOrders);
             st.close();
         }
         catch (SQLException e) {
             throw new RuntimeException();
         }
     }
+
+
 
     public void loadTable(){
         try{

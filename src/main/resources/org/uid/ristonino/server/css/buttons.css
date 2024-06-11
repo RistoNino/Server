@@ -19,6 +19,10 @@
     -fx-background-radius: 3;
 }
 
+.buttonTable:hover{
+    -fx-background-color: #e6e6e6;
+}
+
 
 
 

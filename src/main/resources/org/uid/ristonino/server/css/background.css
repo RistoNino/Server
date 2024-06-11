@@ -1,0 +1,8 @@
+.background{
+    -fx-background-color:  #cccc;
+}
+
+.backgroundImp{
+    -fx-background-color:  WHITE;
+    -fx-background-radius: 10;
+}
