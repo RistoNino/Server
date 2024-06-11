@@ -104,8 +104,10 @@ public class SidebarTableController {
             orderVBox.getChildren().add(coperti);
 
 
+            double tot=(orderService.getTotal(numTav)+(nCoperti*prezzoCoperti));
 
-            totalText.setText("Totale: €"+(orderService.getTotal(numTav)+((double)nCoperti*prezzoCoperti)));
+
+            totalText.setText("Totale: €"+tot);
             setExitIcon();
             setPayButton();
 
