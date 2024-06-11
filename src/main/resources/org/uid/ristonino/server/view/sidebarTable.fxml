@@ -35,7 +35,7 @@
                 <Label fx:id="totalText" styleClass="totalFont" AnchorPane.bottomAnchor="5" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="5" />
 
                 <Label fx:id="payButton" styleClass="pagaFont, border" AnchorPane.bottomAnchor="5" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="5"
-                        style="-fx-padding: 0 5 0 5">
+                        style="-fx-padding: 0 5 0 5" >
                 </Label>
             </AnchorPane>
 

@@ -73,7 +73,6 @@ public class HomePageController implements Initializable{
 
         tableService.load();
         sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));
-        Debug.getInstance().print("Sidebar larghezza: "+sideBar.getPrefWidth());
 
         stackPaneHome.setOnMouseClicked(event -> {
             Node node = (Node) event.getTarget();
