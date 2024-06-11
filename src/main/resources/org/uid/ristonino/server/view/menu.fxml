@@ -1,16 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.server.controller.MenuController">
-    <children>
-        <Button text="test query" onAction="#test" fx:id="testButton" mnemonicParsing="false"/>
-    </children>
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.MenuController">
+   <center>
+      <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="categoriaTab" text="Categorie">
+               <content>
+                  <AnchorPane>
+                     <children>
+                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" >
+                           <left>
+                              <ListView fx:id="categoriaListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                           </left>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="creaCategoriaBtn" mnemonicParsing="false" text="Crea Categoria" />
+                                    <Button fx:id="rimuoviCategoriaBtn" mnemonicParsing="false" text="Rimuovi Categoria" />
+                                    <Button fx:id="modificaCategoriaBtn" mnemonicParsing="false" text="Modifica Categoria" />
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+          <Tab fx:id="articoliTab" text="Articoli">
+               <content>
+                  <AnchorPane>
+                     <children>
+                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" >
+                           <left>
+                              <ListView fx:id="articoliListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                           </left>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="creaArticoloBtn" mnemonicParsing="false" text="Crea Articolo" />
+                                    <Button fx:id="rimuoviArticoloBtn" mnemonicParsing="false" text="Rimuovi Articolo" />
+                                    <Button fx:id="modificaArticoloBtn" mnemonicParsing="false" text="Modifica Articolo" />
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+            <Tab fx:id="altroTab" text="Allergeni e altro">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" >
+                            <left>
+                                <ListView fx:id="categoriaListView2" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                            </left>
+                            <center>
+                                <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                    <children>
+                                        <Button fx:id="creaCategoriaBtn2" mnemonicParsing="false" text="Crea Articolo" />
+                                        <Button fx:id="rimuoviCategoriaBtn2" mnemonicParsing="false" text="Rimuovi Categoria" />
+                                        <Button fx:id="modificaCategoriaBtn2" mnemonicParsing="false" text="Modifica Categoria" />
+                                    </children>
+                                </VBox>
+                            </center>
+                        </BorderPane>
+                    </children>
+                </AnchorPane>
+            </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
 
-</AnchorPane>
+</BorderPane>

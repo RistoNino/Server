@@ -7,10 +7,7 @@ import javafx.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
-import org.uid.ristonino.server.model.types.Flag;
-import org.uid.ristonino.server.model.types.Item;
-import org.uid.ristonino.server.model.types.Ordine;
-import org.uid.ristonino.server.model.types.Table;
+import org.uid.ristonino.server.model.types.*;
 import org.uid.ristonino.server.view.SceneHandler;
 
 import java.sql.*;
@@ -126,27 +123,27 @@ public class DatabaseHandler {
         return false;
     }
 
+//    public void loadOrders() {
+//        try {
+//            allOrders=OrderService.getInstance();
+//            PreparedStatement st = con.prepareStatement(getOrdineDaTavolo);
+//            ResultSet rs = st.executeQuery();
+//            Ordine ordine;
+//            while (rs.next()) {
+//                ordine=new Ordine();
+//                Item i;
+//                i = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getDouble("Price"), rs.getString("ItemNote"));
+//                ordine.insertItem(i, rs.getInt("Quantity"));
+//                allOrders.setIdTavolo(rs.getInt("OrderId"));
+//                allOrders.addOrder(ordine);
+//            }
+//            st.close();
+//        }
+//        catch (SQLException e) {
+//            throw new RuntimeException();
+//        }
+//    }
     public void loadOrders() {
-        try {
-            allOrders=OrderService.getInstance();
-            PreparedStatement st = con.prepareStatement(getOrdineDaTavolo);
-            ResultSet rs = st.executeQuery();
-            Ordine ordine;
-            while (rs.next()) {
-                ordine=new Ordine();
-                Item i;
-                i = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getDouble("Price"), rs.getString("ItemNote"));
-                ordine.insertItem(i, rs.getInt("Quantity"));
-                allOrders.setIdTavolo(rs.getInt("OrderId"));
-                allOrders.addOrder(ordine);
-            }
-            st.close();
-        }
-        catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
-    public void loadOrderNew() {
         try {
             PreparedStatement st = con.prepareStatement(getOrdini);
             ResultSet rs = st.executeQuery();
@@ -215,13 +212,13 @@ public class DatabaseHandler {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Pair<Integer,String>> getAllCategories() {
+    public ArrayList<Categoria> getAllCategories() {
         try {
-            ArrayList<Pair<Integer,String>> categories = new ArrayList<>();
+            ArrayList<Categoria> categories = new ArrayList<>();
             PreparedStatement st = con.prepareStatement(getCategories);
             ResultSet rs = st.executeQuery();
             while(rs.next()){
-                Pair<Integer,String> c = new Pair<>(rs.getInt(1),rs.getString(2));
+                Categoria c = new Categoria(rs.getString(2), rs.getInt(1));
                 categories.add(c);
             }
             return categories;

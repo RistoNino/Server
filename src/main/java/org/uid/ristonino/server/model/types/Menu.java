@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Menu {
 
 
-    private ArrayList<Pair<Integer, String>> categories = new ArrayList<>();
+    private ArrayList<Categoria> categories = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
 
@@ -21,7 +21,7 @@ public class Menu {
         return flags;
     }
 
-    public ArrayList<Pair<Integer, String>> getCategories() {
+    public ArrayList<Categoria> getCategories() {
         return categories;
     }
 
@@ -29,7 +29,7 @@ public class Menu {
         return items;
     }
 
-    public void setCategories(ArrayList<Pair<Integer, String>> categories) {
+    public void setCategories(ArrayList<Categoria> categories) {
         this.categories = categories;
     }
 

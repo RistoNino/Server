@@ -1,14 +1,21 @@
 package org.uid.ristonino.server.model.types;
 
-public class Flag {
-    int Id;
-    String Name;
-    String Image;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-    public Flag(int id, String name, String Image) {
+public class Flag {
+    private int Id;
+    private String Name;
+    @JsonIgnore
+    private String pathImage;
+
+
+
+    private String base64;
+
+    public Flag(int id, String name, String pathImage) {
         this.Id = id;
         this.Name = name;
-        this.Image = Image;
+        this.pathImage = pathImage;
     }
 
     public int getId() {
@@ -27,11 +34,19 @@ public class Flag {
         Name = name;
     }
 
-    public String getImage() {
-        return Image;
+    public String getPathImage() {
+        return pathImage;
     }
 
-    public void setImage(String image) {
-        this.Image = image;
+    public void setPathImage(String pathImage) {
+        this.pathImage = pathImage;
+    }
+
+    public String getBase64() {
+        return base64;
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
     }
 }

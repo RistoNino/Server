@@ -119,16 +119,9 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "Id=" + Id +
-                ", Name='" + Name + '\'' +
-                ", Description='" + Description + '\'' +
-                ", ImageUrl='" + pathImage + '\'' +
-                ", Category=" + Category +
-                ", Price=" + Price +
-                ", Ingredients=" + Ingredients +
-                ", note='" + notes + '\'' +
-                '}';
+        return Name + '\n' +
+                 Description + '\n' +
+                 Price + '\n';
     }
 
     public String getBase64() {
