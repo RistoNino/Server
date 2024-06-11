@@ -8,7 +8,10 @@ import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.model.types.Ordine;
 
+
 import java.util.ArrayList;
+
+import static java.lang.Math.round;
 
 public class OrderService {
     private int ordiniTotaliPagati;
@@ -73,11 +76,14 @@ public class OrderService {
         for (Pair<Integer, Ordine> ordini : ordini) {
             if (ordini.getKey() == id) {
                 double prezzoPiatto=ordini.getValue().getListaOrdine().getFirst().getValue().getPrice();
-                int quantity=ordini.getValue().getListaOrdine().getFirst().getKey();
-                tot+=prezzoPiatto*(double)quantity;
+                double quantity=ordini.getValue().getListaOrdine().getFirst().getKey();
+
+                tot+=prezzoPiatto*quantity;
+
             }
         }
-        return tot;
+
+        return round(tot * 100.0) / 100.0;
     }
 
     public void setIdTavolo(int idTavolo) {

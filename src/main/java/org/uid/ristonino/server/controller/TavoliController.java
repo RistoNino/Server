@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -18,6 +19,7 @@ import org.uid.ristonino.server.model.services.TableService;
 
 
 import java.io.IOException;
+import java.sql.BatchUpdateException;
 
 public class TavoliController {
     @FXML
@@ -47,6 +49,7 @@ public class TavoliController {
         System.out.println("initialize chiamato in TavoliController");
         System.out.println("borderPaneTavoli: " + borderPaneTavoli);
         notification=true;
+        //findButton(1);
     }
 
 
@@ -61,6 +64,7 @@ public class TavoliController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/templete/table.fxml"));
                 Node tavolo=loader.load();
                 TableLabelController controller = loader.getController();
+
                 tavoliFlow.getChildren().add(controller.setTable(i));
             }
             tavoliFlow.getChildren().add(addUpdateLabel());
@@ -126,4 +130,20 @@ public class TavoliController {
         borderPaneTavoli.setRight(null);
     }
 
+
+    void setTableState(int id, boolean state){ //true: pagato, false: da pagare
+
+
+    }
+
+    /*
+    void findButton(int id){
+        for(int i=0; i<tavoliFlow.getChildren().size()-1; i++){
+            if(Integer.parseInt(tavoliFlow.getChildren().get(i).getId()));
+
+
+        }
+        return ;
+    }
+    */
 }
