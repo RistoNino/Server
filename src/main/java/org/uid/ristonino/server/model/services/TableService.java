@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class TableService {
     private ArrayList<Table> table=new ArrayList<>();
 
+    public ArrayList<Table> getTable(){
+        return table;
+    }
+
     private static TableService instance=null;
 
     public static TableService getInstance(){
@@ -33,7 +37,8 @@ public class TableService {
 
     public int getNumberOfTables(){
         update();
-        return table.getLast().getId();
+
+        return table.size();
     }
 
     @Override
@@ -44,16 +49,25 @@ public class TableService {
     }
 
     public int getCoperti(int id){
-        return table.get(id-1).getOccupied();
+        int oc=0;
+        for(int i=0;i<table.size();i++){
+            if(table.get(i).getId()==id){
+                oc=table.get(i).getOccupied();
+            }
+        }
+        return oc;
     }
 
     public int getTotalCoperti(){
         int tot=0;
 
-        for(int i=1; i<=this.getNumberOfTables(); i++){
-
-            tot+=getCoperti(i);
+        for(int i=0; i<table.size(); i++){
+            System.out.println("getCoperti(i)"+table.get(i).getOccupied());
+            tot+=table.get(i).getOccupied();
         }
+
+        System.out.println("******Table:"+table);
+
 
         return tot;
     }
