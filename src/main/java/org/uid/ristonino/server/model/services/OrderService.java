@@ -29,7 +29,16 @@ public class OrderService {
     }
 
     private ArrayList<Pair<Integer, Ordine>> ordini = new ArrayList<>();
+    private ArrayList<Pair<Integer, Boolean>> ordPagatiONo = new ArrayList<>();
     private final DatabaseHandler db = DatabaseHandler.getInstance();
+
+    public void insertOrderState(int id, boolean state){
+        ordPagatiONo.add(new Pair<>(id, state));
+    }
+
+    public ArrayList<Pair<Integer, Boolean>> getOrdiniONo(){
+        return ordPagatiONo;
+    }
 
     private int idTavolo;
 
@@ -41,6 +50,7 @@ public class OrderService {
 
     public void update(){
         ordini= new ArrayList<>();
+        ordPagatiONo= new ArrayList<>();
         this.load();
     }
 
@@ -82,7 +92,6 @@ public class OrderService {
 
             }
         }
-
         return round(tot * 100.0) / 100.0;
     }
 
@@ -100,6 +109,11 @@ public class OrderService {
 
     public void setTotalOrderNonPagati(int tot){
         ordiniTotaliNonPagati=tot;
+    }
+
+
+    public void removeOrder(int id){
+        db.removeOrderByTableId(id);
     }
 
     public int getTotalOrderNonPagati() {
