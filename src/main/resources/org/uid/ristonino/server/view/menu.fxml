@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.MenuController">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.MenuController">
    <center>
       <TabPane tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -16,19 +17,22 @@
                <content>
                   <AnchorPane>
                      <children>
-                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" >
-                           <left>
-                              <ListView fx:id="categoriaListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                           </left>
+                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                            <center>
-                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                              <ListView fx:id="categoriaListView" prefHeight="200.0" prefWidth="200.0" />
+                           </center>
+                           <right>
+                              <VBox minWidth="200" prefHeight="200.0" prefWidth="240.0" spacing="10.0">
                                  <children>
-                                    <Button fx:id="creaCategoriaBtn" mnemonicParsing="false" text="Crea Categoria" />
-                                    <Button fx:id="rimuoviCategoriaBtn" mnemonicParsing="false" text="Rimuovi Categoria" />
-                                    <Button fx:id="modificaCategoriaBtn" mnemonicParsing="false" text="Modifica Categoria" />
+                                    <Button fx:id="creaCategoriaBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="380.0" text="Crea Categoria" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button fx:id="rimuoviCategoriaBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="465.0" text="Rimuovi Categoria" VBox.vgrow="ALWAYS" />
+                                    <Button fx:id="modificaCategoriaBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="495.0" text="Modifica Categoria" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
-                           </center>
+                           </right>
                         </BorderPane>
                      </children>
                   </AnchorPane>
@@ -37,19 +41,22 @@
                <content>
                   <AnchorPane>
                      <children>
-                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" >
-                           <left>
-                              <ListView fx:id="articoliListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                           </left>
+                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                            <center>
-                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                              <ListView fx:id="articoliListView" prefHeight="200.0" prefWidth="200.0" />
+                           </center>
+                           <right>
+                              <VBox minWidth="161.0" prefHeight="200.0" prefWidth="240.0" spacing="10.0">
                                  <children>
-                                    <Button fx:id="creaArticoloBtn" mnemonicParsing="false" text="Crea Articolo" />
-                                    <Button fx:id="rimuoviArticoloBtn" mnemonicParsing="false" text="Rimuovi Articolo" />
-                                    <Button fx:id="modificaArticoloBtn" mnemonicParsing="false" text="Modifica Articolo" />
+                                    <Button fx:id="creaArticoloBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="312.0" text="Crea Articolo">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button fx:id="rimuoviArticoloBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" text="Rimuovi Articolo" VBox.vgrow="ALWAYS" />
+                                    <Button fx:id="modificaArticoloBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="269.0" text="Modifica Articolo" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
-                           </center>
+                           </right>
                         </BorderPane>
                      </children>
                   </AnchorPane>
@@ -58,19 +65,22 @@
             <content>
                 <AnchorPane>
                     <children>
-                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" >
-                            <left>
-                                <ListView fx:id="categoriaListView2" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                            </left>
+                        <BorderPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                             <center>
-                                <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                <ListView fx:id="categoriaListView2" prefHeight="200.0" prefWidth="200.0" />
+                            </center>
+                            <right>
+                                <VBox prefHeight="200.0" prefWidth="240.0" spacing="10.0">
                                     <children>
-                                        <Button fx:id="creaCategoriaBtn2" mnemonicParsing="false" text="Crea Articolo" />
-                                        <Button fx:id="rimuoviCategoriaBtn2" mnemonicParsing="false" text="Rimuovi Categoria" />
-                                        <Button fx:id="modificaCategoriaBtn2" mnemonicParsing="false" text="Modifica Categoria" />
+                                        <Button fx:id="creaCategoriaBtn2" mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" text="Crea Articolo" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Button>
+                                        <Button fx:id="rimuoviCategoriaBtn2" mnemonicParsing="false" prefHeight="25.0" prefWidth="319.0" text="Rimuovi Categoria" VBox.vgrow="ALWAYS" />
+                                        <Button fx:id="modificaCategoriaBtn2" mnemonicParsing="false" prefHeight="25.0" prefWidth="260.0" text="Modifica Categoria" VBox.vgrow="ALWAYS" />
                                     </children>
                                 </VBox>
-                            </center>
+                            </right>
                         </BorderPane>
                     </children>
                 </AnchorPane>
