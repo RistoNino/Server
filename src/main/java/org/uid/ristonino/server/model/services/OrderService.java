@@ -45,7 +45,7 @@ public class OrderService {
     public OrderService() {}
 
     public void load(){
-        db.loadOrders();
+        db.loadOrderNew();
     }
 
     public void update(){
@@ -120,6 +120,11 @@ public class OrderService {
         return ordiniTotaliNonPagati;
     }
 
+
+    public void setStateById(int id, int state){
+        db.setStateById(id, state);
+        this.update();
+    }
 
     @Override
     public String toString() {
