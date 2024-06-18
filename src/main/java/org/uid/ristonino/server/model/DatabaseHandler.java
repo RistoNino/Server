@@ -7,10 +7,7 @@ import javafx.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
-import org.uid.ristonino.server.model.types.Flag;
-import org.uid.ristonino.server.model.types.Item;
-import org.uid.ristonino.server.model.types.Ordine;
-import org.uid.ristonino.server.model.types.Table;
+import org.uid.ristonino.server.model.types.*;
 import org.uid.ristonino.server.view.SceneHandler;
 
 import java.sql.*;
@@ -44,6 +41,8 @@ public class DatabaseHandler {
     private final String getPagatiONo ="SELECT IdTable, Pagato FROM Orders;";
     private final String removeOrders_Item="DELETE FROM Orders_Items WHERE IdOrder IN (SELECT Id FROM Orders WHERE IdTable = ?);";
     private final String removeOrders="DELETE FROM Orders WHERE IdTable = ?;";
+    private final String updatePayState="UPDATE Orders SET Pagato = ? WHERE IdTable = ?";
+
 
 
 
@@ -130,26 +129,6 @@ public class DatabaseHandler {
         return false;
     }
 
-    public void loadOrders() {
-        try {
-            allOrders=OrderService.getInstance();
-            PreparedStatement st = con.prepareStatement(getOrdineDaTavolo);
-            ResultSet rs = st.executeQuery();
-            Ordine ordine;
-            while (rs.next()) {
-                ordine=new Ordine();
-                Item i;
-                i = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getDouble("Price"), rs.getString("ItemNote"));
-                ordine.insertItem(i, rs.getInt("Quantity"));
-                allOrders.setIdTavolo(rs.getInt("OrderId"));
-                allOrders.addOrder(ordine);
-            }
-            st.close();
-        }
-        catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
 
     public void loadOrderNew() {
         try {
@@ -196,13 +175,11 @@ public class DatabaseHandler {
     public void removeOrderByTableId(int id){
         try {
             PreparedStatement deleteOrdersItemsStmt = con.prepareStatement(removeOrders_Item);
-            PreparedStatement deleteOrdersStmt = con.prepareStatement(removeOrders);
+            //PreparedStatement deleteOrdersStmt = con.prepareStatement(removeOrders);
 
             deleteOrdersItemsStmt.setInt(1, id);
-            deleteOrdersStmt.setInt(1, id);
 
             deleteOrdersItemsStmt.executeUpdate();
-            deleteOrdersStmt.executeUpdate();
 
             System.out.println("Ordine rimosso con successo per il tavolo con ID: " + id);
 
@@ -243,13 +220,14 @@ public class DatabaseHandler {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Pair<Integer,String>> getAllCategories() {
+
+    public ArrayList<Categoria> getAllCategories() {
         try {
-            ArrayList<Pair<Integer,String>> categories = new ArrayList<>();
+            ArrayList<Categoria> categories = new ArrayList<>();
             PreparedStatement st = con.prepareStatement(getCategories);
             ResultSet rs = st.executeQuery();
             while(rs.next()){
-                Pair<Integer,String> c = new Pair<>(rs.getInt(1),rs.getString(2));
+                Categoria c = new Categoria(rs.getString(2),rs.getInt(1));
                 categories.add(c);
             }
             st.close();
@@ -289,6 +267,20 @@ public class DatabaseHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setStateById(int id, int state){
+        try {
+            System.out.println("QuaaaStateId");
+            PreparedStatement preparedStatement= con.prepareStatement(updatePayState);
+            preparedStatement.setInt(1, state);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
 
