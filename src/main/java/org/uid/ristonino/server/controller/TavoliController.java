@@ -1,26 +1,23 @@
-//TODO: Aggiornare tavoli ogni tot secondi
-//TODO: Sistemare i font e l'interfaccia in generale
-//TODO: Sistemare tasto aggiorna tavoli, posizionare altrove in un posto fisso
-//TODO: Verificare che quando si chiama getinstance, l'istanza richiamata sia effettivamente un singleton. IMPORTANTE IMPORTANTE
+
 package org.uid.ristonino.server.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import org.kordamp.ikonli.javafx.FontIcon;
+import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
+import org.uid.ristonino.server.model.types.Table;
 
 
 import java.io.IOException;
-import java.sql.BatchUpdateException;
-
 public class TavoliController {
     @FXML
     public StackPane tavoliStackPane;
@@ -49,7 +46,6 @@ public class TavoliController {
         System.out.println("initialize chiamato in TavoliController");
         System.out.println("borderPaneTavoli: " + borderPaneTavoli);
         notification=true;
-        //findButton(1);
     }
 
 
@@ -60,13 +56,15 @@ public class TavoliController {
 
         try{
             tavoliFlow.getChildren().clear();
-            for(int i=1; i<= table.getNumberOfTables(); i++){
+            for(Table t:table.getTable()){
+
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/templete/table.fxml"));
                 Node tavolo=loader.load();
                 TableLabelController controller = loader.getController();
-
-                tavoliFlow.getChildren().add(controller.setTable(i));
+                tavoliFlow.getChildren().add(controller.setTable(t.getId()));
             }
+            setStateTable();
             tavoliFlow.getChildren().add(addUpdateLabel());
 
         }
@@ -127,23 +125,35 @@ public class TavoliController {
     }
 
     void closeSidebar() {
+
         borderPaneTavoli.setRight(null);
     }
 
+    OrderService allOrd=OrderService.getInstance();
 
-    void setTableState(int id, boolean state){ //true: pagato, false: da pagare
+    void setStateTable(){ //Prende tutti gli stati dal database, e colora di verde se è pagato, altrimenti colora di giallo. Lo richiamo ogni volta che devo aggiornare lo stato dei tavoli
 
+        for(int i=0; i<tavoliFlow.getChildren().size(); i++) {
+            if (tavoliFlow.getChildren().get(i).getId() != null) {
+                int idFlow = Integer.parseInt(tavoliFlow.getChildren().get(i).getId());
+                for (Pair<Integer, Boolean> x : allOrd.getOrdiniONo()) {
+                    if (idFlow == x.getKey()) {
+                        System.out.println("Integer.parseInt(tavoliFlow.getChildren().get(i).getId()), x.getKey()" + Integer.parseInt(tavoliFlow.getChildren().get(i).getId()) + " " + x.getKey());
+                        if (x.getValue()) {
+                            tavoliFlow.getChildren().get(i).getStyleClass().add("tablePagato");
+                        } else {
+                            tavoliFlow.getChildren().get(i).getStyleClass().add("tableNoPagato");
+                        }
+                    }
 
-    }
-
-    /*
-    void findButton(int id){
-        for(int i=0; i<tavoliFlow.getChildren().size()-1; i++){
-            if(Integer.parseInt(tavoliFlow.getChildren().get(i).getId()));
-
-
+                }
+            }
         }
-        return ;
     }
-    */
+
+    public void setTableStateById(int id, int state) {
+        allOrd.setStateById(id, state);
+        setStateTable();
+    }
 }
+
