@@ -49,4 +49,14 @@ public class Flag {
     public void setBase64(String base64) {
         this.base64 = base64;
     }
+
+    @Override
+    public String toString() {
+        return "Flag{" +
+                "Id=" + Id +
+                ", Name='" + Name + '\'' +
+                ", pathImage='" + pathImage + '\'' +
+                ", base64='" + base64 + '\'' +
+                '}';
+    }
 }
