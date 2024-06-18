@@ -6,3 +6,11 @@
     -fx-background-color:  WHITE;
     -fx-background-radius: 10;
 }
+
+.tableNoPagato{
+    -fx-background-color: #FDFF96;
+}
+
+.tablePagato{
+    -fx-background-color: #bcffaa;
+}

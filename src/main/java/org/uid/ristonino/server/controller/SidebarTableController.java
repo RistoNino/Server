@@ -1,4 +1,4 @@
-//TODO: Creare funzione creaScontrino
+//TODO: Pulire sidebar ogni volta che premo sul tasto paga
 
 package org.uid.ristonino.server.controller;
 
@@ -70,10 +70,13 @@ public class SidebarTableController {
         });
     }
 
-    void setPayButton(){
+    void setPayButton(int id){
         FontIcon icon=new FontIcon("mdi2c-cash-register");
         icon.setIconSize(30);
         payButton.setGraphic(icon);
+        payButton.setOnMouseClicked(event ->{
+            eliminaOrdine(id);
+        });
     }
 
     public void openSidebar(int numTav) throws IOException {
@@ -109,11 +112,17 @@ public class SidebarTableController {
 
             totalText.setText("Totale: €"+tot);
             setExitIcon();
-            setPayButton();
+            setPayButton(numTav);
 
         }
         else{
             System.out.println("sidebarRight is null");
         }
+    }
+
+
+    public void eliminaOrdine(int id) {
+        orderService.removeOrder(id);
+        TavoliController.getInstance().setTableStateById(id, 1);
     }
 }

@@ -48,3 +48,28 @@
     -fx-text-fill: #fff;
     -fx-background-color: #1A1A1A;
 }
+
+.buttonPay{
+    -fx-background-size: 3;
+    -fx-border-width: 1;
+    -fx-border-color:black;
+    -fx-border-radius: 3;
+
+}
+
+.buttonPay:hover{
+    -fx-background-color: #e6e6e6;
+}
+
+.exitIcon {
+    -fx-background-size: 3;
+    -fx-border-width: 1;
+    -fx-border-color:black;
+    -fx-border-radius: 3;
+
+}
+
+.exitIcon:hover {
+    -fx-background-color: #e6e6e6;
+
+}
