@@ -43,8 +43,8 @@ public class TavoliController {
 
     public void initialize() throws IOException {
         loadTavoli();
-        System.out.println("initialize chiamato in TavoliController");
-        System.out.println("borderPaneTavoli: " + borderPaneTavoli);
+//        System.out.println("initialize chiamato in TavoliController");
+//        System.out.println("borderPaneTavoli: " + borderPaneTavoli);
         notification=true;
     }
 

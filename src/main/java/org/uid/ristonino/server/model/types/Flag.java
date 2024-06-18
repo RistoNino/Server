@@ -52,11 +52,6 @@ public class Flag {
 
     @Override
     public String toString() {
-        return "Flag{" +
-                "Id=" + Id +
-                ", Name='" + Name + '\'' +
-                ", pathImage='" + pathImage + '\'' +
-                ", base64='" + base64 + '\'' +
-                '}';
+        return Name;
     }
 }

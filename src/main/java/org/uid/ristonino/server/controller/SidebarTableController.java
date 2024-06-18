@@ -81,7 +81,7 @@ public class SidebarTableController {
 
     public void openSidebar(int numTav) throws IOException {
         orderVBox.getChildren().clear();
-        sidebarRight.setPrefWidth((SceneHandler.getInstance().sideWidht(20)));
+        sidebarRight.setPrefWidth((SceneHandler.getInstance().sideWidth(20)));
         orderService.update();
         if (sidebarRight != null) {
             tableText.setText("Ordine Tavolo "+numTav+":");

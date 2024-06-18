@@ -72,7 +72,8 @@ public class HomePageController implements Initializable{
         orderService.load();
 
         tableService.load();
-        sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidht(17.5))));
+        sideBar.setPrefWidth(((SceneHandler.getInstance().sideWidth(17.5))));
+        // Debug.getInstance().print("Sidebar larghezza: "+sideBar.getPrefWidth());
 
         stackPaneHome.setOnMouseClicked(event -> {
             Node node = (Node) event.getTarget();
@@ -94,7 +95,6 @@ public class HomePageController implements Initializable{
 
     private void removeButtonState(Button button) {
         if(button.getStyleClass().contains("buttonHomePressed")){
-            System.out.println("Sono qua");
             button.getStyleClass().remove("buttonHomePressed");
 
         }
@@ -139,8 +139,5 @@ public class HomePageController implements Initializable{
     public void closeImp(){
         stackPaneHome.getChildren().removeLast();
     }
-
-
-
 
 }

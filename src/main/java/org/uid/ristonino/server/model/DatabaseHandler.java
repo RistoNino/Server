@@ -19,7 +19,7 @@ public class DatabaseHandler {
 
     // lista query, da finire
 
-    private final String inserisciCategoria = "INSERT INTO Categories (name) VALUES (?);";
+    private final String createCategory = "INSERT INTO Categories (name) VALUES (?);";
     private final String inserisciPiatto = "INSERT INTO Items (name, category_id, description, price) VALUES (?, ?, ?, ?);";
     private final String inserisci = "INSERT INTO Items_Ingredients (Item_Id, Ingredient_Id) VALUES (?, ?);";
     private final String inserisciIngrediente = "INSERT INTO Ingredients (name) VALUES (?);";
@@ -32,6 +32,7 @@ public class DatabaseHandler {
     private final String getOrdineDaTavolo = "SELECT o.Id AS OrderId, i.id AS ItemId, Name, oi.Quantity, Price, oi.Note AS ItemNote FROM Items AS i, Orders_Items AS oi, Orders AS o, Tables AS t WHERE i.Id = oi.idItem AND oi.idOrder = o.Id AND o.idTable = t.Id;";
     private final String getIngredientsByItemId = "SELECT Name FROM Ingredients INNER JOIN Items_Ingredients on Ingredients.Id = Items_Ingredients.Ingredient_Id WHERE Items_Ingredients.Item_Id = ?;";
     private final String getFlags = "SELECT * FROM Flags;";
+    //private final String createOrder = "INSERT INTO Orders (IdTable) VALUES (?);";
     private final String putItemsInOrder = "INSERT INTO Orders_Items (IdOrder, IdItem, Quantity, Note) VALUES (?,?,?,?)";
 
     private final String getOrdini="SELECT o.Id AS OrderId, i.Id AS ItemId, i.Name, oi.Quantity, i.Price, oi.Note AS ItemNote, t.Id AS TableId FROM Items AS i JOIN Orders_Items AS oi ON i.Id = oi.IdItem JOIN Orders AS o ON oi.IdOrder = o.Id JOIN Tables AS t ON o.IdTable = t.Id;";
@@ -46,6 +47,7 @@ public class DatabaseHandler {
 
 
 
+    private final String getIngredients = "SELECT * FROM Ingredients;";
 
     OrderService allOrders;
     private final String url = "jdbc:sqlite:RistoNino.db";
@@ -143,6 +145,8 @@ public class DatabaseHandler {
                 ordine.insertItem(i, rs.getInt("Quantity"));
                 allOrders.setIdTavolo(rs.getInt("TableId"));
                 allOrders.addOrder(ordine);
+
+
             }
             st = con.prepareStatement(getOrdiniPagati);
             rs = st.executeQuery();
@@ -199,7 +203,6 @@ public class DatabaseHandler {
                 Table t = new Table(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getInt(4), rs.getInt(5));
                 tableService.addTable(t);
             }
-            st.close();
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -307,6 +310,38 @@ public class DatabaseHandler {
             }
             st.close();
             return -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int createCategory(Categoria c) {
+        try {
+            PreparedStatement st = con.prepareStatement(createCategory, Statement.RETURN_GENERATED_KEYS);
+            st.setString(1,c.getNome());
+            if (st.executeUpdate() > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+                int idCategory = rs.getInt(1);
+                c.setIdCategoria(idCategory);
+                return idCategory;
+            }
+            return -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Ingrediente> getIngredients() {
+        try {
+            ArrayList<Ingrediente> ingredients = new ArrayList<>();
+            PreparedStatement st = con.prepareStatement(getIngredients);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Ingrediente i = new Ingrediente(rs.getInt(1), rs.getString(2));
+                ingredients.add(i);
+            }
+            return ingredients;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

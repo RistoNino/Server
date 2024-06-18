@@ -16,23 +16,8 @@ public class LoginPageController {
     public TextField usernameField;
     public PasswordField passwordField;
     public Button loginButton;
-    private boolean isDarkMode = true;
 
-    @FXML
-    private void faiCosa() {
-        if (isDarkMode) {
-            SceneHandler.getInstance().changeTheme("light");
-            isDarkMode = false;
-        } else {
-            SceneHandler.getInstance().changeTheme("dark");
-            isDarkMode = true;
-        }
-    }
 
-    @FXML
-    private void connectDb() {
-        db.openConnection();
-    }
 
     @FXML
     public void createUser(ActionEvent event) {

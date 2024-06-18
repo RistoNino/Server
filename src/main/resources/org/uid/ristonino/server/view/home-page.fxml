@@ -15,9 +15,9 @@
       <left>
          <AnchorPane fx:id="sideBar" prefHeight="600.0" prefWidth="240.0" BorderPane.alignment="CENTER">
             <VBox alignment="TOP_CENTER" prefHeight="538.0" prefWidth="240.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
-               <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@LogoNonDefinito.png" />
-               </ImageView>
+<!--               <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                  <Image url="" />-->
+<!--               </ImageView>-->
 
 
                <Button fx:id="dashButton" mnemonicParsing="false" onAction="#dashboard" prefHeight="31.0" prefWidth="300.0" styleClass="buttonHome" text="Dashboard">

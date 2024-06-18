@@ -1,0 +1,28 @@
+.tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-padding: 0 10 0 10;
+}
+.tab-label {
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+    -fx-text-fill: #262626;
+
+}
+.tab:selected {
+    -fx-border-color: #0061F6;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-border-width: 0 0 2 0;
+}
+.tab:selected .focus-indicator {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.tab:focused {
+    -fx-background-color: transparent;
+}
+.tab-pane *.tab-header-background {
+    -fx-background-color: transparent;
+}

@@ -4,6 +4,10 @@ public class Categoria {
     private String Nome;
     private int idCategoria;
 
+    public Categoria(String nome) {
+        this.Nome = nome;
+    }
+
     public Categoria(String nome, int idCategoria) {
         this.Nome = nome;
         this.idCategoria = idCategoria;
@@ -23,9 +27,6 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Categoria{" +
-                "Nome='" + Nome + '\'' +
-                ", idCategoria=" + idCategoria +
-                '}';
+        return Nome;
     }
 }
