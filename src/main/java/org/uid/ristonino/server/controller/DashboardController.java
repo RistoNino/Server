@@ -39,8 +39,8 @@ public class DashboardController {
 
         int totPos =tableService.getTotalMaxCoperti();
 
-        System.out.println("Total occupied: "+totOc);
-        System.out.println("Total Liberi: "+ totPos);
+//        System.out.println("Total occupied: "+totOc);
+//        System.out.println("Total Liberi: "+ totPos);
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Liberi", totPos),
@@ -55,8 +55,8 @@ public class DashboardController {
         int totNonP= orderService.getTotalOrderNonPagati();
         int totP =orderService.getTotalOrderPagati();
 
-        System.out.println("Totale Pagati: "+totP);
-        System.out.println("Total Non Pagati: "+ totNonP);
+//        System.out.println("Totale Pagati: "+totP);
+//        System.out.println("Total Non Pagati: "+ totNonP);
         ObservableList<PieChart.Data> dataOrder =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Pagati", totP),

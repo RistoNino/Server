@@ -3,7 +3,6 @@
 package org.uid.ristonino.server.model;
 
 
-import javafx.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.services.TableService;
@@ -41,7 +40,6 @@ public class DatabaseHandler {
     private final String getOrdiniNonPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 0;";
     private final String getPagatiONo ="SELECT IdTable, Pagato FROM Orders;";
     private final String removeOrders_Item="DELETE FROM Orders_Items WHERE IdOrder IN (SELECT Id FROM Orders WHERE IdTable = ?);";
-    private final String removeOrders="DELETE FROM Orders WHERE IdTable = ?;";
     private final String updatePayState="UPDATE Orders SET Pagato = ? WHERE IdTable = ?";
 
 
@@ -132,7 +130,7 @@ public class DatabaseHandler {
     }
 
 
-    public void loadOrderNew() {
+    public void loadOrder() {
         try {
             PreparedStatement st = con.prepareStatement(getOrdini);
             ResultSet rs = st.executeQuery();
@@ -145,8 +143,6 @@ public class DatabaseHandler {
                 ordine.insertItem(i, rs.getInt("Quantity"));
                 allOrders.setIdTavolo(rs.getInt("TableId"));
                 allOrders.addOrder(ordine);
-
-
             }
             st = con.prepareStatement(getOrdiniPagati);
             rs = st.executeQuery();
@@ -163,7 +159,7 @@ public class DatabaseHandler {
             st = con.prepareStatement(getPagatiONo);
             rs = st.executeQuery();
             while(rs.next()) {
-                System.out.println("rs.getInt(\"IdTable\"), rs.getBoolean(\"Pagato\")"+rs.getInt("IdTable")+rs.getBoolean("Pagato"));
+                // System.out.println("rs.getInt(\"IdTable\"), rs.getBoolean(\"Pagato\")"+rs.getInt("IdTable")+rs.getBoolean("Pagato"));
                 allOrders.insertOrderState(rs.getInt("IdTable"), rs.getBoolean("Pagato"));
             }
             //System.out.println(allOrders);
@@ -274,7 +270,7 @@ public class DatabaseHandler {
 
     public void setStateById(int id, int state){
         try {
-            System.out.println("QuaaaStateId");
+            // System.out.println("QuaaaStateId");
             PreparedStatement preparedStatement= con.prepareStatement(updatePayState);
             preparedStatement.setInt(1, state);
             preparedStatement.setInt(2, id);
@@ -341,6 +337,7 @@ public class DatabaseHandler {
                 Ingrediente i = new Ingrediente(rs.getInt(1), rs.getString(2));
                 ingredients.add(i);
             }
+            st.close();
             return ingredients;
         } catch (SQLException e) {
             throw new RuntimeException(e);

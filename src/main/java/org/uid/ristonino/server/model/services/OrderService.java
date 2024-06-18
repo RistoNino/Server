@@ -45,7 +45,7 @@ public class OrderService {
     public OrderService() {}
 
     public void load(){
-        db.loadOrderNew();
+        db.loadOrder();
     }
 
     public void update(){

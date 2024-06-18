@@ -60,27 +60,23 @@ public class TableService {
 
     public int getTotalCoperti(){
         int tot=0;
-
         for(int i=0; i<table.size(); i++){
-            System.out.println("getCoperti(i)"+table.get(i).getOccupied());
+            //System.out.println("getCoperti(i)"+table.get(i).getOccupied());
             tot+=table.get(i).getOccupied();
         }
-
-        System.out.println("******Table:"+table);
-
-
+        //System.out.println("******Table:"+table);
         return tot;
     }
 
 
     public int getTotalMaxCoperti(){
         int tot=0;
-        System.out.println("totqua"+tot);
+        //System.out.println("totqua"+tot);
         for(int i=0; i<getNumberOfTables(); i++){
-            System.out.println("tot"+i+" table.get(i).getMaxOccupied()"+table.get(i).getMaxOccupied());
+            //System.out.println("tot"+i+" table.get(i).getMaxOccupied()"+table.get(i).getMaxOccupied());
             tot+=table.get(i).getMaxOccupied();
         }
-        System.out.println("tot"+tot);
+        //System.out.println("tot"+tot);
         return tot;
     }
 }

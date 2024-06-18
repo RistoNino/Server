@@ -30,7 +30,6 @@ public class TableLabelController {
         labCop.setText("Tavolo: "+numTav);
         vboxTable.setId(String.valueOf(numTav));
         vboxTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent t) {
                 try {
@@ -42,7 +41,4 @@ public class TableLabelController {
         });
         return vboxTable;
     }
-
-
-
 }

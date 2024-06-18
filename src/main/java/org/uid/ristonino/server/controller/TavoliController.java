@@ -138,7 +138,7 @@ public class TavoliController {
                 int idFlow = Integer.parseInt(tavoliFlow.getChildren().get(i).getId());
                 for (Pair<Integer, Boolean> x : allOrd.getOrdiniONo()) {
                     if (idFlow == x.getKey()) {
-                        System.out.println("Integer.parseInt(tavoliFlow.getChildren().get(i).getId()), x.getKey()" + Integer.parseInt(tavoliFlow.getChildren().get(i).getId()) + " " + x.getKey());
+                        // System.out.println("Integer.parseInt(tavoliFlow.getChildren().get(i).getId()), x.getKey()" + Integer.parseInt(tavoliFlow.getChildren().get(i).getId()) + " " + x.getKey());
                         if (x.getValue()) {
                             tavoliFlow.getChildren().get(i).getStyleClass().add("tablePagato");
                         } else {
