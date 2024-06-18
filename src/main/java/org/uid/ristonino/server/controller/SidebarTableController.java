@@ -123,8 +123,6 @@ public class SidebarTableController {
 
     public void eliminaOrdine(int id) {
         orderService.removeOrder(id);
-        TavoliController.getInstance().setTableStateById(id, true);
-
-
+        TavoliController.getInstance().setTableStateById(id, 1);
     }
 }
