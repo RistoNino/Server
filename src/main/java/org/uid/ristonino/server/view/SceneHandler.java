@@ -91,9 +91,9 @@ public class SceneHandler {
         try {
             scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
             setResolution();
-        }
-        catch (IOException ignored) {
-            System.out.println(ignored.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
