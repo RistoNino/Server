@@ -48,7 +48,7 @@ public class DashboardController {
 
         pieChart.getData().addAll(pieChartData);
 
-        pieChartData.forEach(data -> data.nameProperty().bind(Bindings.concat( data.pieValueProperty(), " Posti ",data.getName()))); //Mi permette di visualizzare i valori a schermo
+        pieChartData.forEach(data -> data.nameProperty().bind(Bindings.concat( data.pieValueProperty(), " ",data.getName()))); //Mi permette di visualizzare i valori a schermo
     }
 
     public void setContiApertiChart(){
@@ -70,7 +70,5 @@ public class DashboardController {
 
     }
 
-    //Riempire gli altri grafici
-    //Inserire tasto che aggiorna i grafici e inserire aggiornamento automatico in base al tempo
 }
 
