@@ -16,6 +16,7 @@ import java.util.Objects;
 public class SceneHandler {
     private Stage stage;
     private Scene scene;
+    private Stage modalStage;
     // Path
     private final static String SCENE_PATH = "/org/uid/ristonino/server/";
     private final static String CSS_PATH = SCENE_PATH + "css/";
@@ -116,16 +117,19 @@ public class SceneHandler {
         }
     }
 
+    public void closeModal() {
+        modalStage.close();
+    }
+
     public void createModalCategory() {
         try {
-            Stage modal = new Stage();
-            modal.initModality(Modality.APPLICATION_MODAL);
-            modal.initOwner(stage);
-            modal.setTitle("Crea Categoria");
-
+            modalStage = new Stage();
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.initOwner(stage);
+            modalStage.setTitle("Crea Categoria");
             Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "dialogMenu/dialog.fxml"));
-            modal.setScene(modalScene);
-            modal.showAndWait();
+            modalStage.setScene(modalScene);
+            modalStage.showAndWait();
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

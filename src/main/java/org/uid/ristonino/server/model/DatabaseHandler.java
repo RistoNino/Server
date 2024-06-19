@@ -55,7 +55,7 @@ public class DatabaseHandler {
 
     private static DatabaseHandler instance = new DatabaseHandler();
     private DatabaseHandler() {}
-    public static DatabaseHandler getInstance() {return instance; }
+    public static DatabaseHandler getInstance() { return instance; }
 
     public void openConnection()  {
         try {

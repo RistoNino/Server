@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import org.uid.ristonino.server.controller.dialog.ModalCategoryController;
+import org.uid.ristonino.server.model.services.CategoryService;
 import org.uid.ristonino.server.model.services.IngredientsService;
 import org.uid.ristonino.server.model.services.MenuService;
 import org.uid.ristonino.server.model.types.*;
@@ -30,6 +31,8 @@ public class MenuController {
     private MenuService menuService = new MenuService();
     private Menu m = menuService.getMenu();
     private IngredientsService IngredientsService = new IngredientsService();
+    private CategoryService categoryService = new CategoryService();
+
 
     ObservableList<Categoria> categories;
     ObservableList<Item> items;
@@ -96,6 +99,15 @@ public class MenuController {
     @FXML
     public void addCategory(ActionEvent actionEvent) {
         sceneHandler.createModalCategory();
-        // qui dovrei aggiornare l'observable list ma non so come prendere l'oggetto Categoria da ModalCategoryModel
+    }
+
+    @FXML
+    public void deleteCategory(ActionEvent actionEvent) {
+        // notifica sei sicuro?
+
+
+        System.out.println(categoriaListView.getSelectionModel().getSelectedItem().getIdCategoria());
+//        categories.remove();
+//        categoryService.removeCategory()
     }
 }

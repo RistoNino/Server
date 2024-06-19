@@ -15,7 +15,7 @@ public class ImpostazioniController {
     public BorderPane impostazioniBorder;
 
     public void initialize(){
-        System.out.println("Impostazioni");
+        //System.out.println("Impostazioni");
     }
 
     public void addLogo(MouseEvent event) {

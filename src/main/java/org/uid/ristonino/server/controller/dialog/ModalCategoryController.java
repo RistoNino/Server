@@ -15,11 +15,19 @@ public class ModalCategoryController {
     private final SceneHandler sceneHandler = SceneHandler.getInstance();
     private final CategoryService categoryService = CategoryService.getInstance();
     private MenuController menuController = MenuController.getInstance();
+
+    private Stage stage;
+
     @FXML
     private Button createCategoryBtn;
 
     @FXML
     private TextField nameTextField;
+
+    @FXML
+    public void closeHandle(ActionEvent event) {
+        sceneHandler.closeModal();
+    }
 
 
     @FXML
@@ -35,6 +43,8 @@ public class ModalCategoryController {
             if (categoryService.addCategory(categoria)) {
                 menuController.addCategoryObservableList(categoria);
             }
+            nameTextField.clear();
+            sceneHandler.closeModal();
         }
     }
 }

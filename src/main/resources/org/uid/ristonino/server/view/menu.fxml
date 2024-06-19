@@ -30,7 +30,7 @@
                                                 <Insets right="10.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button fx:id="rimuoviCategoriaBtn" mnemonicParsing="false" text="Rimuovi Categoria" />
+                                          <Button fx:id="rimuoviCategoriaBtn" mnemonicParsing="false" text="Rimuovi Categoria" onAction="#deleteCategory" />
                                        </children>
                                        <VBox.margin>
                                           <Insets bottom="5.0" top="5.0" />
