@@ -8,7 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.uid.ristonino.server.controller.dialog.ModalCategoryController;
-import org.uid.ristonino.server.controller.dialog.ModalController;
 import org.uid.ristonino.server.model.Debug;
 
 import java.io.IOException;
@@ -123,12 +122,9 @@ public class SceneHandler {
             modal.initModality(Modality.APPLICATION_MODAL);
             modal.initOwner(stage);
             modal.setTitle("Crea Categoria");
-            ModalCategoryController dc = new ModalCategoryController();
-            dc.setModal(modal);
 
             Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "dialogMenu/dialog.fxml"));
             modal.setScene(modalScene);
-
             modal.showAndWait();
         }
         catch (IOException e) {

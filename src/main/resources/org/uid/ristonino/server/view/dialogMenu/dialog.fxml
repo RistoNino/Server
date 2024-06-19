@@ -18,7 +18,6 @@
           <ButtonBar prefHeight="40.0" prefWidth="200.0">
               <buttons>
                   <Button fx:id="createCategoryBtn" mnemonicParsing="false" text="Crea" onAction="#createCategory" />
-                  <Button fx:id="exitButton" mnemonicParsing="false" text="Chiudi" onAction="#handleClose" />
               </buttons>
           </ButtonBar>
       </expandableContent></DialogPane>

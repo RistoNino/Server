@@ -85,6 +85,7 @@ public class MenuController {
     public void addCategory(ActionEvent actionEvent) {
         // apri modal e ottieni dati
         sceneHandler.createModalCategory();
+
         categoriaListView.refresh();
     }
 }

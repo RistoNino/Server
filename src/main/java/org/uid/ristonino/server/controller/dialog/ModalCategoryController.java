@@ -9,7 +9,7 @@ import org.uid.ristonino.server.model.services.CategoryService;
 import org.uid.ristonino.server.model.types.Categoria;
 import org.uid.ristonino.server.view.SceneHandler;
 
-public class ModalCategoryController implements ModalController {
+public class ModalCategoryController {
 
     private final SceneHandler sceneHandler = SceneHandler.getInstance();
     private final CategoryService categoryService = CategoryService.getInstance();
@@ -17,35 +17,21 @@ public class ModalCategoryController implements ModalController {
     @FXML
     private Button createCategoryBtn;
 
-    private Stage modal;
     @FXML
     private TextField nameTextField;
 
 
     @FXML
-    public void createCategory(ActionEvent actionEvent) {
+    public Categoria createCategory(ActionEvent actionEvent) {
+        // CHECK WITH REGEX
         if (nameTextField.getText().isEmpty()) {
             sceneHandler.createErrorMessage("Il nome della categoria non può essere vuoto");
+            return null;
         }
         else {
             Categoria categoria = new Categoria(nameTextField.getText());
             categoryService.addCategory(categoria);
-            modal.close();
+            return categoria;
         }
-    }
-
-    @FXML
-    private void handleClose() {
-        if (modal != null) {
-            modal.close();
-        }
-        else {
-            System.out.println("the modal is null");
-        }
-    }
-
-    @Override
-    public void setModal(Stage modal) {
-        this.modal = modal;
     }
 }
