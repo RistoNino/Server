@@ -5,7 +5,10 @@ package org.uid.ristonino.server.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.uid.ristonino.server.controller.dialog.ModalCategoryController;
+import org.uid.ristonino.server.controller.dialog.ModalController;
 import org.uid.ristonino.server.model.Debug;
 
 import java.io.IOException;
@@ -85,6 +88,11 @@ public class SceneHandler {
         return fxmlLoader.load();
     }
 
+    private <T> T getControllerClass(String resourceName) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
+        return fxmlLoader.getController();
+    }
+
     public void createHomeScene() {
         try {
             scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
@@ -108,6 +116,27 @@ public class SceneHandler {
             setResolution();
         }
     }
+
+    public void createModalCategory() {
+        try {
+            Stage modal = new Stage();
+            modal.initModality(Modality.APPLICATION_MODAL);
+            modal.initOwner(stage);
+            modal.setTitle("Crea Categoria");
+            ModalCategoryController dc = new ModalCategoryController();
+            dc.setModal(modal);
+
+            Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "dialogMenu/dialog.fxml"));
+            modal.setScene(modalScene);
+
+            modal.showAndWait();
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void createErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

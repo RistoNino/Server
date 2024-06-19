@@ -7,12 +7,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
+import javafx.stage.Stage;
+import org.uid.ristonino.server.controller.dialog.ModalCategoryController;
 import org.uid.ristonino.server.model.services.IngredientsService;
 import org.uid.ristonino.server.model.services.MenuService;
 import org.uid.ristonino.server.model.types.*;
+import org.uid.ristonino.server.view.SceneHandler;
 
 public class MenuController {
 
+    private SceneHandler sceneHandler = SceneHandler.getInstance();
     private MenuService menuService = new MenuService();
     private Menu m = menuService.getMenu();
     private IngredientsService IngredientsService = new IngredientsService();
@@ -74,8 +78,13 @@ public class MenuController {
         flagListView.setItems(flags);
         IngredientiListView.setItems(ingredientes);
     }
+
+
+
     @FXML
     public void addCategory(ActionEvent actionEvent) {
         // apri modal e ottieni dati
+        sceneHandler.createModalCategory();
+        categoriaListView.refresh();
     }
 }
