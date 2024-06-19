@@ -7,7 +7,7 @@ import org.uid.ristonino.server.model.types.Ingrediente;
 import java.util.ArrayList;
 
 public class CategoryService {
-    private ArrayList<Categoria> i = new ArrayList<>();
+    private ArrayList<Categoria> i;
     private final DatabaseHandler db = DatabaseHandler.getInstance();
 
     private static CategoryService instance = new CategoryService();

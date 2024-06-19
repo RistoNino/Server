@@ -14,7 +14,17 @@ import org.uid.ristonino.server.model.services.MenuService;
 import org.uid.ristonino.server.model.types.*;
 import org.uid.ristonino.server.view.SceneHandler;
 
+import java.util.ArrayList;
+
 public class MenuController {
+
+    private static MenuController instance = null;
+
+    public MenuController() { instance = this; }
+
+    public static MenuController getInstance() {
+        return instance;
+    }
 
     private SceneHandler sceneHandler = SceneHandler.getInstance();
     private MenuService menuService = new MenuService();
@@ -79,13 +89,13 @@ public class MenuController {
         IngredientiListView.setItems(ingredientes);
     }
 
-
+    public void addCategoryObservableList(Categoria categoria) {
+        categories.add(categoria);
+    }
 
     @FXML
     public void addCategory(ActionEvent actionEvent) {
-        // apri modal e ottieni dati
         sceneHandler.createModalCategory();
-
-        categoriaListView.refresh();
+        // qui dovrei aggiornare l'observable list ma non so come prendere l'oggetto Categoria da ModalCategoryModel
     }
 }
