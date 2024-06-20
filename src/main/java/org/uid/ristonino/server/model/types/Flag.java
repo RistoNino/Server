@@ -1,12 +1,16 @@
 package org.uid.ristonino.server.model.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public class Flag {
     private int Id;
     private String Name;
     @JsonIgnore
     private String pathImage;
+    @JsonIgnore
+    private BooleanProperty selected = new SimpleBooleanProperty(false);
 
 
 
@@ -48,6 +52,22 @@ public class Flag {
 
     public void setBase64(String base64) {
         this.base64 = base64;
+    }
+
+
+    // Getter per la proprietà osservabile
+    public BooleanProperty selectedProperty() {
+        return selected;
+    }
+
+    // Getter per il valore della proprietà
+    public boolean isSelected() {
+        return selected.get();
+    }
+
+    // Setter per il valore della proprietà
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
     }
 
     @Override

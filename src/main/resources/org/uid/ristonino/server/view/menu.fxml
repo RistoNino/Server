@@ -48,7 +48,7 @@
                                 <center>
                                     <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                         <children>
-                                          <ListView fx:id="IngredientiListView" prefHeight="200.0" prefWidth="200.0" />
+                                          <ListView fx:id="ingredientiListView" prefHeight="200.0" prefWidth="200.0" />
                                     <HBox>
                                        <children>
                                                   <Button fx:id="creaIngredientiBtn" mnemonicParsing="false" onAction="#addIngredient" text="Crea Ingrediente">
@@ -56,7 +56,7 @@
                                                 <Insets right="10.0" />
                                              </HBox.margin>
                                           </Button>
-                                                  <Button fx:id="rimuoviIngredientiBtn" mnemonicParsing="false" text="Rimuovi Ingrediente" />
+                                                  <Button fx:id="rimuoviIngredientiBtn" mnemonicParsing="false" onAction="#deleteIngredient" text="Rimuovi Ingrediente" />
                                        </children>
                                        <VBox.margin>
                                           <Insets bottom="5.0" top="5.0" />
@@ -83,7 +83,7 @@
                                             <ListView fx:id="articoliListView" prefHeight="200.0" prefWidth="200.0" />
                                             <HBox>
                                                 <children>
-                                                    <Button fx:id="creaArticoloBtn" mnemonicParsing="false" text="Crea Articolo">
+                                                    <Button fx:id="creaArticoloBtn" mnemonicParsing="false" text="Crea Articolo" onAction="#addItem">
                                                         <HBox.margin>
                                                             <Insets right="10.0" />
                                                         </HBox.margin>
