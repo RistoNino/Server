@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
@@ -16,6 +17,7 @@ import org.uid.ristonino.server.model.types.*;
 import org.uid.ristonino.server.view.SceneHandler;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class MenuController {
 
@@ -121,8 +123,16 @@ public class MenuController {
     @FXML
     public void deleteCategory(ActionEvent actionEvent) {
         // notifica sei sicuro?
+        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina categoria", "Sei sicuro di volere eleminare questa categoria?", "Questa azione è irreversibile");
+        if (result.get() == ButtonType.OK) {
+            Categoria c = categoriaListView.getSelectionModel().getSelectedItem();
+            categories.remove(c);
+            categoryService.removeCategory(c);
+        }
+        else {
 
-       // System.out.println(categoriaListView.getSelectionModel().getSelectedItem().getIdCategoria());
+        }
+        // System.out.println(categoriaListView.getSelectionModel().getSelectedItem().getIdCategoria());
 //        categories.remove();
 //        categoryService.removeCategory()
     }

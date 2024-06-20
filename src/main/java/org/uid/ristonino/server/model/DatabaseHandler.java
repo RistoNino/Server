@@ -33,7 +33,6 @@ public class DatabaseHandler {
     private final String getFlags = "SELECT * FROM Flags;";
     //private final String createOrder = "INSERT INTO Orders (IdTable) VALUES (?);";
     private final String putItemsInOrder = "INSERT INTO Orders_Items (IdOrder, IdItem, Quantity, Note) VALUES (?,?,?,?)";
-
     private final String getOrdini="SELECT o.Id AS OrderId, i.Id AS ItemId, i.Name, oi.Quantity, i.Price, oi.Note AS ItemNote, t.Id AS TableId FROM Items AS i JOIN Orders_Items AS oi ON i.Id = oi.IdItem JOIN Orders AS o ON oi.IdOrder = o.Id JOIN Tables AS t ON o.IdTable = t.Id;";
     private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
     private final String getOrdiniPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 1;";
@@ -41,17 +40,13 @@ public class DatabaseHandler {
     private final String getPagatiONo ="SELECT IdTable, Pagato FROM Orders;";
     private final String removeOrders_Item="DELETE FROM Orders_Items WHERE IdOrder IN (SELECT Id FROM Orders WHERE IdTable = ?);";
     private final String updatePayState="UPDATE Orders SET Pagato = ? WHERE IdTable = ?";
-
-
-
-
     private final String getIngredients = "SELECT * FROM Ingredients;";
+    private final String removeCategory = "DELETE FROM Categories WHERE Id = ?;";
 
     OrderService allOrders;
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
 
-    // classe singleton
 
     private static DatabaseHandler instance = new DatabaseHandler();
     private DatabaseHandler() {}
@@ -176,17 +171,13 @@ public class DatabaseHandler {
         try {
             PreparedStatement deleteOrdersItemsStmt = con.prepareStatement(removeOrders_Item);
             //PreparedStatement deleteOrdersStmt = con.prepareStatement(removeOrders);
-
             deleteOrdersItemsStmt.setInt(1, id);
-
             deleteOrdersItemsStmt.executeUpdate();
-
-            System.out.println("Ordine rimosso con successo per il tavolo con ID: " + id);
+            // System.out.println("Ordine rimosso con successo per il tavolo con ID: " + id);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 
@@ -283,7 +274,6 @@ public class DatabaseHandler {
     }
 
 
-
     public int createOrder(Ordine ord) {
         try {
             PreparedStatement st = con.prepareStatement(createOrder, Statement.RETURN_GENERATED_KEYS);
@@ -353,9 +343,23 @@ public class DatabaseHandler {
                 rs.next();
                 int idIngredient = rs.getInt(1);
                 ing.setId(idIngredient);
+                st.close();
                 return idIngredient;
             }
+            st.close();
             return -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean removeCategory(int idCategoria) {
+        try {
+            PreparedStatement st = con.prepareStatement(removeCategory);
+            st.setInt(1,idCategoria);
+            int rows = st.executeUpdate();
+            st.close();
+            return rows > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

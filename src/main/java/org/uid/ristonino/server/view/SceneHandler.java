@@ -5,6 +5,7 @@ package org.uid.ristonino.server.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.uid.ristonino.server.controller.dialog.ModalCategoryController;
@@ -12,6 +13,7 @@ import org.uid.ristonino.server.model.Debug;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class SceneHandler {
     private Stage stage;
@@ -137,6 +139,13 @@ public class SceneHandler {
         }
     }
 
+    public Optional<ButtonType> createConfirmation(String title, String header, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        return alert.showAndWait();
+    }
 
     public void createErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -22,4 +22,8 @@ public class CategoryService {
     public boolean addCategory(Categoria c) {
         return i.add(c) && db.createCategory(c) >= 0;
     }
+
+    public boolean removeCategory(Categoria selectedItem) {
+        return i.remove(selectedItem) && db.removeCategory(selectedItem.getIdCategoria());
+    }
 }
