@@ -21,7 +21,7 @@ public class DatabaseHandler {
     private final String createCategory = "INSERT INTO Categories (name) VALUES (?);";
     private final String inserisciPiatto = "INSERT INTO Items (name, category_id, description, price) VALUES (?, ?, ?, ?);";
     private final String inserisci = "INSERT INTO Items_Ingredients (Item_Id, Ingredient_Id) VALUES (?, ?);";
-    private final String inserisciIngrediente = "INSERT INTO Ingredients (name) VALUES (?);";
+    private final String createIngredient = "INSERT INTO Ingredients (name) VALUES (?);";
     private final String checkPasswordSt = "SELECT Password FROM Users WHERE Username = ?;";
     private final String createUser = "INSERT INTO Users (Username, Password, PrivilegesLevel) VALUES (?, ?, ?);";
     private final String checkUsername = "SELECT Username FROM Users WHERE Username = ?;";
@@ -339,6 +339,23 @@ public class DatabaseHandler {
             }
             st.close();
             return ingredients;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int createIngredient(Ingrediente ing) {
+        try {
+            PreparedStatement st = con.prepareStatement(createIngredient, Statement.RETURN_GENERATED_KEYS);
+            st.setString(1,ing.getName());
+            if (st.executeUpdate() > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+                int idIngredient = rs.getInt(1);
+                ing.setId(idIngredient);
+                return idIngredient;
+            }
+            return -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

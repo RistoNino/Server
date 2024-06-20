@@ -121,13 +121,13 @@ public class SceneHandler {
         modalStage.close();
     }
 
-    public void createModalCategory() {
+    public void createModal(String titleModal, String pathModal) {
         try {
             modalStage = new Stage();
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.initOwner(stage);
-            modalStage.setTitle("Crea Categoria");
-            Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "dialogMenu/dialog.fxml"));
+            modalStage.setTitle(titleModal);
+            Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "dialogMenu/" + pathModal));
             modalStage.setScene(modalScene);
             modalStage.showAndWait();
         }

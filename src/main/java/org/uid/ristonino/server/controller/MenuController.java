@@ -34,8 +34,13 @@ public class MenuController {
     private CategoryService categoryService = new CategoryService();
 
 
+
+
     ObservableList<Categoria> categories;
     ObservableList<Item> items;
+
+
+
     ObservableList<Flag> flags;
     ObservableList<Ingrediente> ingredientes;
 
@@ -95,19 +100,46 @@ public class MenuController {
     public void addCategoryObservableList(Categoria categoria) {
         categories.add(categoria);
     }
+//    public void addIngredientObservableList(Categoria categoria) {
+//        categories.add(categoria);
+//    }
+
+    public <T> void addObjectObservableList(T object, ObservableList<T> observableList) {
+        observableList.add(object);
+    }
 
     @FXML
     public void addCategory(ActionEvent actionEvent) {
-        sceneHandler.createModalCategory();
+        sceneHandler.createModal("Crea categoria", "dialog.fxml");
+    }
+
+    @FXML
+    public void addIngredient(ActionEvent actionEvent) {
+        sceneHandler.createModal("Crea Ingrediente", "dialog-ingredient.fxml");
     }
 
     @FXML
     public void deleteCategory(ActionEvent actionEvent) {
         // notifica sei sicuro?
 
-
-        System.out.println(categoriaListView.getSelectionModel().getSelectedItem().getIdCategoria());
+       // System.out.println(categoriaListView.getSelectionModel().getSelectedItem().getIdCategoria());
 //        categories.remove();
 //        categoryService.removeCategory()
+    }
+
+    public ObservableList<Ingrediente> getObservableIngredientes() {
+        return ingredientes;
+
+    }
+    public ObservableList<Flag> getObservableFlags() {
+        return flags;
+    }
+
+    public ObservableList<Item> getObservableItems() {
+        return items;
+    }
+
+    public ObservableList<Categoria> getObservableCategories() {
+        return categories;
     }
 }
