@@ -21,7 +21,7 @@ public class DatabaseHandler {
     private final String createCategory = "INSERT INTO Categories (name) VALUES (?);";
     private final String inserisciPiatto = "INSERT INTO Items (name, category_id, description, price) VALUES (?, ?, ?, ?);";
     private final String inserisci = "INSERT INTO Items_Ingredients (Item_Id, Ingredient_Id) VALUES (?, ?);";
-    private final String inserisciIngrediente = "INSERT INTO Ingredients (name) VALUES (?);";
+    private final String createIngredient = "INSERT INTO Ingredients (name) VALUES (?);";
     private final String checkPasswordSt = "SELECT Password FROM Users WHERE Username = ?;";
     private final String createUser = "INSERT INTO Users (Username, Password, PrivilegesLevel) VALUES (?, ?, ?);";
     private final String checkUsername = "SELECT Username FROM Users WHERE Username = ?;";
@@ -31,9 +31,7 @@ public class DatabaseHandler {
     private final String getOrdineDaTavolo = "SELECT o.Id AS OrderId, i.id AS ItemId, Name, oi.Quantity, Price, oi.Note AS ItemNote FROM Items AS i, Orders_Items AS oi, Orders AS o, Tables AS t WHERE i.Id = oi.idItem AND oi.idOrder = o.Id AND o.idTable = t.Id;";
     private final String getIngredientsByItemId = "SELECT Name FROM Ingredients INNER JOIN Items_Ingredients on Ingredients.Id = Items_Ingredients.Ingredient_Id WHERE Items_Ingredients.Item_Id = ?;";
     private final String getFlags = "SELECT * FROM Flags;";
-    //private final String createOrder = "INSERT INTO Orders (IdTable) VALUES (?);";
     private final String putItemsInOrder = "INSERT INTO Orders_Items (IdOrder, IdItem, Quantity, Note) VALUES (?,?,?,?)";
-
     private final String getOrdini="SELECT o.Id AS OrderId, i.Id AS ItemId, i.Name, oi.Quantity, i.Price, oi.Note AS ItemNote, t.Id AS TableId FROM Items AS i JOIN Orders_Items AS oi ON i.Id = oi.IdItem JOIN Orders AS o ON oi.IdOrder = o.Id JOIN Tables AS t ON o.IdTable = t.Id;";
     private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
     private final String getOrdiniPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 1;";
@@ -41,21 +39,18 @@ public class DatabaseHandler {
     private final String getPagatiONo ="SELECT IdTable, Pagato FROM Orders;";
     private final String removeOrders_Item="DELETE FROM Orders_Items WHERE IdOrder IN (SELECT Id FROM Orders WHERE IdTable = ?);";
     private final String updatePayState="UPDATE Orders SET Pagato = ? WHERE IdTable = ?";
-
-
-
-
     private final String getIngredients = "SELECT * FROM Ingredients;";
+    private final String removeCategory = "DELETE FROM Categories WHERE Id = ?;";
+    private final String removeIngredient = "DELETE FROM Ingredients WHERE Id = ?;";
 
     OrderService allOrders;
     private final String url = "jdbc:sqlite:RistoNino.db";
     Connection con;
 
-    // classe singleton
 
     private static DatabaseHandler instance = new DatabaseHandler();
     private DatabaseHandler() {}
-    public static DatabaseHandler getInstance() {return instance; }
+    public static DatabaseHandler getInstance() { return instance; }
 
     public void openConnection()  {
         try {
@@ -176,17 +171,13 @@ public class DatabaseHandler {
         try {
             PreparedStatement deleteOrdersItemsStmt = con.prepareStatement(removeOrders_Item);
             //PreparedStatement deleteOrdersStmt = con.prepareStatement(removeOrders);
-
             deleteOrdersItemsStmt.setInt(1, id);
-
             deleteOrdersItemsStmt.executeUpdate();
-
-            System.out.println("Ordine rimosso con successo per il tavolo con ID: " + id);
+            // System.out.println("Ordine rimosso con successo per il tavolo con ID: " + id);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 
@@ -283,7 +274,6 @@ public class DatabaseHandler {
     }
 
 
-
     public int createOrder(Ordine ord) {
         try {
             PreparedStatement st = con.prepareStatement(createOrder, Statement.RETURN_GENERATED_KEYS);
@@ -339,6 +329,47 @@ public class DatabaseHandler {
             }
             st.close();
             return ingredients;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int createIngredient(Ingrediente ing) {
+        try {
+            PreparedStatement st = con.prepareStatement(createIngredient, Statement.RETURN_GENERATED_KEYS);
+            st.setString(1,ing.getName());
+            if (st.executeUpdate() > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+                int idIngredient = rs.getInt(1);
+                ing.setId(idIngredient);
+                st.close();
+                return idIngredient;
+            }
+            st.close();
+            return -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean removeCategory(int id) {
+        try {
+            PreparedStatement st = con.prepareStatement(removeCategory);
+            st.setInt(1,id);
+            int rows = st.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean removeIngredient(int id) {
+        try {
+            PreparedStatement st = con.prepareStatement(removeIngredient);
+            st.setInt(1,id);
+            int rows = st.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

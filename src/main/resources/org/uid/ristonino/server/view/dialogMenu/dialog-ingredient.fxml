@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.server.controller.dialog.ModalIngredientController">
+    <DialogPane expanded="true">
+        <header>
+            <Label fx:id="headerLabel" text="Crea Ingrediente" />
+        </header>
+        <content>
+            <VBox>
+                <Label fx:id="nameLabel" text="Nome" />
+                <TextField fx:id="nameTextField" />
+            </VBox>
+        </content>
+        <expandableContent>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                <buttons>
+                    <Button fx:id="createCategoryBtn" mnemonicParsing="false" text="Crea" onAction="#createIngredient" />
+                    <Button fx:id="closeModalBtn" mnemonicParsing="false" text="Chiudi" onAction="#closeHandle" />
+                </buttons>
+            </ButtonBar>
+        </expandableContent>
+    </DialogPane>
+</AnchorPane>

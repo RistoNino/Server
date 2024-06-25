@@ -7,7 +7,7 @@ import org.uid.ristonino.server.model.types.Ingrediente;
 import java.util.ArrayList;
 
 public class CategoryService {
-    private ArrayList<Categoria> i = new ArrayList<>();
+    private ArrayList<Categoria> i;
     private final DatabaseHandler db = DatabaseHandler.getInstance();
 
     private static CategoryService instance = new CategoryService();
@@ -19,7 +19,15 @@ public class CategoryService {
     public ArrayList<Categoria> getCategories() {
         return i;
     }
+
     public boolean addCategory(Categoria c) {
         return i.add(c) && db.createCategory(c) >= 0;
     }
+
+    public void removeCategory(Categoria selectedItem) {
+        i.remove(selectedItem);
+        db.removeCategory(selectedItem.getIdCategoria());
+    }
+
+
 }

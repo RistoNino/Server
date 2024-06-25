@@ -5,15 +5,20 @@ package org.uid.ristonino.server.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.uid.ristonino.server.controller.dialog.ModalCategoryController;
 import org.uid.ristonino.server.model.Debug;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class SceneHandler {
     private Stage stage;
     private Scene scene;
+    private Stage modalStage;
     // Path
     private final static String SCENE_PATH = "/org/uid/ristonino/server/";
     private final static String CSS_PATH = SCENE_PATH + "css/";
@@ -85,6 +90,11 @@ public class SceneHandler {
         return fxmlLoader.load();
     }
 
+    private <T> T getControllerClass(String resourceName) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
+        return fxmlLoader.getController();
+    }
+
     public void createHomeScene() {
         try {
             scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
@@ -107,6 +117,34 @@ public class SceneHandler {
         } finally {
             setResolution();
         }
+    }
+
+    public void closeModal() {
+        modalStage.close();
+    }
+
+    public void createModal(String titleModal, String pathModal) {
+        try {
+            modalStage = new Stage();
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.initOwner(stage);
+            modalStage.setTitle(titleModal);
+            Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "dialogMenu/" + pathModal));
+            modalStage.setScene(modalScene);
+            modalStage.showAndWait();
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<ButtonType> createConfirmation(String title, String header, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        return alert.showAndWait();
     }
 
     public void createErrorMessage(String message) {
