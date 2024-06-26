@@ -6,7 +6,7 @@ import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
 import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.Debug;
-import org.uid.ristonino.server.model.ImageBase64Encoder;
+import org.uid.ristonino.server.model.ImageUtil;
 import org.uid.ristonino.server.model.types.Menu;
 
 import java.io.IOException;
@@ -37,9 +37,10 @@ public class MenuService {
     public Future<JsonObject> getAllItems() {
 
 
-        ImageBase64Encoder conv = new ImageBase64Encoder();
+        ImageUtil conv = new ImageUtil();
         for (int i = 0; i < m.getFlags().size(); i++) {
             String path = Debug.PATH + m.getFlags().get(i).getPathImage();
+            System.out.println(path);
                 // dovremmo implementare il webserver che da proprio le immagini
             try {
                 m.getFlags().get(i).setBase64(conv.encodeImageToBase64(path));

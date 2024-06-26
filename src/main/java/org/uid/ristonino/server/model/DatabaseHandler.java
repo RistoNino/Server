@@ -19,8 +19,14 @@ public class DatabaseHandler {
     // lista query, da finire
 
     private final String createCategory = "INSERT INTO Categories (name) VALUES (?);";
-    private final String inserisciPiatto = "INSERT INTO Items (name, category_id, description, price) VALUES (?, ?, ?, ?);";
-    private final String inserisci = "INSERT INTO Items_Ingredients (Item_Id, Ingredient_Id) VALUES (?, ?);";
+    private final String createItem = "INSERT INTO Items (Name, Description, PathImage, Price, Category_Id) VALUES (?, ?, ?, ?, ?);";
+    private final String addIngredientsToItem = "INSERT INTO Items_Ingredients (Item_Id, Ingredient_Id) VALUES (?, ?);";
+    private final String addFlagsToItem = "INSERT INTO Items_Flags (Item_Id, Flag_Id) VALUES (?, ?);";
+    private final String deleteItem = "DELETE FROM Items WHERE Id = ?;";
+    private final String removeIngredientsFromItem = "DELETE FROM Items_Ingredients WHERE Item_Id = ?;";
+    private final String removeFlagsFromItem = "DELETE FROM Items_Flags WHERE Item_Id = ?;";
+    private final String createFlag = "INSERT INTO Flags (Name, PathImage) VALUES (?,?)";
+    private final String deleteFlag = "DELETE FROM Flags WHERE Id = ?;";
     private final String createIngredient = "INSERT INTO Ingredients (name) VALUES (?);";
     private final String checkPasswordSt = "SELECT Password FROM Users WHERE Username = ?;";
     private final String createUser = "INSERT INTO Users (Username, Password, PrivilegesLevel) VALUES (?, ?, ?);";
@@ -304,13 +310,31 @@ public class DatabaseHandler {
     public int createCategory(Categoria c) {
         try {
             PreparedStatement st = con.prepareStatement(createCategory, Statement.RETURN_GENERATED_KEYS);
-            st.setString(1,c.getNome());
+            st.setString(1,c.getName());
             if (st.executeUpdate() > 0) {
                 ResultSet rs = st.getGeneratedKeys();
                 rs.next();
                 int idCategory = rs.getInt(1);
-                c.setIdCategoria(idCategory);
+                c.setId(idCategory);
                 return idCategory;
+            }
+            return -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int createFlag(Flag f) {
+        try {
+            PreparedStatement st = con.prepareStatement(createFlag, Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, f.getName());
+            st.setString(2, f.getPathImage());
+            if (st.executeUpdate() > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+                int idFlag = rs.getInt(1);
+                f.setId(idFlag);
+                return idFlag;
             }
             return -1;
         } catch (SQLException e) {
@@ -353,6 +377,78 @@ public class DatabaseHandler {
         }
     }
 
+    public boolean createItem(Item item) {
+        PreparedStatement createItemStatement = null;
+        PreparedStatement addIngredientsStatement = null;
+        PreparedStatement addFlagsStatement = null;
+        ResultSet rs = null;
+
+        try {
+            con.setAutoCommit(false);
+            // Name, Description, PathImage, Price, Category_Id
+            createItemStatement = con.prepareStatement(createItem, Statement.RETURN_GENERATED_KEYS);
+            createItemStatement.setString(1, item.getName());
+            createItemStatement.setString(2, item.getDescription());
+            createItemStatement.setString(3, item.getPathImage());
+            createItemStatement.setDouble(4, item.getPrice());
+            createItemStatement.setInt(5, item.getCategory()); // TODO: sostiture con get dell'oggetto categoria e get id
+
+            if (createItemStatement.executeUpdate() > 0) {
+                rs = createItemStatement.getGeneratedKeys();
+                rs.next();
+                int idItem = rs.getInt(1);
+                item.setId(idItem);
+
+
+                addIngredientsStatement = con.prepareStatement(addIngredientsToItem);
+                ArrayList<Ingrediente> ingredients = item.getIngredientes();
+                // aggiungo gli ingredienti alla tabella n:m
+                for (int i = 0; i < ingredients.size(); i++) {
+                    addIngredientsStatement.setInt(1, idItem);
+                    addIngredientsStatement.setInt(2, ingredients.get(i).getId());
+                    addIngredientsStatement.addBatch();
+                }
+                addIngredientsStatement.executeBatch();
+
+
+                addFlagsStatement = con.prepareStatement(addFlagsToItem);
+                ArrayList<Flag> flags = item.getFlags();
+                // aggiungo le flags
+                for (int i = 0; i < flags.size(); i++) {
+                    addFlagsStatement.setInt(1, idItem);
+                    addFlagsStatement.setInt(2, flags.get(i).getId());
+                    addFlagsStatement.addBatch();
+                }
+                addFlagsStatement.executeBatch();
+
+                con.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            try {
+                // Rollback in caso di errore
+                con.rollback();
+            } catch (SQLException rollback) {
+                rollback.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (createItemStatement != null) createItemStatement.close();
+                if (addIngredientsStatement != null) addIngredientsStatement.close();
+                if (addFlagsStatement != null) addFlagsStatement.close();
+                con.setAutoCommit(true); // Ripristina l'auto-commit
+            } catch (SQLException closeEx) {
+                closeEx.printStackTrace();
+                throw new RuntimeException(closeEx);
+            }
+        }
+        return false;
+    }
+
     public boolean removeCategory(int id) {
         try {
             PreparedStatement st = con.prepareStatement(removeCategory);
@@ -374,4 +470,33 @@ public class DatabaseHandler {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteItem(Item item) {
+        try {
+            PreparedStatement deleteItemStatement = con.prepareStatement(deleteItem, Statement.RETURN_GENERATED_KEYS);
+            deleteItemStatement.setInt(1, item.getId());
+            if (deleteItemStatement.executeUpdate() > 0) {
+                deleteItemStatement.close();
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean removeFlag(Flag f) {
+        try {
+            PreparedStatement deleteItemStatement = con.prepareStatement(deleteFlag, Statement.RETURN_GENERATED_KEYS);
+            deleteItemStatement.setInt(1, f.getId());
+            if (deleteItemStatement.executeUpdate() > 0) {
+                deleteItemStatement.close();
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

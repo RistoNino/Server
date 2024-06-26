@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -15,6 +16,9 @@ import org.uid.ristonino.server.model.services.OrderService;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.model.types.Ordine;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -29,6 +33,7 @@ public class ApiHandler extends AbstractVerticle {
 
         router.route().handler(BodyHandler.create());
         router.get("/api/menu").handler(this::getAllItems);
+        router.get("/api/images/:file").handler(this::getImage);
         router.post("/api/orders").handler(this::createOrder);
 
         vertx.createHttpServer()
@@ -42,12 +47,36 @@ public class ApiHandler extends AbstractVerticle {
                 });
     }
 
+
     private void getAllItems(RoutingContext routingContext) {
         menuService.getAllItems().onSuccess(items -> {
             routingContext.response()
                     .putHeader("content-type", "application/json")
                     .end(io.vertx.core.json.Json.encodePrettily(items));
         });
+    }
+
+
+
+    private void getImage(RoutingContext routingContext) {
+        String param = routingContext.request().getParam("file");
+        String imagePath = Debug.PATH + "images/" + param;
+        //System.out.println(imagePath);
+        try(InputStream inputStream = ApiHandler.class.getResourceAsStream(imagePath)) {
+            if (inputStream == null) {
+                routingContext.response().setStatusCode(404).end("Image not found");
+                return;
+            }
+            Buffer imageBuffer = Buffer.buffer(inputStream.readAllBytes());
+            String contentType = getContentType(param);
+
+            routingContext.response().putHeader("Content-Type", contentType);
+            routingContext.response().putHeader("Content-Length", String.valueOf(imageBuffer.length()));
+
+            routingContext.response().end(imageBuffer);
+        } catch (IOException e) {
+            routingContext.response().setStatusCode(500).end("Unable to load image");
+        }
     }
 
     private void createOrder(RoutingContext routingContext) {
@@ -90,6 +119,19 @@ public class ApiHandler extends AbstractVerticle {
 
         ordine.setListaOrdine(items);
         return ordine;
+    }
+
+
+    private String getContentType(String fileName) {
+        if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+            return "image/jpeg";
+        } else if (fileName.endsWith(".png")) {
+            return "image/png";
+        } else if (fileName.endsWith(".gif")) {
+            return "image/gif";
+        } else {
+            return "application/octet-stream";
+        }
     }
 
 }

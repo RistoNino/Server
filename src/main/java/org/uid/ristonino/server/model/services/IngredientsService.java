@@ -30,9 +30,9 @@ public class IngredientsService {
          i.remove(ing);
          db.removeIngredient(ing.getId());
     }
-    public static List<Ingrediente> getSelectedIngredients(List<Ingrediente> flags) {
-        return flags.stream()
-                .filter(Ingrediente::isSelected)
-                .collect(Collectors.toList());
-    }
+//    public static List<Ingrediente> getSelectedIngredients(List<Ingrediente> flags) {
+//        return flags.stream()
+//                .filter(Ingrediente::isSelected)
+//                .collect(Collectors.toList());
+//    }
 }

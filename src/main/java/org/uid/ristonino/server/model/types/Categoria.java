@@ -1,32 +1,32 @@
 package org.uid.ristonino.server.model.types;
 
 public class Categoria {
-    private String Nome;
-    private int idCategoria;
+    private String name;
+    private int id;
 
-    public Categoria(String nome) {
-        this.Nome = nome;
+    public Categoria(String name) {
+        this.name = name;
     }
 
-    public Categoria(String nome, int idCategoria) {
-        this.Nome = nome;
-        this.idCategoria = idCategoria;
+    public Categoria(String name, int idCategoria) {
+        this.name = name;
+        this.id = idCategoria;
     }
-    public String getNome() {
-        return Nome;
+    public String getName() {
+        return name;
     }
-    public void setNome(String nome) {
-        Nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
-    public int getIdCategoria() {
-        return idCategoria;
+    public int getId() {
+        return id;
     }
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setId(int idCategoria) {
+        this.id = idCategoria;
     }
 
     @Override
     public String toString() {
-        return Nome;
+        return name;
     }
 }

@@ -8,9 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
-import org.uid.ristonino.server.model.services.CategoryService;
-import org.uid.ristonino.server.model.services.IngredientsService;
-import org.uid.ristonino.server.model.services.MenuService;
+import org.uid.ristonino.server.model.services.*;
 import org.uid.ristonino.server.model.types.*;
 import org.uid.ristonino.server.view.SceneHandler;
 
@@ -31,9 +29,8 @@ public class MenuController {
     private Menu m = menuService.getMenu();
     private IngredientsService ingredientsService = IngredientsService.getInstance();
     private CategoryService categoryService = CategoryService.getInstance();
-
-
-
+    private ItemService itemService = ItemService.getInstance();
+    private FlagService flagService = FlagService.getInstance();
 
     ObservableList<Categoria> categories;
     ObservableList<Item> items;
@@ -129,14 +126,40 @@ public class MenuController {
     }
 
     @FXML
+    public void addFlag(ActionEvent actionEvent) {
+        sceneHandler.createModal("Crea Allergene o altro", "dialog-flag.fxml");
+    }
+
+    @FXML
+    public void deleteFlag(ActionEvent actionEvent) {
+        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina allergene/altro", "Sei sicuro di volere eleminare questo allergene o altro?", "Questa azione è irreversibile");
+        if (result.get() == ButtonType.OK) {
+            Flag f = flagListView.getSelectionModel().getSelectedItem();
+            flags.remove(f);
+            flagService.removeFlag(f);
+        }
+    }
+
+    @FXML
     public void addItem(ActionEvent actionEvent) {
         sceneHandler.createModal("Crea Articolo", "dialog-item.fxml");
+    }
+
+    @FXML
+    public void deleteItem(ActionEvent actionEvent) {
+        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Articolo", "Sei sicuro di volere eleminare questo articolo?", "Questa azione è irreversibile");
+        if (result.get() == ButtonType.OK) {
+            Item i = articoliListView.getSelectionModel().getSelectedItem();
+            items.remove(i);
+            itemService.removeItem(i);
+        }
     }
 
     public ObservableList<Ingrediente> getObservableIngredientes() {
         return ingredientes;
 
     }
+
     public ObservableList<Flag> getObservableFlags() {
         return flags;
     }
