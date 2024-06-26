@@ -60,6 +60,7 @@ public class ApiHandler extends AbstractVerticle {
 
     private void getImage(RoutingContext routingContext) {
         String param = routingContext.request().getParam("file");
+        // make query to get images
         String imagePath = Debug.PATH + "images/" + param;
         //System.out.println(imagePath);
         try(InputStream inputStream = ApiHandler.class.getResourceAsStream(imagePath)) {

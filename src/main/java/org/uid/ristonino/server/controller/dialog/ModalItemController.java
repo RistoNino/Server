@@ -94,19 +94,17 @@ public class ModalItemController {
 
         listViewFlags.setCellFactory(CheckBoxListCell.forListView(flag -> flag.selectedProperty()));
         listViewIngredients.setCellFactory(CheckBoxListCell.forListView(ingrediente -> ingrediente.selectedProperty()));
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        priceTextField.setTextFormatter(new TextFormatter<>(c ->
-                {
-                    if (c.getControlNewText().isEmpty())
-                    {
-                        return c;
-                    }
-                    ParsePosition parsePosition = new ParsePosition( 0 );
-                    Object object = format.parse(c.getControlNewText(), parsePosition);
 
-                    return object == null || parsePosition.getIndex() < c.getControlNewText().length() ? null : c;
-                })
-        );
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            if(change.getControlNewText().matches("(\\d+(\\.|,| *)(\\d+| *))")){
+                return change; //if change is a number
+            } else {
+                change.setText(""); //else make no change
+                return change;
+            }
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        priceTextField.setTextFormatter(textFormatter);
     }
 
     // iterano sulle liste observable
