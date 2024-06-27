@@ -2,7 +2,6 @@ package org.uid.ristonino.server.model.services;
 
 import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.types.Categoria;
-import org.uid.ristonino.server.model.types.Ingrediente;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class CategoryService {
 
     public void removeCategory(Categoria selectedItem) {
         i.remove(selectedItem);
-        db.removeCategory(selectedItem.getIdCategoria());
+        db.removeCategory(selectedItem.getId());
     }
 
 

@@ -22,6 +22,11 @@ public class Flag {
         this.pathImage = pathImage;
     }
 
+    public Flag(String name, String pathImage) {
+        this.Name = name;
+        this.pathImage = pathImage;
+    }
+
     public int getId() {
         return Id;
     }

@@ -88,7 +88,7 @@
                                                             <Insets right="10.0" />
                                                         </HBox.margin>
                                                     </Button>
-                                                    <Button fx:id="rimuoviArticoloBtn" mnemonicParsing="false" text="Rimuovi Articolo" />
+                                                    <Button fx:id="rimuoviArticoloBtn" mnemonicParsing="false" text="Rimuovi Articolo" onAction="#deleteItem" />
                                                 </children>
                                                 <VBox.margin>
                                                     <Insets bottom="5.0" top="5.0" />
@@ -115,11 +115,11 @@
                                       <ListView fx:id="flagListView" prefHeight="200.0" prefWidth="200.0" />
                                     <HBox>
                                        <children>
-                                              <Button fx:id="creaFlagBtn" mnemonicParsing="false" text="Crea Flag">
+                                              <Button fx:id="creaFlagBtn" mnemonicParsing="false" text="Crea Flag" onAction="#addFlag">
                                              <HBox.margin>
                                                 <Insets right="10.0" />
                                              </HBox.margin></Button>
-                                              <Button fx:id="rimuoviFlagBtn" mnemonicParsing="false" text="Rimuovi Flag" />
+                                              <Button fx:id="rimuoviFlagBtn" mnemonicParsing="false" text="Rimuovi Flag" onAction="#deleteFlag"/>
                                        </children>
                                     </HBox>
                                     </children>

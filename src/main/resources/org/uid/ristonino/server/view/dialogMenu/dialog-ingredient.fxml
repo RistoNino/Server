@@ -5,6 +5,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -17,6 +18,7 @@
             <VBox>
                 <Label fx:id="nameLabel" text="Nome" />
                 <TextField fx:id="nameTextField" />
+
             </VBox>
         </content>
         <expandableContent>
