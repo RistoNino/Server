@@ -162,11 +162,17 @@ public class MenuController {
 
     @FXML
     public void deleteItem(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Articolo", "Sei sicuro di volere eleminare questo articolo?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Item i = articoliListView.getSelectionModel().getSelectedItem();
-            items.remove(i);
-            itemService.removeItem(i);
+        Item i = articoliListView.getSelectionModel().getSelectedItem();
+
+        if (i != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Articolo", "Sei sicuro di volere eleminare questo articolo?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+                items.remove(i);
+                itemService.removeItem(i);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun articolo selezionato");
         }
     }
 
