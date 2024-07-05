@@ -106,7 +106,6 @@ public class MenuController {
         if (c != null) {
             Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina categoria", "Sei sicuro di volere eleminare questa categoria?", "Questa azione è irreversibile");
             if (result.get() == ButtonType.OK) {
-
                 categories.remove(c);
                 categoryService.removeCategory(c);
             }
@@ -123,11 +122,16 @@ public class MenuController {
 
     @FXML
     public void deleteIngredient(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Ingrediente", "Sei sicuro di volere eleminare questo ingrediente?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Ingrediente i = ingredientiListView.getSelectionModel().getSelectedItem();
-            ingredientes.remove(i);
-            ingredientsService.removeIngredient(i);
+        Ingrediente i = ingredientiListView.getSelectionModel().getSelectedItem();
+        if (i != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Ingrediente", "Sei sicuro di volere eleminare questo ingrediente?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+                ingredientes.remove(i);
+                ingredientsService.removeIngredient(i);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun ingrediente selezionato");
         }
     }
 
