@@ -142,11 +142,16 @@ public class MenuController {
 
     @FXML
     public void deleteFlag(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina allergene/altro", "Sei sicuro di volere eleminare questo allergene o altro?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Flag f = flagListView.getSelectionModel().getSelectedItem();
-            flags.remove(f);
-            flagService.removeFlag(f);
+        Flag f = flagListView.getSelectionModel().getSelectedItem();
+        if (f != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina allergene/altro", "Sei sicuro di volere eleminare questo allergene o altro?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+                flags.remove(f);
+                flagService.removeFlag(f);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun allergene/altro selezionato");
         }
     }
 
