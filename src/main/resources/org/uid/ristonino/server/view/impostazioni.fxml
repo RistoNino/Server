@@ -16,10 +16,6 @@
                 <Label text="Inserisci Logo: " styleClass="subtitleFont"/>
                 <Button text="LOGO" onMouseClicked="#addLogo" />
             </HBox>
-
         </AnchorPane>
-
     </center>
-
-
 </BorderPane>

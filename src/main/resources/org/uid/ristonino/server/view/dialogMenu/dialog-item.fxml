@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.dialog.ModalItemController">
+<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.modal.ModalItemController">
 <DialogPane expanded="true">
       <header>
          <Label fx:id="headerLabel" text="Crea Articolo" />

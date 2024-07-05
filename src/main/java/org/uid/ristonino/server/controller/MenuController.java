@@ -102,11 +102,16 @@ public class MenuController {
 
     @FXML
     public void deleteCategory(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina categoria", "Sei sicuro di volere eleminare questa categoria?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Categoria c = categoriaListView.getSelectionModel().getSelectedItem();
-            categories.remove(c);
-            categoryService.removeCategory(c);
+        Categoria c = categoriaListView.getSelectionModel().getSelectedItem();
+        if (c != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina categoria", "Sei sicuro di volere eleminare questa categoria?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+                categories.remove(c);
+                categoryService.removeCategory(c);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun categoria selezionata");
         }
     }
 
@@ -117,11 +122,16 @@ public class MenuController {
 
     @FXML
     public void deleteIngredient(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Ingrediente", "Sei sicuro di volere eleminare questo ingrediente?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Ingrediente i = ingredientiListView.getSelectionModel().getSelectedItem();
-            ingredientes.remove(i);
-            ingredientsService.removeIngredient(i);
+        Ingrediente i = ingredientiListView.getSelectionModel().getSelectedItem();
+        if (i != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Ingrediente", "Sei sicuro di volere eleminare questo ingrediente?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+                ingredientes.remove(i);
+                ingredientsService.removeIngredient(i);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun ingrediente selezionato");
         }
     }
 
@@ -132,11 +142,16 @@ public class MenuController {
 
     @FXML
     public void deleteFlag(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina allergene/altro", "Sei sicuro di volere eleminare questo allergene o altro?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Flag f = flagListView.getSelectionModel().getSelectedItem();
-            flags.remove(f);
-            flagService.removeFlag(f);
+        Flag f = flagListView.getSelectionModel().getSelectedItem();
+        if (f != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina allergene/altro", "Sei sicuro di volere eleminare questo allergene o altro?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+                flags.remove(f);
+                flagService.removeFlag(f);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun allergene/altro selezionato");
         }
     }
 
@@ -147,17 +162,22 @@ public class MenuController {
 
     @FXML
     public void deleteItem(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Articolo", "Sei sicuro di volere eleminare questo articolo?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Item i = articoliListView.getSelectionModel().getSelectedItem();
-            items.remove(i);
-            itemService.removeItem(i);
+        Item i = articoliListView.getSelectionModel().getSelectedItem();
+
+        if (i != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina Articolo", "Sei sicuro di volere eleminare questo articolo?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+                items.remove(i);
+                itemService.removeItem(i);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun articolo selezionato");
         }
     }
 
     public ObservableList<Ingrediente> getObservableIngredientes() {
         return ingredientes;
-
     }
 
     public ObservableList<Flag> getObservableFlags() {

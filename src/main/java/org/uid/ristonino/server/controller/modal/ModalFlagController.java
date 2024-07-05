@@ -1,16 +1,13 @@
-package org.uid.ristonino.server.controller.dialog;
+package org.uid.ristonino.server.controller.modal;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import org.uid.ristonino.server.controller.MenuController;
 import org.uid.ristonino.server.model.services.FlagService;
-import org.uid.ristonino.server.model.services.IngredientsService;
 import org.uid.ristonino.server.model.types.Flag;
-import org.uid.ristonino.server.model.types.Ingrediente;
 import org.uid.ristonino.server.view.SceneHandler;
 
 import java.io.File;
@@ -94,7 +91,10 @@ public class ModalFlagController {
 
     @FXML
     public void showImage(ActionEvent actionEvent) {
-        // TODO: mostrare immagine
-        // System.out.println(pathImage);
+        if (pathImage != null && !pathImage.isEmpty()) {
+            sceneHandler.showImagePopup(pathImage);
+        } else {
+            sceneHandler.createErrorMessage("Nessuna immagine caricata");
+        }
     }
 }
