@@ -1,13 +1,10 @@
-package org.uid.ristonino.server.controller.dialog;
+package org.uid.ristonino.server.controller.modal;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
 import org.uid.ristonino.server.controller.MenuController;
 import org.uid.ristonino.server.model.services.IngredientsService;
-import org.uid.ristonino.server.model.types.Categoria;
 import org.uid.ristonino.server.model.types.Ingrediente;
 import org.uid.ristonino.server.view.SceneHandler;
 

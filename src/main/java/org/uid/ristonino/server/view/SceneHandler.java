@@ -6,11 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.uid.ristonino.server.controller.dialog.ModalCategoryController;
 import org.uid.ristonino.server.model.Debug;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -90,11 +94,6 @@ public class SceneHandler {
         return fxmlLoader.load();
     }
 
-    private <T> T getControllerClass(String resourceName) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
-        return fxmlLoader.getController();
-    }
-
     public void createHomeScene() {
         try {
             scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
@@ -154,6 +153,28 @@ public class SceneHandler {
         alert.show();
     }
 
+    public void showImagePopup(String imagePath) {
+        try {
+            modalStage = new Stage();
+            modalStage.initOwner(stage);
+            modalStage.setTitle("Image Preview");
+
+            ImageView imageView = new ImageView(new Image(new FileInputStream(imagePath)));
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(800);
+            imageView.setFitHeight(600);
+
+            StackPane layout = new StackPane();
+            layout.getChildren().add(imageView);
+
+            Scene scene = new Scene(layout);
+            modalStage.setScene(scene);
+            modalStage.showAndWait();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 
     public double sideWidth(double percentage){
         return (stage.widthProperty().getValue()*percentage)/100;

@@ -18,6 +18,6 @@ module org.uid.ristonino.server {
     exports org.uid.ristonino.server.view;
     exports org.uid.ristonino.server;
     opens org.uid.ristonino.server.model to javafx.fxml;
-    exports org.uid.ristonino.server.controller.dialog;
-    opens org.uid.ristonino.server.controller.dialog to javafx.fxml;
+    exports org.uid.ristonino.server.controller.modal;
+    opens org.uid.ristonino.server.controller.modal to javafx.fxml;
 }

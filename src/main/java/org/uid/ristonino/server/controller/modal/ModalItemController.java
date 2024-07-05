@@ -1,31 +1,24 @@
-package org.uid.ristonino.server.controller.dialog;
+package org.uid.ristonino.server.controller.modal;
 
-import javafx.beans.Observable;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxListCell;
 
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
-import org.uid.ristonino.server.controller.HomePageController;
 import org.uid.ristonino.server.controller.MenuController;
-import org.uid.ristonino.server.model.services.CategoryService;
-import org.uid.ristonino.server.model.services.IngredientsService;
 import org.uid.ristonino.server.model.services.ItemService;
 import org.uid.ristonino.server.model.types.Categoria;
 import org.uid.ristonino.server.model.types.Flag;
 import org.uid.ristonino.server.model.types.Ingrediente;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.view.SceneHandler;
-import org.w3c.dom.Text;
 
 import java.io.File;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParsePosition;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 
@@ -96,10 +89,10 @@ public class ModalItemController {
         listViewIngredients.setCellFactory(CheckBoxListCell.forListView(ingrediente -> ingrediente.selectedProperty()));
 
         UnaryOperator<TextFormatter.Change> filter = change -> {
-            if(change.getControlNewText().matches("(\\d+(\\.|,| *)(\\d+| *))")){
-                return change; //if change is a number
+            if (change.getControlNewText().matches("(\\d+(\\.|,| *)(\\d+| *))")){
+                return change;
             } else {
-                change.setText(""); //else make no change
+                change.setText("");
                 return change;
             }
         };
@@ -107,7 +100,6 @@ public class ModalItemController {
         priceTextField.setTextFormatter(textFormatter);
     }
 
-    // iterano sulle liste observable
     public ArrayList<Flag> getSelectedFlags() {
         ArrayList<Flag> selectedFlags = new ArrayList<>();
         for (Flag flag : flags) {
@@ -156,6 +148,12 @@ public class ModalItemController {
         else if (pathImage == null || pathImage.isEmpty()) {
             sceneHandler.createErrorMessage("Caricare un'immagine.");
         }
+        else if (priceTextField.getText().isEmpty()) {
+            sceneHandler.createErrorMessage("Inserire un prezzo");
+        }
+        else if (getSelectedFlags().isEmpty() || getSelectedIngredients().isEmpty()) {
+            sceneHandler.createErrorMessage("Impossibile creare un piatto senza ingredienti o allegeni/flag associati");
+        }
         else {
             Item i = new Item(
                     nameTextField.getText(),
@@ -196,8 +194,11 @@ public class ModalItemController {
 
     @FXML
     public void showImage(ActionEvent actionEvent) {
-        // TODO: mostrare immagine
-        // System.out.println(pathImage);
+        if (pathImage != null && !pathImage.isEmpty()) {
+            sceneHandler.showImagePopup(pathImage);
+        } else {
+            sceneHandler.createErrorMessage("Nessuna immagine caricata");
+        }
     }
 
     @FXML

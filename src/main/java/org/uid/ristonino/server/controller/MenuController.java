@@ -178,7 +178,6 @@ public class MenuController {
 
     public ObservableList<Ingrediente> getObservableIngredientes() {
         return ingredientes;
-
     }
 
     public ObservableList<Flag> getObservableFlags() {
