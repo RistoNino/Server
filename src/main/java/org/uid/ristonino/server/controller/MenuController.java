@@ -102,11 +102,17 @@ public class MenuController {
 
     @FXML
     public void deleteCategory(ActionEvent actionEvent) {
-        Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina categoria", "Sei sicuro di volere eleminare questa categoria?", "Questa azione è irreversibile");
-        if (result.get() == ButtonType.OK) {
-            Categoria c = categoriaListView.getSelectionModel().getSelectedItem();
-            categories.remove(c);
-            categoryService.removeCategory(c);
+        Categoria c = categoriaListView.getSelectionModel().getSelectedItem();
+        if (c != null) {
+            Optional<ButtonType> result = sceneHandler.createConfirmation("Elimina categoria", "Sei sicuro di volere eleminare questa categoria?", "Questa azione è irreversibile");
+            if (result.get() == ButtonType.OK) {
+
+                categories.remove(c);
+                categoryService.removeCategory(c);
+            }
+        }
+        else {
+            sceneHandler.createErrorMessage("Nessun categoria selezionata");
         }
     }
 
