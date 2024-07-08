@@ -5,6 +5,9 @@ import org.uid.ristonino.server.model.types.Table;
 
 import java.util.ArrayList;
 
+
+//TODO:Usare thread negli init
+
 public class TableService {
     private ArrayList<Table> table=new ArrayList<>();
 
