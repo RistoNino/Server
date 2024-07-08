@@ -48,6 +48,8 @@ public class DatabaseHandler {
     private final String getIngredients = "SELECT * FROM Ingredients;";
     private final String removeCategory = "DELETE FROM Categories WHERE Id = ?;";
     private final String removeIngredient = "DELETE FROM Ingredients WHERE Id = ?;";
+    private final String deleteAllTables = "DELETE FROM Tables";
+    private final String deleteAllOrders = "DELETE FROM Orders";
 
     OrderService allOrders;
     private final String url = "jdbc:sqlite:RistoNino.db";
@@ -68,6 +70,8 @@ public class DatabaseHandler {
             Debug.getInstance().print("Error while trying to connect to the database:  " + e.getMessage());
         }
     }
+
+
 
     public void closeConnection()  {
         try {
@@ -129,6 +133,20 @@ public class DatabaseHandler {
         }
         return false;
     }
+
+    public void cleanOrdersAndTables(){
+        try{
+            Statement stmt = con.createStatement();
+            int x=stmt.executeUpdate(deleteAllTables);
+            System.out.println("***!!*: "+x);
+        }catch(SQLException e){
+            System.out.println(e);
+
+        }
+
+
+    }
+
 
 
     public void loadOrder() {

@@ -9,8 +9,9 @@ import org.uid.ristonino.server.view.SceneHandler;
 
 public class MainApplication extends Application {
     DatabaseHandler db = DatabaseHandler.getInstance();
+
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
         SceneHandler.getInstance().init(primaryStage);
     }
 
@@ -24,6 +25,7 @@ public class MainApplication extends Application {
 
     @Override
     public void stop() {
+        db.cleanOrdersAndTables();
         db.closeConnection();
         System.exit(0);
     }
