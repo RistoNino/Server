@@ -14,8 +14,8 @@ public class Item {
     private String pathImage;
     private String base64;
     @JsonIgnore
-    private Categoria category;
-    private int Category; // TODO: replace with object Category and add send flags
+    private Categoria Category;
+    private int category; // TODO: replace with object Category and add send flags
     @JsonIgnore
     private ArrayList<Flag> flags;
     private double Price;
@@ -49,11 +49,11 @@ public class Item {
     }
 
     public int getCategory() {
-        return Category;
+        return category;
     }
 
-    public void setCategory(int category) {
-        Category = category;
+    public void setCategory(int categoryId) {
+        category = categoryId;
     }
 
     public ArrayList<String> getIngredients() {
@@ -92,8 +92,8 @@ public class Item {
         this.Description = description;
         this.Price = price;
         this.pathImage = pathImage;
-        this.category = category;
-        this.Category = this.category.getId();
+        this.Category = category;
+        this.category = category.getId();
         this.ingredientes = ingredients;
         this.flags = flags;
     }
@@ -110,7 +110,7 @@ public class Item {
         this.Description = description;
         this.Price = Price;
         this.pathImage = pathImage;
-        this.Category = category;
+        this.category = category;
     }
 
     public Item(int id, String notes, String removedIngredients) {
@@ -132,8 +132,8 @@ public class Item {
     @Override
     public String toString() {
         return Name + '\n' +
-                 Description + '\n' +
-                 Price + '\n';
+                Description + '\n' +
+                Price + '\n';
     }
 
     public String getBase64() {
