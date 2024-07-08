@@ -1,4 +1,5 @@
 package org.uid.ristonino.server.model;
+//TODO: Gestire richiesta get per aggiungere il tavolo (id tavolo e numero coperti ed il server deve riuscire a ricavare l'ip (uno predefinito va bene))
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,7 +62,7 @@ public class ApiHandler extends AbstractVerticle {
     private void getImage(RoutingContext routingContext) {
         String param = routingContext.request().getParam("file");
         // make query to get images
-        String imagePath = Debug.PATH + "images/" + param;
+        String imagePath = Debug.IMAGE_PATH + "images/" + param;
         //System.out.println(imagePath);
         try(InputStream inputStream = ApiHandler.class.getResourceAsStream(imagePath)) {
             if (inputStream == null) {
