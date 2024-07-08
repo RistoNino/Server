@@ -31,7 +31,7 @@ public class ImageUtil {
             BufferedImage img = ImageIO.read(is);
 
             ByteArrayOutputStream b = new ByteArrayOutputStream();
-            ImageIO.write(img, "jpg", b);
+            ImageIO.write(img, "png", b);
             byte[] imgBytes = b.toByteArray();
 
             String img64 = Base64.getEncoder().encodeToString(imgBytes);
