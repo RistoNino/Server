@@ -37,26 +37,19 @@ public class MenuService {
     public Future<JsonObject> getAllItems() {
 
 
-        ImageUtil conv = new ImageUtil();
         for (int i = 0; i < m.getFlags().size(); i++) {
-            String path = Debug.PATH + m.getFlags().get(i).getPathImage();
-            System.out.println(path);
-                // dovremmo implementare il webserver che da proprio le immagini
-            try {
-                m.getFlags().get(i).setBase64(conv.encodeImageToBase64(path));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            String path = Debug.IMAGE_PATH + m.getFlags().get(i).getPathImage();
+            System.out.println("*****"+path);
+
+            // dovremmo implementare il webserver che da proprio le immagini
+
         }
 
         for (int i = 0; i < m.getItems().size(); i++) {
             String path = Debug.PATH + m.getItems().get(i).getPathImage();
+            System.out.println("*****"+path);
+
             // dovremmo implementare il webserver che da proprio le immagini
-            try {
-                m.getItems().get(i).setBase64(conv.encodeImageToBase64(path));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
 
 
