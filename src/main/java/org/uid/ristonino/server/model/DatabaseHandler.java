@@ -50,6 +50,9 @@ public class DatabaseHandler {
     private final String removeIngredient = "DELETE FROM Ingredients WHERE Id = ?;";
     private final String deleteAllTables = "DELETE FROM Tables";
     private final String deleteAllOrders = "DELETE FROM Orders";
+    private final String addTable = "INSERT INTO Tables (Id, IpTable, isOccupied, copertiOccupati, maxCoperti) VALUES (?,?,?,?,?);";
+    private final String checkTableExists = "SELECT COUNT(*) FROM Tables WHERE Id = ?;";
+
 
     OrderService allOrders;
     private final String url = "jdbc:sqlite:RistoNino.db";
@@ -70,8 +73,6 @@ public class DatabaseHandler {
             Debug.getInstance().print("Error while trying to connect to the database:  " + e.getMessage());
         }
     }
-
-
 
     public void closeConnection()  {
         try {
@@ -137,14 +138,12 @@ public class DatabaseHandler {
     public void cleanOrdersAndTables(){
         try{
             Statement stmt = con.createStatement();
-            int x=stmt.executeUpdate(deleteAllTables);
-            System.out.println("***!!*: "+x);
-        }catch(SQLException e){
-            System.out.println(e);
-
+            int x = stmt.executeUpdate(deleteAllTables);
+            // System.out.println("***!!*: "+x);
         }
-
-
+        catch(SQLException e){
+            System.out.println(e);
+        }
     }
 
 
@@ -510,6 +509,45 @@ public class DatabaseHandler {
             if (deleteItemStatement.executeUpdate() > 0) {
                 deleteItemStatement.close();
                 return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkTableExists(Table t) {
+        try {
+            PreparedStatement checkTableStatement = con.prepareStatement(checkTableExists);
+            checkTableStatement.setInt(1, t.getId());
+            if (checkTableStatement.execute()) {
+                ResultSet rs = checkTableStatement.getResultSet();
+                return rs.getInt(1) > 0;
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public boolean addTable(Table table) {
+        try {
+            if (!checkTableExists(table)) {
+                PreparedStatement addTableStatement = con.prepareStatement(addTable);
+                addTableStatement.setInt(1, table.getId());
+                addTableStatement.setString(2, table.getIp());
+                addTableStatement.setBoolean(3, table.isIsoccupied());
+                addTableStatement.setInt(4, table.getOccupied());
+                addTableStatement.setInt(5, table.getMaxOccupied());
+
+                if (addTableStatement.executeUpdate() > 0) {
+                    addTableStatement.close();
+                    return true;
+                }
+            }
+            else {
+                System.out.println("table with id:" + table.getId() + " already exists");
             }
             return false;
         } catch (SQLException e) {

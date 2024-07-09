@@ -128,7 +128,7 @@ public class SceneHandler {
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.initOwner(stage);
             modalStage.setTitle(titleModal);
-            Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "dialogMenu/" + pathModal));
+            Scene modalScene = new Scene(loadRootFromFXML(VIEW_PATH + "modalMenu/" + pathModal));
             modalStage.setScene(modalScene);
             modalStage.showAndWait();
         }

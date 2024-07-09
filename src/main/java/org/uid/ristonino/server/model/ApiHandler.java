@@ -1,32 +1,37 @@
 package org.uid.ristonino.server.model;
-//TODO: Gestire richiesta get per aggiungere il tavolo (id tavolo e numero coperti ed il server deve riuscire a ricavare l'ip (uno predefinito va bene))
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import javafx.util.Pair;
+import org.uid.ristonino.server.model.services.ItemService;
 import org.uid.ristonino.server.model.services.MenuService;
 import org.uid.ristonino.server.model.services.OrderService;
+import org.uid.ristonino.server.model.services.TableService;
 import org.uid.ristonino.server.model.types.Item;
 import org.uid.ristonino.server.model.types.Ordine;
+import org.uid.ristonino.server.model.types.Table;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 public class ApiHandler extends AbstractVerticle {
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final MenuService menuService = new MenuService();
     private final OrderService orderService = OrderService.getInstance();
+    private final ItemService itemService = ItemService.getInstance();
+    private TableService tableService = new TableService();
 
     @Override
     public void start(Promise<Void> startPromise) {
@@ -34,8 +39,13 @@ public class ApiHandler extends AbstractVerticle {
 
         router.route().handler(BodyHandler.create());
         router.get("/api/menu").handler(this::getAllItems);
-        router.get("/api/images/:file").handler(this::getImage);
+        // /api/menu returns the current menu
+        router.get("/api/images/:idItem").handler(this::getImage);
+        // /api/images/{idItem} returns the image of the item
+        // in case of a flag, put in the body
         router.post("/api/orders").handler(this::createOrder);
+        // /api/orders places a new order
+        router.post("/api/tables").handler(this::putTable);
 
         vertx.createHttpServer()
                 .requestHandler(router)
@@ -46,6 +56,26 @@ public class ApiHandler extends AbstractVerticle {
                         startPromise.fail(http.cause());
                     }
                 });
+    }
+
+    private void putTable(RoutingContext routingContext) {
+        Table table;
+        try {
+            table = deserializeTable(routingContext.getBodyAsString());
+        } catch (JsonProcessingException e) {
+            routingContext.response()
+                    .setStatusCode(400)
+                    .end("Invalid request body: " + e.getMessage());
+            return;
+        }
+        table.setIp(routingContext.request().remoteAddress().host());
+
+        if (tableService.addNewTable(table)) {
+            routingContext.response().setStatusCode(200).end("Table added");
+        }
+        else {
+            routingContext.response().setStatusCode(500).end("Table couldn't be added, check out the server for more details");
+        }
     }
 
 
@@ -61,9 +91,24 @@ public class ApiHandler extends AbstractVerticle {
 
     private void getImage(RoutingContext routingContext) {
         String param = routingContext.request().getParam("file");
-        // make query to get images
-        String imagePath = Debug.IMAGE_PATH + "images/" + param;
-        //System.out.println(imagePath);
+        String imagePath;
+
+        if (Debug.IS_ACTIVE) {
+            imagePath = Debug.IMAGE_PATH + "images/" + param;
+        }
+        else {
+            Optional<Item> opt = itemService.getItems().stream()
+                    .filter(item -> item.getId() == Integer.parseInt(param))
+                    .findFirst();
+
+            if (opt.isPresent()) {
+                imagePath = opt.get().getPathImage();
+            }
+            else {
+                routingContext.response().setStatusCode(404).end("Image not found");
+            }
+        }
+
         try(InputStream inputStream = ApiHandler.class.getResourceAsStream(imagePath)) {
             if (inputStream == null) {
                 routingContext.response().setStatusCode(404).end("Image not found");
@@ -74,7 +119,6 @@ public class ApiHandler extends AbstractVerticle {
 
             routingContext.response().putHeader("Content-Type", contentType);
             routingContext.response().putHeader("Content-Length", String.valueOf(imageBuffer.length()));
-
             routingContext.response().end(imageBuffer);
         } catch (IOException e) {
             routingContext.response().setStatusCode(500).end("Unable to load image");
@@ -121,6 +165,12 @@ public class ApiHandler extends AbstractVerticle {
 
         ordine.setListaOrdine(items);
         return ordine;
+    }
+
+    private Table deserializeTable(String json) throws JsonProcessingException {
+        JsonObject j = new JsonObject(json);
+        Table t = new Table(j.getInteger("idTable"), "", true, j.getInteger( "numberCovers"), j.getInteger("maxCovers"));
+        return t;
     }
 
 

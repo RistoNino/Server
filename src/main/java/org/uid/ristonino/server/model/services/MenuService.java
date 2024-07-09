@@ -6,10 +6,8 @@ import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
 import org.uid.ristonino.server.model.DatabaseHandler;
 import org.uid.ristonino.server.model.Debug;
-import org.uid.ristonino.server.model.ImageUtil;
 import org.uid.ristonino.server.model.types.Menu;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MenuService {
@@ -37,20 +35,17 @@ public class MenuService {
     public Future<JsonObject> getAllItems() {
 
 
-        for (int i = 0; i < m.getFlags().size(); i++) {
-            String path = Debug.IMAGE_PATH + m.getFlags().get(i).getPathImage();
-            System.out.println("*****"+path);
-
-            // dovremmo implementare il webserver che da proprio le immagini
-
-        }
-
-        for (int i = 0; i < m.getItems().size(); i++) {
-            String path = Debug.PATH + m.getItems().get(i).getPathImage();
-            System.out.println("*****"+path);
-
-            // dovremmo implementare il webserver che da proprio le immagini
-        }
+//        for (int i = 0; i < m.getFlags().size(); i++) {
+//            String path = Debug.IMAGE_PATH + m.getFlags().get(i).getPathImage();
+//            //System.out.println("Path Flag: " + path);
+//
+//        }
+//
+//        for (int i = 0; i < m.getItems().size(); i++) {
+//            String path = Debug.PATH + m.getItems().get(i).getPathImage();
+//            System.out.println("Path Items: " + path);
+//
+//        }
 
 
         ObjectMapper mapper = new ObjectMapper();

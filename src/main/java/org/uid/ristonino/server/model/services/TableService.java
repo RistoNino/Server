@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class TableService {
     private ArrayList<Table> table=new ArrayList<>();
+    private DatabaseHandler db = DatabaseHandler.getInstance();
 
     public ArrayList<Table> getTable(){
         return table;
@@ -29,7 +30,6 @@ public class TableService {
     }
 
     public void load(){
-        DatabaseHandler db= DatabaseHandler.getInstance();
         db.loadTable();
     }
 
@@ -40,8 +40,12 @@ public class TableService {
 
     public int getNumberOfTables(){
         update();
-
         return table.size();
+    }
+
+    public boolean addNewTable(Table tab) {
+        table.add(tab);
+        return db.addTable(tab);
     }
 
     @Override

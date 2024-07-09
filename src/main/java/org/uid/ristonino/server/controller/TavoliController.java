@@ -59,7 +59,7 @@ public class TavoliController {
             for(Table t:table.getTable()){
 
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/templete/table.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/template/table.fxml"));
                 Node tavolo=loader.load();
                 TableLabelController controller = loader.getController();
                 tavoliFlow.getChildren().add(controller.setTable(t.getId()));
@@ -77,7 +77,7 @@ public class TavoliController {
 
     public void addNotification(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/templete/notification.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/template/notification.fxml"));
             Node notification=loader.load();
             NotificationController controller = loader.getController();
             tavoliStackPane.getChildren().add(controller.setNotification("Tavoli Aggiornati!", "mdi2c-check-bold"));

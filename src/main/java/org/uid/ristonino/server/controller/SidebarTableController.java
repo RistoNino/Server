@@ -88,7 +88,7 @@ public class SidebarTableController {
             ArrayList<Pair<Integer, Item>> ord =orderService.getOrder(numTav);
             for(int i=0; i<ord.size();i++)
             {
-                FXMLLoader loader= new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/templete/item.fxml"));
+                FXMLLoader loader= new FXMLLoader(getClass().getResource("/org/uid/ristonino/server/view/template/item.fxml"));
                 Node item=loader.load();
                 ItemTableController controller = loader.getController();
 

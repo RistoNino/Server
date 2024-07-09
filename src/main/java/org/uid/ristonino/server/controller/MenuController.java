@@ -97,7 +97,7 @@ public class MenuController {
 
     @FXML
     public void addCategory(ActionEvent actionEvent) {
-        sceneHandler.createModal("Crea categoria", "dialog.fxml");
+        sceneHandler.createModal("Crea categoria", "modal.fxml");
     }
 
     @FXML
@@ -117,7 +117,7 @@ public class MenuController {
 
     @FXML
     public void addIngredient(ActionEvent actionEvent) {
-        sceneHandler.createModal("Crea Ingrediente", "dialog-ingredient.fxml");
+        sceneHandler.createModal("Crea Ingrediente", "modal-ingredient.fxml");
     }
 
     @FXML
@@ -137,7 +137,7 @@ public class MenuController {
 
     @FXML
     public void addFlag(ActionEvent actionEvent) {
-        sceneHandler.createModal("Crea Allergene o altro", "dialog-flag.fxml");
+        sceneHandler.createModal("Crea Allergene o altro", "modal-flag.fxml");
     }
 
     @FXML
@@ -157,7 +157,7 @@ public class MenuController {
 
     @FXML
     public void addItem(ActionEvent actionEvent) {
-        sceneHandler.createModal("Crea Articolo", "dialog-item.fxml");
+        sceneHandler.createModal("Crea Articolo", "modal-item.fxml");
     }
 
     @FXML

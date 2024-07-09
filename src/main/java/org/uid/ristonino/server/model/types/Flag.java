@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class Flag {
     private int Id;
     private String Name;
-    @JsonIgnore
     private String pathImage;
     @JsonIgnore
     private BooleanProperty selected = new SimpleBooleanProperty(false);
@@ -51,13 +50,6 @@ public class Flag {
         this.pathImage = pathImage;
     }
 
-    public String getBase64() {
-        return base64;
-    }
-
-    public void setBase64(String base64) {
-        this.base64 = base64;
-    }
 
 
     // Getter per la proprietà osservabile

@@ -25,6 +25,7 @@ public class Table {
         this.id = id;
     }
 
+
     public String getIp() {
         return ip;
     }
@@ -37,6 +38,9 @@ public class Table {
         return occupied;
     }
 
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
     public int getMaxOccupied() {
         return maxOccupied;
