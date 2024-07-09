@@ -112,6 +112,10 @@ public class HomePageController implements Initializable{
         removeButtonState(tavButton);
         homepagePane.setCenter(dashb);
     }
+
+
+
+
     public void tavoli(){
         addButtonState(tavButton);
         removeButtonState(menuButton);
@@ -135,6 +139,8 @@ public class HomePageController implements Initializable{
             throw new RuntimeException(e);
         }
     }
+
+
 
     public void closeImp(){
         stackPaneHome.getChildren().removeLast();

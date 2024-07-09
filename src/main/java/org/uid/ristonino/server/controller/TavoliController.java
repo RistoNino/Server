@@ -53,7 +53,7 @@ public class TavoliController {
         if(notification){
             this.addNotification();
         }
-
+        table.update();
         try{
             tavoliFlow.getChildren().clear();
             for(Table t:table.getTable()){
@@ -137,6 +137,7 @@ public class TavoliController {
             if (tavoliFlow.getChildren().get(i).getId() != null) {
                 int idFlow = Integer.parseInt(tavoliFlow.getChildren().get(i).getId());
                 for (Pair<Integer, Boolean> x : allOrd.getOrdiniONo()) {
+                    System.out.println("IdFlow: "+idFlow+" idTavolo"+x.getKey());
                     if (idFlow == x.getKey()) {
                         // System.out.println("Integer.parseInt(tavoliFlow.getChildren().get(i).getId()), x.getKey()" + Integer.parseInt(tavoliFlow.getChildren().get(i).getId()) + " " + x.getKey());
                         if (x.getValue()) {

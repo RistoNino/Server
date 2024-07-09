@@ -129,6 +129,7 @@ public class ApiHandler extends AbstractVerticle {
         String body = routingContext.getBodyAsString();
         Ordine order;
         try {
+            System.out.println("body: "+body);
             order = deserializeOrder(body);
         }
         catch (JsonProcessingException e) {
@@ -151,7 +152,10 @@ public class ApiHandler extends AbstractVerticle {
         ordine.setIdTavolo(jsonObject.getInteger("idTavolo"));
 
         JsonArray jsonArray = jsonObject.getJsonArray("items");
+        System.out.println("Deserialize pre fors: "+jsonArray.size());
+
         for (int i = 0; i < jsonArray.size(); i++) {
+            System.out.println("Deserialize");
             JsonObject itemJson = jsonArray.getJsonObject(i);
             Integer idItem = itemJson.getInteger("id");
             Integer quantity = itemJson.getInteger("quantity");

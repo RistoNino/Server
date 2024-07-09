@@ -39,7 +39,7 @@ public class DatabaseHandler {
     private final String getFlags = "SELECT * FROM Flags;";
     private final String putItemsInOrder = "INSERT INTO Orders_Items (IdOrder, IdItem, Quantity, Note) VALUES (?,?,?,?)";
     private final String getOrdini="SELECT o.Id AS OrderId, i.Id AS ItemId, i.Name, oi.Quantity, i.Price, oi.Note AS ItemNote, t.Id AS TableId FROM Items AS i JOIN Orders_Items AS oi ON i.Id = oi.IdItem JOIN Orders AS o ON oi.IdOrder = o.Id JOIN Tables AS t ON o.IdTable = t.Id;";
-    private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
+    //private final String createOrder = "INSERT INTO Orders (IdTable, Note) VALUES (?,?);";
     private final String getOrdiniPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 1;";
     private final String getOrdiniNonPagati = "SELECT COUNT(*) FROM Orders WHERE Pagato = 0;";
     private final String getPagatiONo ="SELECT IdTable, Pagato FROM Orders;";
@@ -52,6 +52,7 @@ public class DatabaseHandler {
     private final String deleteAllOrders = "DELETE FROM Orders";
     private final String addTable = "INSERT INTO Tables (Id, IpTable, isOccupied, copertiOccupati, maxCoperti) VALUES (?,?,?,?,?);";
     private final String checkTableExists = "SELECT COUNT(*) FROM Tables WHERE Id = ?;";
+    private final String addOrder="INSERT INTO Orders (IdTable, Pagato) VALUES (?, ?);";
 
 
     OrderService allOrders;
@@ -93,7 +94,17 @@ public class DatabaseHandler {
             PreparedStatement st = con.prepareStatement(checkUsername);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
-            return rs.next();
+
+            if(rs.next()) {
+                rs.close();
+                st.close();
+                return true;
+            }
+            else{
+                rs.close();
+                st.close();
+                return false;
+            }
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -108,7 +119,13 @@ public class DatabaseHandler {
                 String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
                 st.setString(2,hashedPassword);
                 st.setInt(3,privilegesLevel);
-                return st.executeUpdate() > 0;
+                if(st.executeUpdate()>0) {
+                    st.close();
+                    return true;
+                }else{
+                    st.close();
+                    return false;
+                }
             }
             else {
                 return false;
@@ -127,8 +144,12 @@ public class DatabaseHandler {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 String hashedPassword = rs.getString("Password");
+                rs.close();
+                st.close();
                 return BCrypt.checkpw(passwordInput,hashedPassword);
             }
+            st.close();
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -139,6 +160,9 @@ public class DatabaseHandler {
         try{
             Statement stmt = con.createStatement();
             int x = stmt.executeUpdate(deleteAllTables);
+            stmt.close();
+            stmt.executeQuery(deleteAllOrders);
+            stmt.close();
             // System.out.println("***!!*: "+x);
         }
         catch(SQLException e){
@@ -162,18 +186,23 @@ public class DatabaseHandler {
                 allOrders.setIdTavolo(rs.getInt("TableId"));
                 allOrders.addOrder(ordine);
             }
+            st.close();
+            rs.close();
+
             st = con.prepareStatement(getOrdiniPagati);
             rs = st.executeQuery();
             if (rs.next()) {
                 allOrders.setTotalOrderPagati(rs.getInt(1));
             }
-
+            st.close();
+            rs.close();
             st = con.prepareStatement(getOrdiniNonPagati);
             rs = st.executeQuery();
             if (rs.next()) {
                 allOrders.setTotalOrderNonPagati(rs.getInt(1));
             }
-
+            st.close();
+            rs.close();
             st = con.prepareStatement(getPagatiONo);
             rs = st.executeQuery();
             while(rs.next()) {
@@ -182,6 +211,7 @@ public class DatabaseHandler {
             }
             //System.out.println(allOrders);
             st.close();
+            rs.close();
         }
         catch (SQLException e) {
             throw new RuntimeException();
@@ -197,7 +227,7 @@ public class DatabaseHandler {
             deleteOrdersItemsStmt.setInt(1, id);
             deleteOrdersItemsStmt.executeUpdate();
             // System.out.println("Ordine rimosso con successo per il tavolo con ID: " + id);
-
+            deleteOrdersItemsStmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -205,14 +235,21 @@ public class DatabaseHandler {
     }
 
     public void loadTable(){
+        System.out.println("loadTable in DatabaseHandler");
+        this.closeConnection();
+        this.openConnection();
+
         try{
             PreparedStatement st = con.prepareStatement(getTavoli);
             ResultSet rs = st.executeQuery();
             TableService tableService= TableService.getInstance();
             while(rs.next()){
+                System.out.println("loadTable in DatabaseHandler: "+rs.getString(2));
                 Table t = new Table(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getInt(4), rs.getInt(5));
-                tableService.addTable(t);
+                tableService.addNewTable(t);
             }
+            rs.close();
+            st.close();
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -227,6 +264,7 @@ public class DatabaseHandler {
                 Item i = new Item(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
                 items.add(i);
             }
+            rs.close();
             st.close();
             return items;
         } catch (SQLException e) {
@@ -243,6 +281,7 @@ public class DatabaseHandler {
                 Categoria c = new Categoria(rs.getString(2),rs.getInt(1));
                 categories.add(c);
             }
+            rs.close();
             st.close();
             return categories;
         } catch (SQLException e) {
@@ -259,6 +298,7 @@ public class DatabaseHandler {
             while(rs.next()){
                 ingredients.add(rs.getString(1));
             }
+            rs.close();
             st.close();
             return ingredients;
         } catch (SQLException e) {
@@ -275,6 +315,7 @@ public class DatabaseHandler {
                 Flag f = new Flag(rs.getInt(1),rs.getString(2), rs.getString(3));
                 flags.add(f);
             }
+            rs.close();
             st.close();
             return flags;
         } catch (SQLException e) {
@@ -289,6 +330,7 @@ public class DatabaseHandler {
             preparedStatement.setInt(1, state);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -296,26 +338,34 @@ public class DatabaseHandler {
 
     }
 
+    private final String getIdOrder="SELECT Id FROM Orders WHERE IdTable = ?;";
 
     public int createOrder(Ordine ord) {
         try {
-            PreparedStatement st = con.prepareStatement(createOrder, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = con.prepareStatement(getIdOrder);
             st.setInt(1,ord.getIdTavolo());
-            if (st.executeUpdate() > 0) {
-                ResultSet rs = st.getGeneratedKeys();
-                rs.next();
-                int idOrdine = rs.getInt(1);
-                ord.setIdOrdine(rs.getInt(1));
+            ResultSet rs=st.executeQuery();
+            int id=0;
+            if(rs.next())
+                id=rs.getInt("Id");
+
+            System.out.println("Id: "+id);
+
+            if (id > 0) {
+                ord.setIdOrdine(id);
+                System.out.println("Order: "+ord.getListaOrdine());
                 for (int i = 0; i < ord.getListaOrdine().size(); i++) {
+                    System.out.println("a");
                     PreparedStatement stItem = con.prepareStatement(putItemsInOrder);
-                    stItem.setInt(1,idOrdine);
+                    stItem.setInt(1,id);
                     stItem.setInt(2,ord.getListaOrdine().get(i).getValue().getId());
                     stItem.setInt(3,ord.getListaOrdine().get(i).getKey());
                     stItem.setString(4,ord.getListaOrdine().get(i).getValue().getNotes());
                     stItem.executeUpdate();
                 }
+                rs.close();
                 st.close();
-                return idOrdine;
+                return id;
             }
             st.close();
             return -1;
@@ -333,8 +383,12 @@ public class DatabaseHandler {
                 rs.next();
                 int idCategory = rs.getInt(1);
                 c.setId(idCategory);
+                rs.close();
+                st.close();
                 return idCategory;
             }
+            st.close();
+
             return -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -351,8 +405,10 @@ public class DatabaseHandler {
                 rs.next();
                 int idFlag = rs.getInt(1);
                 f.setId(idFlag);
+                rs.close();
                 return idFlag;
             }
+            st.close();
             return -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -368,6 +424,7 @@ public class DatabaseHandler {
                 Ingrediente i = new Ingrediente(rs.getInt(1), rs.getString(2));
                 ingredients.add(i);
             }
+            rs.close();
             st.close();
             return ingredients;
         } catch (SQLException e) {
@@ -385,6 +442,7 @@ public class DatabaseHandler {
                 int idIngredient = rs.getInt(1);
                 ing.setId(idIngredient);
                 st.close();
+                rs.close();
                 return idIngredient;
             }
             st.close();
@@ -416,7 +474,6 @@ public class DatabaseHandler {
                 int idItem = rs.getInt(1);
                 item.setId(idItem);
 
-
                 addIngredientsStatement = con.prepareStatement(addIngredientsToItem);
                 ArrayList<Ingrediente> ingredients = item.getIngredientes();
                 // aggiungo gli ingredienti alla tabella n:m
@@ -439,6 +496,10 @@ public class DatabaseHandler {
                 addFlagsStatement.executeBatch();
 
                 con.commit();
+                rs.close();
+                addIngredientsStatement.close();
+                addFlagsStatement.close();
+                createItemStatement.close();
                 return true;
             }
         } catch (SQLException e) {
@@ -471,6 +532,7 @@ public class DatabaseHandler {
             PreparedStatement st = con.prepareStatement(removeCategory);
             st.setInt(1,id);
             int rows = st.executeUpdate();
+            st.close();
             return rows > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -482,6 +544,7 @@ public class DatabaseHandler {
             PreparedStatement st = con.prepareStatement(removeIngredient);
             st.setInt(1,id);
             int rows = st.executeUpdate();
+            st.close();
             return rows > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -496,6 +559,7 @@ public class DatabaseHandler {
                 deleteItemStatement.close();
                 return true;
             }
+            deleteItemStatement.close();
             return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -510,6 +574,7 @@ public class DatabaseHandler {
                 deleteItemStatement.close();
                 return true;
             }
+            deleteItemStatement.close();
             return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -522,8 +587,17 @@ public class DatabaseHandler {
             checkTableStatement.setInt(1, t.getId());
             if (checkTableStatement.execute()) {
                 ResultSet rs = checkTableStatement.getResultSet();
-                return rs.getInt(1) > 0;
+                if(rs.getInt(1)>0){
+                    checkTableStatement.close();
+                    rs.close();
+                    return true;
+                }else {
+                    checkTableStatement.close();
+                    rs.close();
+                    return false;
+                }
             }
+            checkTableStatement.close();
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -541,10 +615,23 @@ public class DatabaseHandler {
                 addTableStatement.setInt(4, table.getOccupied());
                 addTableStatement.setInt(5, table.getMaxOccupied());
 
+                //Ogni volta che aggiungo il tavolo, devo aggiungere l'ordine nella tabella Orders.
+
+                PreparedStatement pstmt = con.prepareStatement(addOrder);
+                pstmt.setInt(1, table.getId());
+                pstmt.setInt(2, 0);
+
+                pstmt.executeUpdate();
+                pstmt.close();
                 if (addTableStatement.executeUpdate() > 0) {
                     addTableStatement.close();
                     return true;
                 }
+                addTableStatement.close();
+
+
+
+
             }
             else {
                 System.out.println("table with id:" + table.getId() + " already exists");

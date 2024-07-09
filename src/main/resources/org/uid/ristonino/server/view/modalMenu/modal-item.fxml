@@ -6,49 +6,59 @@
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.modal.ModalItemController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uid.ristonino.server.controller.modal.ModalItemController">
+    <ScrollPane hbarPolicy="ALWAYS" prefHeight="900.0" prefWidth="530.0">
+
 <DialogPane expanded="true">
+
       <header>
          <Label fx:id="headerLabel" text="Crea Articolo" />
       </header>
       <content>
-         <VBox>
-             <Label fx:id="nameLabel" text="Nome" />
-             <TextField fx:id="nameTextField" promptText="Nome articolo" />
-             <Label fx:id="descriptionLabel" text="Descrizione" />
-             <TextArea fx:id="descriptionTextArea" promptText="Descrizione Articolo" />
-            <Label text="Prezzo" />
-            <TextField fx:id="priceTextField" promptText="15,00€" />
-             <Label fx:id="categoryLabel" text="Categoria" />
-             <ComboBox fx:id="comboBoxCategories" />
-             <HBox>
-                 <Button fx:id="uploadImageBtn" onAction="#uploadImage" text="Carica foto">
-                  <HBox.margin>
-                     <Insets right="5.0" />
-                  </HBox.margin></Button>
-                 <Button fx:id="showImageBtn" onAction="#showImage" text="Mostra foto" visible="false" />
-             </HBox>
-             <Label fx:id="ingredientsLabel" text="Ingredienti" />
-             <ListView fx:id="listViewIngredients" maxHeight="200.0" />
-             <Label fx:id="flagsLabel" text="Allergeni e altro" />
-             <ListView fx:id="listViewFlags" maxHeight="200.0">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin></ListView>
-             <HBox alignment="TOP_RIGHT">
-                 <Button fx:id="createItemBtn" mnemonicParsing="false" onAction="#createItem" text="Crea">
-                 <HBox.margin>
-                     <Insets right="5.0" />
-                 </HBox.margin></Button>
-                 <Button fx:id="closeModalBtn" mnemonicParsing="false" onAction="#closeHandle" text="Chiudi" />
-             </HBox>
-         </VBox>
+             <VBox>
+
+                 <Label fx:id="nameLabel" text="Nome" />
+                 <TextField fx:id="nameTextField" promptText="Nome articolo" />
+                 <Label fx:id="descriptionLabel" text="Descrizione" />
+                 <TextArea fx:id="descriptionTextArea" promptText="Descrizione Articolo" />
+                <Label text="Prezzo" />
+                <TextField fx:id="priceTextField" promptText="15,00€" />
+                 <Label fx:id="categoryLabel" text="Categoria" />
+                 <ComboBox fx:id="comboBoxCategories" />
+                 <HBox>
+                     <Button fx:id="uploadImageBtn" onAction="#uploadImage" text="Carica foto">
+                      <HBox.margin>
+                         <Insets right="5.0" />
+                      </HBox.margin></Button>
+                     <Button fx:id="showImageBtn" onAction="#showImage" text="Mostra foto" visible="false" />
+                 </HBox>
+                 <Label fx:id="ingredientsLabel" text="Ingredienti" />
+                 <ListView fx:id="listViewIngredients" maxHeight="200.0" />
+                 <Label fx:id="flagsLabel" text="Allergeni e altro" />
+                 <ListView fx:id="listViewFlags" maxHeight="200.0">
+                   <VBox.margin>
+                      <Insets bottom="10.0" />
+                   </VBox.margin></ListView>
+                 <HBox alignment="TOP_RIGHT">
+                     <Button fx:id="createItemBtn" mnemonicParsing="false" onAction="#createItem" text="Crea">
+                     <HBox.margin>
+                         <Insets right="5.0" />
+                     </HBox.margin></Button>
+                     <Button fx:id="closeModalBtn" mnemonicParsing="false" onAction="#closeHandle" text="Chiudi" />
+                 </HBox>
+
+             </VBox>
+
+
       </content>
 </DialogPane>
+    </ScrollPane>
+
 </AnchorPane>
